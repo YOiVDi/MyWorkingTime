@@ -10,6 +10,7 @@ import UserNotifications
 
 
 struct PauseTimerView: View {
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @StateObject var viewModel = PauseTimerViewModel()
     
     var body: some View {
@@ -18,7 +19,7 @@ struct PauseTimerView: View {
                 TimerView(viewModel: viewModel)
                 Buttons(viewModel: viewModel)
             }
-            .navigationTitle("Timer")
+            .navigationTitle(verticalSizeClass == .compact ? "" : "Timer")
             .navigationBarTitleDisplayMode(.inline)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.backGround)

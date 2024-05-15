@@ -15,7 +15,6 @@ struct EditSheet: View {
     var body: some View {
         NavigationView {
                 List {
-//                    DatePicker("WorkingHour's", selection: $viewModel.newWorkingTime, displayedComponents: .hourAndMinute)
                     Picker("WorkingHours's", selection: $viewModel.newWorkingTime) {
                         ForEach(0..<9) {
                             Text("\($0)")
@@ -47,6 +46,8 @@ struct EditSheet: View {
                     }
                     
                     // Button to save all changes
+                    HStack {
+                        Spacer()
                         Button("Save") {
                             // Show error message or prevent submission
                             guard viewModel.pauseFinishEdit > viewModel.pauseStartEdit else {
@@ -59,6 +60,8 @@ struct EditSheet: View {
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
                         .shadow(color: .black, radius: 3, x: -1, y: 1)
+                        Spacer()
+                    }
                 }
             .navigationTitle("Updating Details")
         }

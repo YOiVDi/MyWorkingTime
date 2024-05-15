@@ -9,18 +9,19 @@ import SwiftUI
 
 struct TimerView: View {
     @Environment(\.scenePhase) var scenePhase
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @ObservedObject var viewModel: PauseTimerView.PauseTimerViewModel
     var body: some View {
         ZStack {
             Circle()
                 .stroke(lineWidth: 20)
-                .frame(width: 350, height: 350)
+                .frame(width: 350, height: verticalSizeClass == .compact  ? 250 : 350)
                 .foregroundStyle(.secondary)
                 .overlay(
                     Circle()
                         .trim(from: 0 , to: viewModel.trimProgress)
                         .stroke(lineWidth: 20)
-                        .frame(width: 350, height: 350)
+                        .frame(width: 350, height: verticalSizeClass == .compact  ? 250 : 350)
                         .foregroundStyle(viewModel.timerCircleColor)
                         .rotationEffect(Angle(degrees: -90))
                         .animation(.easeInOut, value: viewModel.elapsedTime)
@@ -77,6 +78,7 @@ struct TimerView: View {
                             viewModel.setTimer()
                         }
                     }
+                    .frame(width: 350)
                 } else {
                     Text("\(viewModel.formatTime(viewModel.elapsedTime))")
                         .foregroundColor(.green)

@@ -11,6 +11,7 @@ struct WorkingDaysListView: View {
     
     @ObservedObject var viewModel: WorkingDaysView.ViewModel
     @State private var selections = Set<WorkingDay>()
+    @State private var pendingSelections = Set<WorkingDay>()
     @Environment(\.editMode) var editMode
     
     var body: some View {
@@ -48,17 +49,43 @@ struct WorkingDaysListView: View {
                     Button {
                         viewModel.add()
                     } label: {
-                        Label("add", systemImage: "plus.circle")
+                        Label("add", systemImage: "plus.circle.fill")
                     }
                 } else {
                     Button(role: .destructive) {
-                        viewModel.selectionDelete(selections)
-                        editMode?.wrappedValue = .inactive
+                        pendingSelections = selections
+                        withAnimation {
+                            viewModel.alert = .deleteAll
+                            editMode?.wrappedValue = .inactive
+                        }
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
                 }
             }
+        }
+        .onAppear {
+            // Reset selections when the view appears
+            selections.removeAll()
+            editMode?.wrappedValue = .inactive
+        }
+        .alert(viewModel.alert?.title ?? "Error Occured" , isPresented: Binding(value: $viewModel.alert)) {
+            if viewModel.alert == .deleteAll {
+                Button("Yes", role: .destructive) {
+                    viewModel.selectionDelete(pendingSelections)
+                    selections.removeAll()
+                    editMode?.wrappedValue = .inactive
+                    pendingSelections.removeAll()
+                }
+                Button("Cancel", role: .cancel) {
+                    withAnimation {
+                        editMode?.wrappedValue = .active
+                    }
+                    selections = pendingSelections
+                }
+            }
+        } message: {
+            Text(viewModel.alert?.message ?? "")
         }
     }
 }

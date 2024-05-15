@@ -11,6 +11,8 @@ enum CustomAlerts: Error, LocalizedError {
     case emptyCompanyName
     case notCorrectTime
     case saved
+    case dayExist
+    case deleteAll
     
     
     var title: String {
@@ -21,6 +23,10 @@ enum CustomAlerts: Error, LocalizedError {
             return "Unable to save your settings"
         case .saved:
             return "Saved"
+        case .dayExist:
+            return "The day cannot be added"
+        case .deleteAll:
+            return "Are you sure?"
         }
     }
     
@@ -32,6 +38,10 @@ enum CustomAlerts: Error, LocalizedError {
             return "Please make sure that the working hours are filled in correctly, they should be between 1 - 8 hours"
         case .saved:
             return "Your settings has been saved."
+        case .dayExist:
+            return "The day you are trying to add already exists in your list."
+        case .deleteAll:
+            return "If you click 'Yes', all selected items will be deleted. Once you click 'Yes', the operation cannot be undone"
         }
     }
 }

@@ -23,6 +23,7 @@ extension DetailView {
         // Delete pause.
         func deletePause(workingDay: WorkingDay, pause: Pause) {
             workingDay.removeFromPause(pause)
+            persistenceController.container.viewContext.delete(pause)
             persistenceController.save()
         }
         

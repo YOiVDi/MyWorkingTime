@@ -31,7 +31,13 @@ struct SettingsView: View {
                         }
                     }
                 }
-                Button("Save Settings", action: {viewModel.saveSettingsToUserDefaults()})
+                HStack {
+                    Spacer()
+                    Button("Save Settings", action: {viewModel.saveSettingsToUserDefaults()})
+                        .buttonStyle(BorderedProminentButtonStyle())
+                        .shadow(color: .black, radius: 3, x: -1, y: 1)
+                    Spacer()
+                }
             }
             .alert(viewModel.alert?.title ?? "Error Occured", isPresented: Binding(value: $viewModel.alert)) {
                 

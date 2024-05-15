@@ -12,6 +12,7 @@ import SwiftUI
 extension WorkingDaysView {
     class ViewModel: ObservableObject {
         @Published private(set) var workingDaysList: [WorkingDay] = []
+        @Published var alert: CustomAlerts? = nil
         
         // Singleton instance of PersistenceController(Core-Data)
         private let persistenceController = PersistenceController.shared
@@ -39,7 +40,7 @@ extension WorkingDaysView {
         func add() {
             // Check if the day already exists
             guard !dayExist() else {
-                print("Day already exists.")
+                alert  = .dayExist
                 return
             }
             

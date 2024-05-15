@@ -24,8 +24,8 @@ struct DetailView: View {
                 // Pause Section
                 pauseSection
             }
-//            .listRowBackground(Color.backGround)
-            .listRowSeparator(.hidden)
+            .listRowBackground(Color.backGround)
+//            .listRowSeparator(.hidden)
         }
         .listRowSpacing(10)
         .background(Color.backGround)

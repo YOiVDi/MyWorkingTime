@@ -17,6 +17,7 @@ extension PauseTimerView {
         @Published var seconds = 0
         @Published var isStopped = false
         @Published var isStarted = false
+        let pauseTimes: [Int] = [5, 10, 15, 20, 25, 30]
         let persistenceController = PersistenceController.shared
         private var timer: Timer?
         

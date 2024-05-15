@@ -4,7 +4,7 @@
         <attribute name="finishPause" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="startPause" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="totalPause" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="workingDay" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="WorkingDay" inverseName="pause" inverseEntity="WorkingDay"/>
+        <relationship name="workingDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkingDay" inverseName="pause" inverseEntity="WorkingDay"/>
     </entity>
     <entity name="WorkingDay" representedClassName="WorkingDay" syncable="YES">
         <attribute name="companyName" optional="YES" attributeType="String"/>
@@ -12,6 +12,6 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="workingHours" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="workOnWeekend" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <relationship name="pause" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pause" inverseName="workingDay" inverseEntity="Pause"/>
+        <relationship name="pause" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Pause" inverseName="workingDay" inverseEntity="Pause"/>
     </entity>
 </model>
