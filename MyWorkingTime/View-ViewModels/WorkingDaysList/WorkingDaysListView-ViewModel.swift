@@ -11,7 +11,7 @@ import SwiftUI
 
 extension WorkingDaysView {
     class ViewModel: ObservableObject {
-        @Published private(set) var workingDaysList: [WorkingDay] = []
+        @Published private(set) var workingDaysList: [WorkingDay] = [] 
         @Published var alert: CustomAlerts? = nil
         
         // Singleton instance of PersistenceController(Core-Data)

@@ -25,7 +25,7 @@ struct PersistenceController {
         workingDay.workingHours = 8
         workingDay.workOnWeekend = false
         for _ in 0..<3 {
-            var pause = Pause(context: controller.viewContext)
+            let pause = Pause(context: controller.viewContext)
             pause.startPause = Date(timeIntervalSinceNow: 1200)
             pause.finishPause = Date(timeIntervalSinceNow: 1800)
             pause.totalPause = 10
@@ -64,6 +64,7 @@ struct PersistenceController {
             }
         }
     }
+    
     func fetchRequest(filter: NSPredicate?, sortBy: [NSSortDescriptor]?) -> [WorkingDay] {
         var workingDaysList: [WorkingDay] = []
         let request = NSFetchRequest<WorkingDay>(entityName: "WorkingDay")

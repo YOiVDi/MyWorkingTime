@@ -41,7 +41,7 @@ enum CustomAlerts: Error, LocalizedError {
         case .dayExist:
             return "The day you are trying to add already exists in your list."
         case .deleteAll:
-            return "If you click 'Yes', all selected items will be deleted. Once you click 'Yes', the operation cannot be undone"
+            return "If you click 'Yes', all selected items will be deleted. Once you click 'Yes', the operation cannot be undo"
         }
     }
 }

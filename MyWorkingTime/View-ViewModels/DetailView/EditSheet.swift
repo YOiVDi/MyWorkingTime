@@ -11,7 +11,6 @@ struct EditSheet: View {
     @State var model: WorkingDay
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: DetailView.ViewModel
-    @State private var selectedPause: Pause?
     var body: some View {
         NavigationView {
                 List {
@@ -21,24 +20,26 @@ struct EditSheet: View {
                         }
                     }
                     if model.arrPause.isEmpty { // if array is empty
-                        Text("Add pause")
+                        ContentUnavailableView("You have no pauses.", systemImage: "doc.fill", description: Text("To add pause return back to detail view and use, a 'Add Pause' button."))
                     } else { // Showing if array is not empty
                         ForEach(model.arrPause, id: \.self) { pause in
                             HStack(spacing: 10) {
-                                Image(systemName: pause == selectedPause ? "checkmark.circle" : "circle")
+                                Image(systemName: pause == viewModel.selectedPause ? "checkmark.circle" : "circle")
                                     .foregroundStyle(.blue)
                                 Text("Start: \(pause.wrappedStartPause.formatted(date: .omitted, time: .shortened))")
                                 Spacer()
                                 Text("Finish: \(pause.wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
                             }
                             .onTapGesture {
-                                selectedPause = pause
+                                viewModel.selectedPause = pause
+                                viewModel.pauseStartEdit = pause.wrappedStartPause
+                                viewModel.pauseFinishEdit = pause.wrappedFinishPause
                             }
                         }
                     }
                     
                     // Edit pause time
-                    if selectedPause != nil {
+                    if viewModel.selectedPause != nil {
                         VStack {
                             DatePicker("New Start", selection: $viewModel.pauseStartEdit, displayedComponents: .hourAndMinute)
                             DatePicker("New Finish", selection: $viewModel.pauseFinishEdit, displayedComponents: .hourAndMinute)
@@ -54,8 +55,8 @@ struct EditSheet: View {
                                 print("Your Start of pause is bigger than finish pause.")
                                 return
                             }
-                            viewModel.update(model, pause: selectedPause)
-                            selectedPause = nil
+                            viewModel.update(model, pause: viewModel.selectedPause)
+                            viewModel.selectedPause = nil
                             viewModel.onChange.toggle()
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
@@ -63,11 +64,17 @@ struct EditSheet: View {
                         Spacer()
                     }
                 }
+                .onAppear {
+                    viewModel.newWorkingTime = Int(model.workingHours)
+                }
+                .onDisappear {
+                    viewModel.selectedPause = nil
+                }
             .navigationTitle("Updating Details")
         }
     }
 }
 
 #Preview {
-    EditSheet(model: PersistenceController.preview, viewModel: DetailView.ViewModel())
+    EditSheet(model: PersistenceController.preview, viewModel: DetailView.ViewModel(model: WorkingDay()))
 }

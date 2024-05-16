@@ -10,9 +10,9 @@ import SwiftUI
 struct DetailView: View {
     
     // MARK: Properties
-    @State var model: WorkingDay
+//    @State var model: WorkingDay
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel = ViewModel()
+    @StateObject var viewModel: ViewModel
     
     var body: some View {
         List {
@@ -35,7 +35,7 @@ struct DetailView: View {
         
         // MARK: Edited Sheet
         .sheet(isPresented: $viewModel.onChange) {
-                EditSheet(model: model, viewModel: viewModel)
+            EditSheet(model: viewModel.model, viewModel: viewModel)
         }
         .toolbar {
             ToolbarItem {
@@ -48,7 +48,7 @@ struct DetailView: View {
                 }
             }
         }
-        .navigationTitle("\(model.wrappedDate.formatted(.dateTime.day().month()))")
+        .navigationTitle("\(viewModel.model.wrappedDate.formatted(.dateTime.day().month()))")
         .onDisappear(perform: {
             dismiss()
         })
@@ -56,7 +56,7 @@ struct DetailView: View {
     
     private var companySection: some View {
         Section("Company") {
-            Text(model.wrappedCompanyname)
+            Text(viewModel.model.wrappedCompanyname)
                 .font(.body)
                 .fontWeight(.semibold)
         }
@@ -65,7 +65,7 @@ struct DetailView: View {
     private var workingHoursSection: some View {
         Section("Working Hour's") {
 //            Text("\(model.wrappedWorkingHours.formatted(date: .omitted, time: .shortened))")
-            Text("\(model.WrappedWorkingHours)")
+            Text("\(viewModel.model.WrappedWorkingHours)")
                 .font(.body)
                 .fontWeight(.semibold)
         }
@@ -73,25 +73,40 @@ struct DetailView: View {
     
     private var pauseSection: some View {
         Section("Pause") {
-            if model.arrPause.count != 0  {
-                ForEach(0..<model.arrPause.count, id: \.self) { index in
+            if viewModel.model.arrPause.count != 0  {
+                ForEach(0..<viewModel.model.arrPause.count, id: \.self) { index in
                         HStack {
-                                Text("Start: \(model.arrPause[index].wrappedStartPause.formatted(date: .omitted, time: .shortened))")
+                                Text("Start: \(viewModel.model.arrPause[index].wrappedStartPause.formatted(date: .omitted, time: .shortened))")
                                     .font(.body)
                                     .fontWeight(.semibold)
-                                Text("Finish: \(model.arrPause[index].wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
+                                Text("Finish: \(viewModel.model.arrPause[index].wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
                                     .font(.body)
                                     .fontWeight(.semibold)
                         }
                         .swipeActions {
-                            let pause = model.arrPause[index]
+                            let pause = viewModel.model.arrPause[index]
                             Button("delete", role: .destructive) {
-                                viewModel.deletePause(workingDay: model, pause: pause)
+                                viewModel.deletePause(workingDay: viewModel.model, pause: pause)
                             }
                         }
                 }
             }
+            HStack {
+                Spacer()
+                Button {
+                    viewModel.addPause(for: viewModel.model)
+                } label: {
+                    Text("Add Pause")
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+                .shadow(color: .black, radius: 3, x: -1, y: 1)
+                Spacer()
+            }
         }
+    }
+    init(model: WorkingDay) {
+        _dismiss = Environment(\.dismiss)
+        _viewModel = StateObject(wrappedValue: ViewModel(model: model))
     }
 }
 
