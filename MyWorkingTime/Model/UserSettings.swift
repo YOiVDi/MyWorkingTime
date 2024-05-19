@@ -9,7 +9,9 @@ import Foundation
 
 struct UserSettings: Codable {
     var companyName: String = ""
-    var workOnWeekend: Bool =  false
-//    var workingHours: Date = Date()
     var workingHours: Int = 8
+    var workOnWeekend: Bool =  false
+    var saturday: Bool =  false
+    var sunday: Bool =  false
+    var holidays: Bool =  false
 }

@@ -22,7 +22,6 @@ struct PauseTimerView: View {
             .navigationTitle(verticalSizeClass == .compact ? "" : "Timer")
             .navigationBarTitleDisplayMode(.inline)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.backGround)
         }
     }
 }

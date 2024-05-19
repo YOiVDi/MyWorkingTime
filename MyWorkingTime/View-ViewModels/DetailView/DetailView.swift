@@ -15,6 +15,7 @@ struct DetailView: View {
     @StateObject var viewModel: ViewModel
     
     var body: some View {
+        VStack {
         List {
             Group {
                 // Company section
@@ -24,13 +25,25 @@ struct DetailView: View {
                 // Pause Section
                 pauseSection
             }
-            .listRowBackground(Color.backGround)
-//            .listRowSeparator(.hidden)
+            //            .listRowSeparator(.hidden)
         }
         .listRowSpacing(10)
-        .background(Color.backGround)
         .scrollContentBackground(.hidden)
         .scrollBounceBehavior(.basedOnSize)
+            HStack {
+                Spacer()
+                Button {
+                    viewModel.addPause(for: viewModel.model)
+                } label: {
+                    Text("Add Pause")
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+                .shadow(color: .black, radius: 3, x: -1, y: 1)
+                Spacer()
+            }
+            .disabled(viewModel.model.arrPause.count >= 5)
+            .padding(.bottom, 80)
+    }
         
         
         // MARK: Edited Sheet
@@ -72,16 +85,16 @@ struct DetailView: View {
     }
     
     private var pauseSection: some View {
-        Section("Pause") {
-            if viewModel.model.arrPause.count != 0  {
-                ForEach(0..<viewModel.model.arrPause.count, id: \.self) { index in
+            Section("Pause") {
+                if viewModel.model.arrPause.count != 0  {
+                    ForEach(0..<viewModel.model.arrPause.count, id: \.self) { index in
                         HStack {
-                                Text("Start: \(viewModel.model.arrPause[index].wrappedStartPause.formatted(date: .omitted, time: .shortened))")
-                                    .font(.body)
-                                    .fontWeight(.semibold)
-                                Text("Finish: \(viewModel.model.arrPause[index].wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
-                                    .font(.body)
-                                    .fontWeight(.semibold)
+                            Text("Start: \(viewModel.model.arrPause[index].wrappedStartPause.formatted(date: .omitted, time: .shortened))")
+                                .font(.body)
+                                .fontWeight(.semibold)
+                            Text("Finish: \(viewModel.model.arrPause[index].wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
+                                .font(.body)
+                                .fontWeight(.semibold)
                         }
                         .swipeActions {
                             let pause = viewModel.model.arrPause[index]
@@ -89,20 +102,9 @@ struct DetailView: View {
                                 viewModel.deletePause(workingDay: viewModel.model, pause: pause)
                             }
                         }
+                    }
                 }
             }
-            HStack {
-                Spacer()
-                Button {
-                    viewModel.addPause(for: viewModel.model)
-                } label: {
-                    Text("Add Pause")
-                }
-                .buttonStyle(BorderedProminentButtonStyle())
-                .shadow(color: .black, radius: 3, x: -1, y: 1)
-                Spacer()
-            }
-        }
     }
     init(model: WorkingDay) {
         _dismiss = Environment(\.dismiss)

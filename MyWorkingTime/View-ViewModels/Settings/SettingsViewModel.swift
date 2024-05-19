@@ -10,15 +10,23 @@ import SwiftUI
 extension SettingsView {
     @MainActor class SettingsViewModel: ObservableObject {
         @Published var userSettings = UserSettings()
-        var settings = UserDefaults.standard.data(forKey: "userSettings")
         @Published var alert: CustomAlerts? = nil
+        var settings = UserDefaults.standard.data(forKey: "userSettings")
         
-        // Pause properties array
+        
+        /// Pause properties array
         let pauseTime: [Int] = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45]
         
-        // Define defaultWorkingHours outside the property initializer
+        /// Define defaultWorkingHours outside the property initializer
         private let defaultWorkingHours: Date
         
+        func workOnWeekend() {
+            if userSettings.workOnWeekend == false {
+                userSettings.sunday = false
+                userSettings.saturday = false
+                userSettings.holidays = false
+            }
+        }
         
         // MARK: - Initialization
         
@@ -52,6 +60,7 @@ extension SettingsView {
         
         func retrieveSettingsFromUserDefaults() {
             guard let userData = settings else { return }
+//            guard let userData = settings else { return }
             do {
                 userSettings = try JSONDecoder().decode(UserSettings.self, from: userData)
             } catch {

@@ -42,8 +42,8 @@ extension DetailView {
         func update(_ workingDay: WorkingDay, pause: Pause?) {
             workingDay.workingHours = Int16(newWorkingTime)
             if let pause {
-                pause.startPause = defaultTime
-                pause.finishPause = defaultTime
+                pause.startPause = pauseStartEdit
+                pause.finishPause = pauseFinishEdit
             }
             persistenceController.save()
         }

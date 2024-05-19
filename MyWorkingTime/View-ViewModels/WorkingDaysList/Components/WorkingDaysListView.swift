@@ -10,13 +10,11 @@ import SwiftUI
 struct WorkingDaysListView: View {
     
     @ObservedObject var viewModel: WorkingDaysView.ViewModel
-    @State private var selections = Set<WorkingDay>()
-    @State private var pendingSelections = Set<WorkingDay>()
     @Environment(\.editMode) var editMode
     
     var body: some View {
         // MARK: - List
-        List(selection: $selections) {
+        List(selection: $viewModel.selections) {
             ForEach(viewModel.workingDaysList, id: \.self) { workingDay in
                 NavigationLink(destination: DetailView(model: workingDay)) {
                     VStack(alignment: .leading) {
@@ -31,29 +29,38 @@ struct WorkingDaysListView: View {
                 .listRowBackground(Color.black.opacity(0))
             }
             .onDelete(perform: withAnimation(.smooth) {
-                viewModel.delete })
+                viewModel.deleteWorkingDay })
             .onMove(perform: withAnimation(.smooth) {
-                viewModel.move })
+                viewModel.moveWorkingDay })
         }
         .scrollBounceBehavior(.basedOnSize)
         .scrollContentBackground(.hidden)
         .listRowSpacing(10)
-        .background(Color.backGround)
+        .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
+            Button("Today", action: { viewModel.addWorkingDay() })
+            Button("My choose", action: { viewModel.createNewDaySheet = true })
+        }
+        .sheet(isPresented: $viewModel.createNewDaySheet) {
+            CreateNewDayView(viewModel: viewModel)
+        }
+        
         // MARK: - Toolbar
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 EditButton()
             }
+
             ToolbarItem(placement: .topBarTrailing) {
                 if editMode?.wrappedValue.isEditing == false {
                     Button {
-                        viewModel.add()
+//                        viewModel.addWorkingDay()
+                        viewModel.confirmationIsShowing = true
                     } label: {
                         Label("add", systemImage: "plus.circle.fill")
                     }
                 } else {
                     Button(role: .destructive) {
-                        pendingSelections = selections
+                        viewModel.pendingSelections = viewModel.selections
                         withAnimation {
                             viewModel.alert = .deleteAll
                             editMode?.wrappedValue = .inactive
@@ -66,22 +73,22 @@ struct WorkingDaysListView: View {
         }
         .onAppear {
             // Reset selections when the view appears
-            selections.removeAll()
+            viewModel.selections.removeAll()
             editMode?.wrappedValue = .inactive
         }
         .alert(viewModel.alert?.title ?? "Error Occured" , isPresented: Binding(value: $viewModel.alert)) {
             if viewModel.alert == .deleteAll {
                 Button("Yes", role: .destructive) {
-                    viewModel.selectionDelete(pendingSelections)
-                    selections.removeAll()
+                    viewModel.deleteSelectedWorkingDays(viewModel.pendingSelections)
+                    viewModel.selections.removeAll()
                     editMode?.wrappedValue = .inactive
-                    pendingSelections.removeAll()
+                    viewModel.pendingSelections.removeAll()
                 }
                 Button("Cancel", role: .cancel) {
                     withAnimation {
                         editMode?.wrappedValue = .active
                     }
-                    selections = pendingSelections
+                    viewModel.selections = viewModel.pendingSelections
                 }
             }
         } message: {

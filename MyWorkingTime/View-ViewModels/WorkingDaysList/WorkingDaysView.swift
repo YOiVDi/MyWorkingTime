@@ -25,7 +25,7 @@ struct WorkingDaysView: View {
                         } description: {
                             Text(emptyMessage)
                         } actions: {
-                            Button("Click", action: viewModel.add)
+                            Button("Click", action: viewModel.addWorkingDay)
                             .font(.title3)
                             .buttonStyle(BorderedProminentButtonStyle())
                         }
@@ -39,7 +39,6 @@ struct WorkingDaysView: View {
             .frame(maxHeight: .infinity)
             .navigationTitle("Working Hours")
             .navigationBarTitleDisplayMode(.inline)
-            .background(Color.backGround)
         }
     }
 }

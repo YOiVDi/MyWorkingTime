@@ -17,22 +17,26 @@ extension PauseTimerView {
         @Published var seconds = 0
         @Published var isStopped = false
         @Published var isStarted = false
-        let pauseTimes: [Int] = [5, 10, 15, 20, 25, 30]
+        
+        let pauseTimes: [Int] = [5, 10, 15, 20, 25, 30] // at moment not in use
         let persistenceController = PersistenceController.shared
+        
         private var timer: Timer?
         
-        private(set) var startPause: Date?
-        private(set) var stopPause: Date?
+        private(set) var dateInBackground: Date?
+        private(set) var dateInActiveMode: Date?
         
         private(set) var beginPause: Date?
         private(set) var finishPause: Date?
         
         // MARK: - Computed properties
-        // TrimmingProgress
+        // trimming of circle is based on elapsedTime
         var trimProgress: CGFloat {
             return elapsedTime == 0 ?  (timer != nil && elapsedTime == 0 ? 1 : 0) : 1 - (elapsedTime / elapsedTimeFrom)
         }
         
+        
+        /// changes the color of the timer circle depending on what state it is currently in
         var timerCircleColor: Color {
             if timer == nil {
                 return Color.gray.opacity(0.5)
@@ -42,6 +46,8 @@ extension PauseTimerView {
             return Color.blue
         }
         
+        
+        /// start button is disabled in certain conditions
         var disableStart: Bool {
             if hours == 0 && minutes == 0 && seconds == 0 {
                 return true
@@ -57,7 +63,12 @@ extension PauseTimerView {
         
         // MARK: - Methods
         
-        /// starting timer
+        /// checks if the timer is currently running or not
+        func isTimerRunning() -> Bool {
+            return timer != nil
+        }
+        
+        /// gives a initial value of timer and activate it
         func startTimer() {
             self.isStarted = true
             self.beginPause = Date()
@@ -73,16 +84,12 @@ extension PauseTimerView {
             }
         }
         
-        /// stopping timer
+        ///  invalidate timer
         func stopTimer() {
             isStopped = true
             isStarted = false
             timer?.invalidate()
-        }
-        
-        /// if the timer is not 'nil' it means it is running
-        func isTimerRunning() -> Bool {
-            return timer != nil
+            deleteNotification()
         }
         
         /// reset the timer to its initial state
@@ -90,8 +97,8 @@ extension PauseTimerView {
             stopTimer()
             isStarted = false
             isStopped = false
-            startPause = nil
-            stopPause = nil
+            dateInBackground = nil
+            dateInActiveMode = nil
             elapsedTime = elapsedTimeFrom
             timer = nil
             deleteNotification()
@@ -124,11 +131,11 @@ extension PauseTimerView {
         }
         
         
-        // Calculate difference between start and stop pause to keep timer circle accurate.
+        /// Calculate difference between start and stop pause to keep timer circle accurate.
         func pauseTimeCalculate() {
             // Calculate the time difference
             let calendar = Calendar.current
-            let components = calendar.dateComponents([.hour, .minute, .second], from: startPause ?? Date.now, to: stopPause ?? Date.now)
+            let components = calendar.dateComponents([.hour, .minute, .second], from: dateInBackground ?? Date.now, to: dateInActiveMode ?? Date.now)
 
             // Extract the components
             let minutes = components.minute ?? 0
@@ -148,8 +155,7 @@ extension PauseTimerView {
              }
         }
         
-        /// Setting the timer duration 
-        
+        /// Setting the timer duration
         func setTimer() {
             let hourToSeconds = (hours * 60) * 60
             let minuteToSeconds = minutes * 60
@@ -178,8 +184,10 @@ extension PauseTimerView {
                 dayPause.startPause = beginPause
                 dayPause.finishPause = finishPause
                 matchingDay.addToPause(dayPause)
+                // for test purpose
                 print("\(matchingDay.arrPause)")
             } else {
+                // for test purpose
                 // No matching object found
                 print("No WorkingDay object found for \(date).")
             }
@@ -189,6 +197,7 @@ extension PauseTimerView {
         func finishPauseTime() {
             guard let beginPause else { return }
             finishPause = beginPause.addingTimeInterval(elapsedTimeFrom)
+            // for test purpose
             print("start: \(beginPause), finish: \(String(describing: self.finishPause))")
             if timer != nil {
                 addPause()
@@ -204,8 +213,8 @@ extension PauseTimerView {
             // setup notification
             let addRequest = {
                 let content = UNMutableNotificationContent()
-                content.title = "🤯 Pause finish"
-                content.subtitle = "Your pause of \(self.formatTime(self.elapsedTimeFrom)) \(self.elapsedTime <= 1 ? "minute" : "minutes") is run over."
+                content.title = "🤯 Pause is over"
+                content.subtitle = "Your break started at \(String(describing: self.beginPause?.formatted(date: .abbreviated, time: .shortened))), and ended now \(String(describing: self.finishPause?.formatted(date: .abbreviated, time: .shortened))) total break time  \(self.formatTime(self.elapsedTimeFrom))"
                 content.sound = UNNotificationSound.default
                 
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: self.elapsedTimeFrom, repeats: false)
@@ -238,15 +247,21 @@ extension PauseTimerView {
         
         /// it's handle logic for Active scene phase
         func handleActiveScenePhase() {
-            if startPause != nil {
-                stopPause = Date()
+            if dateInBackground != nil {
+                dateInActiveMode = Date()
             }
+            
             // for test purpose
-            print("Background: stopPause: \(String(describing: stopPause))")
+            print("Background: stopPause: \(String(describing: dateInActiveMode))")
+            
+            // If the timer is running, elapsedTime is greater than 0, and isStart == false, resume the timer.
+            // If we have captured the date when the app goes into the background (i.e., it is not nil),
+            // run pauseTimeCalculate, which calculates the time between when we went into the background
+            // and returned to active mode, then subtract that from elapsedTime.
             
             if (isTimerRunning() && elapsedTime > 0) && isStarted == false {
                 resumeTimer()
-                if startPause != nil {
+                if dateInBackground != nil {
                     pauseTimeCalculate()
                 }
             }
@@ -257,10 +272,13 @@ extension PauseTimerView {
         func handleBackgroundScenePhase() {
             
             if isTimerRunning() {
-                startPause = Date()
-                stopTimer()
+                dateInBackground = Date()
+                timer?.invalidate()
+                isStopped = true
+                isStarted = false
+                
                 // for test purpose
-                print("Background: startPause: \(String(describing: startPause))")
+                print("Background: startPause: \(String(describing: dateInBackground))")
             }
         }
     }
