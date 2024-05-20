@@ -13,6 +13,8 @@ enum CustomAlerts: Error, LocalizedError {
     case saved
     case dayExist
     case deleteAll
+    case swipeDelete
+    case userDefaultsIsEmpty
     
     
     var title: String {
@@ -27,6 +29,10 @@ enum CustomAlerts: Error, LocalizedError {
             return "The day cannot be added"
         case .deleteAll:
             return "Are you sure?"
+        case .swipeDelete:
+            return "Are you sure?"
+        case .userDefaultsIsEmpty:
+            return "Workday could not be created"
         }
     }
     
@@ -41,7 +47,11 @@ enum CustomAlerts: Error, LocalizedError {
         case .dayExist:
             return "The day you are trying to add already exists in your list."
         case .deleteAll:
-            return "If you click 'Yes', all selected items will be deleted. Once you click 'Yes', the operation cannot be undo"
+            return "If you click 'Delete', all selected items will be deleted. Once you click 'Delete', the operation cannot be undo"
+        case .swipeDelete:
+            return "If you click 'Delete', selected item will be deleted. Once you click 'Delete', the operation cannot be undo"
+        case .userDefaultsIsEmpty:
+            return "It looks like your settings are not filled in correctly. Please check your settings and try again to create a workday."
         }
     }
 }

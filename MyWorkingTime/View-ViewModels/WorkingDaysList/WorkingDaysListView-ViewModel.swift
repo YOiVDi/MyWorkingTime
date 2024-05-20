@@ -11,62 +11,97 @@ import SwiftUI
 
 extension WorkingDaysView {
     class ViewModel: ObservableObject {
-        @Published private(set) var workingDaysList: [WorkingDay] = [] 
+        
+        // MARK: - Public Properties
+        @Published private(set) var workingDaysList: [WorkingDay] = []
         @Published var selections = Set<WorkingDay>()
         @Published var pendingSelections = Set<WorkingDay>()
+        @Published var singeleSelect: WorkingDay? = nil
         @Published var alert: CustomAlerts? = nil
         @Published var confirmationIsShowing = false
         @Published var notADayWithTodayDate = false
         @Published var createNewDaySheet = false
         
-        /// properties to create new 
         @Published var id = UUID()
         @Published var companyName: String?
         @Published var date = Date()
         @Published var workingHours = 0
         @Published var workOnWeekend = false
         
-        /// Singleton instance of PersistenceController(Core-Data)
-        private let persistenceController = PersistenceController.shared
+        // MARK: - Private Properties
         private var userSettings: UserSettings?
+        private let persistenceController = PersistenceController.shared
         
         
-        
+        // MARK: - Initialization
         init() {
             fetchWorkingDays(filter: nil, sortBy: [NSSortDescriptor(key: "date", ascending: true)])
-            userSettings = fetchUserSettings()
+            fetchUserSettings()
             companyName = userSettings?.companyName
         }
         
-        // MARK: ListView Functions
+        // MARK: - Public Methods
         
-        /// Check if current day exist in list.
-        func doesDayExist() -> Bool {
-            let targetDate = notADayWithTodayDate ? self.date : Date()
-            
-            let calendar = Calendar.current
-            
-            let itemExist = workingDaysList.contains { day in
-                return calendar.isDate(day.wrappedDate, inSameDayAs: targetDate)
-            }
-            return itemExist
-        }
-        
-        /// function to add new day
+        /// add a new working day
         func addWorkingDay() {
+            fetchUserSettings()
             guard let userSettings else {
-                print("No user settings data found.")
+                alert = .userDefaultsIsEmpty
                 return
             }
-            
             createNewWorkingDay(userSettings: userSettings)
             fetchWorkingDays(filter: nil, sortBy: [NSSortDescriptor(key: "date", ascending: true)])
 
             persistenceController.save()
         }
         
-        /// Create new working day
-        /// - Parameter userSettings: initialize a new day based on predefined settings
+        /// Moves a working day within the array.
+        func moveWorkingDay(from source: IndexSet, to destination: Int) {
+            withAnimation {
+                workingDaysList.move(fromOffsets: source, toOffset: destination)
+            }
+            persistenceController.save()
+        }
+        
+        /// Deletes a working day at specified offsets.
+        func deleteWorkingDay(at offsets: IndexSet) {
+            withAnimation {
+                guard let index = offsets.first else { return }
+                let entity = workingDaysList[index]
+                persistenceController.container.viewContext.delete(entity)
+                workingDaysList.remove(atOffsets: offsets)
+            }
+            persistenceController.save()
+        }
+        
+        func deleteWorkingDay2(day: WorkingDay) {
+            withAnimation {
+                guard let index = self.workingDaysList.firstIndex(where: { workingDay in
+                    workingDay.wrappedDate == day.wrappedDate
+                }) else {return}
+                persistenceController.container.viewContext.delete(day)
+                workingDaysList.remove(at: index)
+            }
+//            persistenceController.save()
+        }
+        
+        
+        /// Deletes multiple selected working days.
+        func deleteSelectedWorkingDays(_ selection: Set<WorkingDay>) {
+            for object in selection {
+                if let index = workingDaysList.firstIndex(where: {$0 == object}) {
+                    let entity = workingDaysList[index]
+                    persistenceController.container.viewContext.delete(entity)
+                    workingDaysList.remove(at: index)
+                }
+            }
+            persistenceController.save()
+        }
+        
+        // MARK: - Private Methods
+        
+        /// Creates a new working day based on user settings.
+        /// - Parameter userSettings: Predefined user settings for initializing a new working day.
         private func createNewWorkingDay(userSettings: UserSettings) {
                 guard !doesDayExist() else {
                     alert = .dayExist
@@ -87,55 +122,36 @@ extension WorkingDaysView {
         }
         
         
-        /// Checks for user default settings with a specified "Key" and if any settings exist, decodes them
-        private func fetchUserSettings() -> UserSettings? {
+        /// Fetches user settings from UserDefaults.
+        private func fetchUserSettings() {
             guard let userData = UserDefaults.standard.data(forKey: "userSettings") else {
                 // THERE ERROR MUST BE HANDLE !!!
-                return nil
+                return
             }
             
             do {
-                return try JSONDecoder().decode(UserSettings.self, from: userData)
+                self.userSettings = try JSONDecoder().decode(UserSettings.self, from: userData)
             } catch {
                 print("Failed to decode user settings data:", error.localizedDescription)
-                return nil
+                return
             }
         }
         
-        /// Function to delete object.
-        func deleteWorkingDay(at offsets: IndexSet) {
-            withAnimation {
-                guard let index = offsets.first else { return }
-                let entity = workingDaysList[index]
-                persistenceController.container.viewContext.delete(entity)
-                workingDaysList.remove(atOffsets: offsets)
-            }
-            persistenceController.save()
-        }
-        
-        
-        /// Function for delete several items at once
-        func deleteSelectedWorkingDays(_ selection: Set<WorkingDay>) {
-            for object in selection {
-                if let index = workingDaysList.firstIndex(where: {$0 == object}) {
-                    let entity = workingDaysList[index]
-                    persistenceController.container.viewContext.delete(entity)
-                    workingDaysList.remove(at: index)
-                }
-            }
-            persistenceController.save()
-        }
-        
-        /// Function to move position within array (workingDays).
-        func moveWorkingDay(from source: IndexSet, to destination: Int) {
-            withAnimation {
-                workingDaysList.move(fromOffsets: source, toOffset: destination)
-            }
-            persistenceController.save()
-        }
-        
+        /// Fetches working days with optional filtering and sorting.
         private func fetchWorkingDays(filter: NSPredicate?, sortBy: [NSSortDescriptor]?) {
             workingDaysList = persistenceController.fetchRequest(filter: filter, sortBy: sortBy)
+        }
+        
+        /// Checks if a working day already exists for the specified date.
+       private func doesDayExist() -> Bool {
+            let targetDate = notADayWithTodayDate ? self.date : Date()
+            
+            let calendar = Calendar.current
+            
+            let itemExist = workingDaysList.contains { day in
+                return calendar.isDate(day.wrappedDate, inSameDayAs: targetDate)
+            }
+            return itemExist
         }
     }
 }

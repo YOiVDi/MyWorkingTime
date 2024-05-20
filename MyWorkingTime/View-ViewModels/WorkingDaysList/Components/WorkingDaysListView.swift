@@ -24,12 +24,21 @@ struct WorkingDaysListView: View {
                                 .font(.title3).bold()
                         }
                     }
+                    .swipeActions(allowsFullSwipe: false) {
+                        Button {
+                            viewModel.singeleSelect = workingDay
+                            viewModel.alert = .swipeDelete
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                                .tint(.red)
+                        }
+                    }
                 }
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.black.opacity(0))
             }
-            .onDelete(perform: withAnimation(.smooth) {
-                viewModel.deleteWorkingDay })
+            //            .onDelete(perform: withAnimation(.smooth) {
+            //                viewModel.deleteWorkingDay })
             .onMove(perform: withAnimation(.smooth) {
                 viewModel.moveWorkingDay })
         }
@@ -49,11 +58,10 @@ struct WorkingDaysListView: View {
             ToolbarItem(placement: .topBarLeading) {
                 EditButton()
             }
-
+            
             ToolbarItem(placement: .topBarTrailing) {
                 if editMode?.wrappedValue.isEditing == false {
                     Button {
-//                        viewModel.addWorkingDay()
                         viewModel.confirmationIsShowing = true
                     } label: {
                         Label("add", systemImage: "plus.circle.fill")
@@ -78,29 +86,42 @@ struct WorkingDaysListView: View {
         }
         .alert(viewModel.alert?.title ?? "Error Occured" , isPresented: Binding(value: $viewModel.alert)) {
             if viewModel.alert == .deleteAll {
-                Button("Yes", role: .destructive) {
+                Button("Delete", role: .destructive) {
                     viewModel.deleteSelectedWorkingDays(viewModel.pendingSelections)
                     viewModel.selections.removeAll()
                     editMode?.wrappedValue = .inactive
                     viewModel.pendingSelections.removeAll()
+                    viewModel.alert = nil
                 }
                 Button("Cancel", role: .cancel) {
                     withAnimation {
                         editMode?.wrappedValue = .active
                     }
                     viewModel.selections = viewModel.pendingSelections
+                    viewModel.alert = nil
+                }
+            } else if viewModel.alert == .swipeDelete {
+                Button("Delete", role: .destructive) {
+                    guard let selection = viewModel.singeleSelect else { return }
+                    viewModel.deleteWorkingDay2(day: selection)
+                    viewModel.singeleSelect = nil
+                    viewModel.alert = nil
+                }
+                Button("Cancel", role: .cancel) {
+                    viewModel.alert = nil
                 }
             }
+            
         } message: {
             Text(viewModel.alert?.message ?? "")
         }
     }
 }
-    
-    
+
+
 #Preview {
-        NavigationStack {
-            WorkingDaysListView(viewModel: WorkingDaysView.ViewModel())
-        }
+    NavigationStack {
+        WorkingDaysListView(viewModel: WorkingDaysView.ViewModel())
     }
+}
 

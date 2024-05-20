@@ -35,6 +35,9 @@ struct WorkingDaysView: View {
                     WorkingDaysListView(viewModel: viewModel)
                 }
             }
+            .alert(viewModel.alert?.title ?? "Error Occured" , isPresented: Binding(value: $viewModel.alert)) {} message: {
+                Text(viewModel.alert?.message ?? "")
+            }
             .animation(.easeInOut, value: viewModel.workingDaysList.isEmpty)
             .frame(maxHeight: .infinity)
             .navigationTitle("Working Hours")
