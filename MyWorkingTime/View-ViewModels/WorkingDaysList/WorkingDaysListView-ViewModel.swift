@@ -16,7 +16,7 @@ extension WorkingDaysView {
         @Published private(set) var workingDaysList: [WorkingDay] = []
         @Published var selections = Set<WorkingDay>()
         @Published var pendingSelections = Set<WorkingDay>()
-        @Published var singeleSelect: WorkingDay? = nil
+        @Published var singelSelect: WorkingDay? = nil
         @Published var alert: CustomAlerts? = nil
         @Published var confirmationIsShowing = false
         @Published var notADayWithTodayDate = false
@@ -53,6 +53,14 @@ extension WorkingDaysView {
             fetchWorkingDays(filter: nil, sortBy: [NSSortDescriptor(key: "date", ascending: true)])
 
             persistenceController.save()
+        }
+        
+        /// Create a day from a user-selected date
+        func creatingDayOfUserChoice(_ dismiss: DismissAction) {
+            notADayWithTodayDate = true
+            addWorkingDay()
+            dismiss()
+            notADayWithTodayDate = false
         }
         
         /// Moves a working day within the array.
@@ -95,9 +103,9 @@ extension WorkingDaysView {
                    editMode?.wrappedValue = .inactive
                    pendingSelections.removeAll()
                case .swipeDelete:
-                   if let selection = singeleSelect {
+                   if let selection = singelSelect {
                        swipeDelete(day: selection)
-                       singeleSelect = nil
+                       singelSelect = nil
                    }
                default:
                    break
@@ -118,21 +126,6 @@ extension WorkingDaysView {
             }
             alert = nil
         }
-        
-        
-        /// Deletes multiple selected working days.
-        func deleteSelectedWorkingDays(_ selection: Set<WorkingDay>) {
-            for object in selection {
-                if let index = workingDaysList.firstIndex(where: {$0 == object}) {
-                    let entity = workingDaysList[index]
-                    persistenceController.container.viewContext.delete(entity)
-                    workingDaysList.remove(at: index)
-                }
-            }
-            persistenceController.save()
-        }
-        
-        
         
         
         // MARK: - Private Methods
@@ -189,6 +182,19 @@ extension WorkingDaysView {
                 return calendar.isDate(day.wrappedDate, inSameDayAs: targetDate)
             }
             return itemExist
+        }
+        
+        
+        /// Deletes multiple selected working days.
+        private func deleteSelectedWorkingDays(_ selection: Set<WorkingDay>) {
+            for object in selection {
+                if let index = workingDaysList.firstIndex(where: {$0 == object}) {
+                    let entity = workingDaysList[index]
+                    persistenceController.container.viewContext.delete(entity)
+                    workingDaysList.remove(at: index)
+                }
+            }
+            persistenceController.save()
         }
     }
 }

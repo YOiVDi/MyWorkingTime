@@ -25,10 +25,7 @@ struct CreateNewDayView: View {
                 }
                 
                 Button("Create day") {
-                    viewModel.notADayWithTodayDate = true
-                    viewModel.addWorkingDay()
-                    dismiss()
-                    viewModel.notADayWithTodayDate = false
+                    viewModel.creatingDayOfUserChoice(dismiss)
                 }
             }
             .navigationTitle("Create Day")
