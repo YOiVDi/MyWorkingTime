@@ -46,7 +46,7 @@ struct Buttons: View {
                     viewModel.stopTimer()
                 } label: {
                     Label("Stop", systemImage: "stop")
-                        .frame(maxWidth: viewModel.isTimerRunning() ? 120 : 100)
+                        .frame(maxWidth: viewModel.isTimerRunning ? 120 : 100)
                 }
                 .tint(.red)
                 .disabled(!viewModel.isStarted || viewModel.elapsedTime == 0)
@@ -89,7 +89,7 @@ struct Buttons: View {
                     viewModel.stopTimer()
                 } label: {
                     Label("Stop", systemImage: "stop")
-                        .frame(maxWidth: viewModel.isTimerRunning() ? 120 : 100)
+                        .frame(maxWidth: viewModel.isTimerRunning ? 120 : 100)
                 }
                 .tint(.red)
                 .disabled(!viewModel.isStarted || viewModel.elapsedTime == 0)

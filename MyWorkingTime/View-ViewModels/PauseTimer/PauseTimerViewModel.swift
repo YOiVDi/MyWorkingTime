@@ -10,6 +10,7 @@ import SwiftUI
 
 extension PauseTimerView {
     class PauseTimerViewModel: ObservableObject {
+        // MARK: - Public propeties
         @Published private(set) var elapsedTimeFrom: Double = 0
         @Published private(set) var elapsedTime: TimeInterval = 0
         @Published var hours = 0
@@ -17,9 +18,11 @@ extension PauseTimerView {
         @Published var seconds = 0
         @Published var isStopped = false
         @Published var isStarted = false
+        @Published var alert: CustomAlerts? = nil
         
+        // // MARK: - Private Properties
         let pauseTimes: [Int] = [5, 10, 15, 20, 25, 30] // at moment not in use
-        let persistenceController = PersistenceController.shared
+        private let persistenceController = PersistenceController.shared
         
         private var timer: Timer?
         
@@ -54,22 +57,25 @@ extension PauseTimerView {
             }
             return false
         }
+        
+        /// checks if the timer is currently running or not
+        var isTimerRunning: Bool {
+            return timer != nil
+        }
          
-        // MARK: - Init
+        // MARK: - Initialization
         
         init() {
             
         }
         
-        // MARK: - Methods
-        
-        /// checks if the timer is currently running or not
-        func isTimerRunning() -> Bool {
-            return timer != nil
-        }
+        // MARK: - Public Methods
         
         /// gives a initial value of timer and activate it
         func startTimer() {
+            if doesDayExist() == nil {
+                alert = .pauseWillBeNotAdded
+            }
             self.isStarted = true
             self.beginPause = Date()
             addNotification()
@@ -166,19 +172,34 @@ extension PauseTimerView {
             elapsedTime = elapsedTimeFrom
         }
         
-        // Add pause to day if exist.
-        func addPause() {
+        private func doesDayExist() -> WorkingDay? {
             let workingDaysList = PersistenceController.shared.fetchRequest(filter: nil, sortBy: nil)
             let date = Date()
             let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: date)
-
-            // Find the first WorkingDay object with the specified date
-            if let matchingDay = workingDaysList.first(where: { workingDay in
+            
+            guard let matchingDay = workingDaysList.first(where: { workingDay in
                 let workingDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workingDay.wrappedDate)
                 return workingDayComponents.year == targetComponents.year &&
                        workingDayComponents.month == targetComponents.month &&
                        workingDayComponents.day == targetComponents.day
-            }) {
+            }) else { return nil}
+            return matchingDay
+        }
+        
+        /// Add pause to day if exist.
+        func addPause() {
+//            let workingDaysList = PersistenceController.shared.fetchRequest(filter: nil, sortBy: nil)
+//            let date = Date()
+//            let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: date)
+
+            // Find the first WorkingDay object with the specified date
+//            if let matchingDay = workingDaysList.first(where: { workingDay in
+//                let workingDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workingDay.wrappedDate)
+//                return workingDayComponents.year == targetComponents.year &&
+//                       workingDayComponents.month == targetComponents.month &&
+//                       workingDayComponents.day == targetComponents.day
+//            }) {
+                guard let matchingDay = doesDayExist() else { return }
                 guard let beginPause, let finishPause else { return }
                 let dayPause = Pause(context: persistenceController.container.viewContext)
                 dayPause.startPause = beginPause
@@ -186,11 +207,11 @@ extension PauseTimerView {
                 matchingDay.addToPause(dayPause)
                 // for test purpose
                 print("\(matchingDay.arrPause)")
-            } else {
-                // for test purpose
-                // No matching object found
-                print("No WorkingDay object found for \(date).")
-            }
+//            } else {
+//                // for test purpose
+//                // No matching object found
+//                print("No WorkingDay object found for \(date).")
+//            }
         }
         
         // Set finish pause time
@@ -207,7 +228,7 @@ extension PauseTimerView {
         
         
         /// Adding notification to NotificationCenter
-        func addNotification() {
+        private func addNotification() {
             let center = UNUserNotificationCenter.current()
             
             // setup notification
@@ -240,7 +261,7 @@ extension PauseTimerView {
         }
         
         /// if timer doesn't work or is on pause remove notification request
-        func deleteNotification() {
+        private func deleteNotification() {
             let center = UNUserNotificationCenter.current()
             center.removeAllPendingNotificationRequests()
         }
@@ -259,7 +280,7 @@ extension PauseTimerView {
             // run pauseTimeCalculate, which calculates the time between when we went into the background
             // and returned to active mode, then subtract that from elapsedTime.
             
-            if (isTimerRunning() && elapsedTime > 0) && isStarted == false {
+            if (isTimerRunning && elapsedTime > 0) && isStarted == false {
                 resumeTimer()
                 if dateInBackground != nil {
                     pauseTimeCalculate()
@@ -271,7 +292,7 @@ extension PauseTimerView {
         ///  it's handle logic for Background scene phase
         func handleBackgroundScenePhase() {
             
-            if isTimerRunning() {
+            if isTimerRunning {
                 dateInBackground = Date()
                 timer?.invalidate()
                 isStopped = true

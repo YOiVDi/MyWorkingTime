@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CustomAlerts: Error, LocalizedError {
+enum CustomAlerts: Error, LocalizedError , Equatable{
     case emptyCompanyName
     case notCorrectTime
     case saved
@@ -15,6 +15,7 @@ enum CustomAlerts: Error, LocalizedError {
     case deleteAll
     case swipeDelete
     case userDefaultsIsEmpty
+    case pauseWillBeNotAdded
     
     
     var title: String {
@@ -33,6 +34,8 @@ enum CustomAlerts: Error, LocalizedError {
             return "Are you sure?"
         case .userDefaultsIsEmpty:
             return "Workday could not be created"
+        case .pauseWillBeNotAdded:
+            return "The pause will not be added!"
         }
     }
     
@@ -52,6 +55,8 @@ enum CustomAlerts: Error, LocalizedError {
             return "If you click 'Delete', selected item will be deleted. Once you click 'Delete', the operation cannot be undo"
         case .userDefaultsIsEmpty:
             return "It looks like your settings are not filled in correctly. Please check your settings and try again to create a workday."
+        case .pauseWillBeNotAdded:
+            return "The day with date \(Date().formatted(date: .abbreviated, time: .omitted)) not exist in your Working List."
         }
     }
 }

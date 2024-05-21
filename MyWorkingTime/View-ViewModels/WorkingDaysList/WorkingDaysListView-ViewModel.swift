@@ -10,7 +10,7 @@ import SwiftUI
 
 
 extension WorkingDaysView {
-    class ViewModel: ObservableObject {
+    @MainActor class ViewModel: ObservableObject {
         
         // MARK: - Public Properties
         @Published private(set) var workingDaysList: [WorkingDay] = []

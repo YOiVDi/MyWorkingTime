@@ -26,8 +26,9 @@ struct TimerView: View {
                         .rotationEffect(Angle(degrees: -90))
                         .animation(.easeInOut, value: viewModel.elapsedTime)
                 )
+            
             VStack {
-                if !viewModel.isTimerRunning() {
+                if !viewModel.isTimerRunning {
                     VStack {
                         Text("Set Timer")
                             .font(.title)
@@ -92,6 +93,11 @@ struct TimerView: View {
                 } else if scenePhase == .background {
                     viewModel.handleBackgroundScenePhase()
                 }
+            }
+            .alert(viewModel.alert?.title ?? "Error Occur", isPresented: Binding(value: $viewModel.alert)) {
+                
+            } message: {
+                Text(viewModel.alert?.message ?? "")
             }
         }
         .frame(maxWidth: .infinity, maxHeight: 400)
