@@ -86,73 +86,14 @@ struct WorkingDaysListView: View {
         }
         .alert(viewModel.alert?.title ?? "Error Occured" , isPresented: Binding(value: $viewModel.alert)) {
             Button("Delete", role: .destructive) {
-                handleDeleteAction()
+                viewModel.handleDeleteAction(editMode)
             }
             Button("Cancel", role: .cancel) {
-                handleCancelAction()
+                viewModel.handleCancelAction(editMode)
             }
-            
-//            Button("Delete", role: .destructive) {
-//                if viewModel.alert == .deleteAll {
-//                    viewModel.deleteSelectedWorkingDays(viewModel.pendingSelections)
-//                    viewModel.selections.removeAll()
-//                    editMode?.wrappedValue = .inactive
-//                    viewModel.pendingSelections.removeAll()
-//                    viewModel.alert = nil
-//                } else if viewModel.alert == .swipeDelete {
-//                    guard let selection = viewModel.singeleSelect else { return }
-//                    viewModel.deleteWorkingDay2(day: selection)
-//                    viewModel.singeleSelect = nil
-//                    viewModel.alert = nil
-//                }
-//            }
-//            
-//            Button("Cancel", role: .cancel) {
-//                if viewModel.alert == .deleteAll {
-//                    withAnimation {
-//                        editMode?.wrappedValue = .active
-//                    }
-//                    viewModel.selections = viewModel.pendingSelections
-//                    viewModel.alert = nil
-//                } else if viewModel.alert == .swipeDelete {
-//                    viewModel.alert = nil
-//                }
-//            }
-            
         } message: {
             Text(viewModel.alert?.message ?? "")
         }
-    }
-    
-    private func handleDeleteAction() {
-           switch viewModel.alert {
-           case .deleteAll:
-               viewModel.deleteSelectedWorkingDays(viewModel.pendingSelections)
-               viewModel.selections.removeAll()
-               editMode?.wrappedValue = .inactive
-               viewModel.pendingSelections.removeAll()
-           case .swipeDelete:
-               if let selection = viewModel.singeleSelect {
-                   viewModel.deleteWorkingDay2(day: selection)
-                   viewModel.singeleSelect = nil
-               }
-           default:
-               break
-           }
-           viewModel.alert = nil
-       }
-    
-    private func handleCancelAction() {
-        switch viewModel.alert {
-        case .deleteAll:
-            withAnimation {
-                editMode?.wrappedValue = .active
-            }
-            viewModel.selections = viewModel.pendingSelections
-        default:
-            break
-        }
-        viewModel.alert = nil
     }
 }
 

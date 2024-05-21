@@ -74,7 +74,8 @@ extension WorkingDaysView {
             persistenceController.save()
         }
         
-        func deleteWorkingDay2(day: WorkingDay) {
+        /// Deletes a selected working day.
+        func swipeDelete(day: WorkingDay) {
             withAnimation {
                 guard let index = self.workingDaysList.firstIndex(where: { workingDay in
                     workingDay.wrappedDate == day.wrappedDate
@@ -82,7 +83,40 @@ extension WorkingDaysView {
                 persistenceController.container.viewContext.delete(day)
                 workingDaysList.remove(at: index)
             }
-//            persistenceController.save()
+            persistenceController.save()
+        }
+        
+        /// Alert cancel button
+        func handleDeleteAction(_ editMode:  Binding<EditMode>?) {
+               switch alert {
+               case .deleteAll:
+                   deleteSelectedWorkingDays(pendingSelections)
+                   selections.removeAll()
+                   editMode?.wrappedValue = .inactive
+                   pendingSelections.removeAll()
+               case .swipeDelete:
+                   if let selection = singeleSelect {
+                       swipeDelete(day: selection)
+                       singeleSelect = nil
+                   }
+               default:
+                   break
+               }
+               alert = nil
+           }
+        
+        ///  Alert cancel button
+         func handleCancelAction(_ editMode:  Binding<EditMode>?) {
+            switch alert {
+            case .deleteAll:
+                withAnimation {
+                    editMode?.wrappedValue = .active
+                }
+                selections = pendingSelections
+            default:
+                break
+            }
+            alert = nil
         }
         
         
@@ -97,6 +131,9 @@ extension WorkingDaysView {
             }
             persistenceController.save()
         }
+        
+        
+        
         
         // MARK: - Private Methods
         
