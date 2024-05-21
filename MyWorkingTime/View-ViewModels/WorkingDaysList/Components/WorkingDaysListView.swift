@@ -26,7 +26,7 @@ struct WorkingDaysListView: View {
                     }
                     .swipeActions(allowsFullSwipe: false) {
                         Button {
-                            viewModel.singeleSelect = workingDay
+                            viewModel.singelSelect = workingDay
                             viewModel.alert = .swipeDelete
                         } label: {
                             Label("Delete", systemImage: "trash")

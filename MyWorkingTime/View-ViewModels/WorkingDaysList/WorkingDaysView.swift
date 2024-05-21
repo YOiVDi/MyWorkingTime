@@ -12,7 +12,7 @@ struct WorkingDaysView: View {
     
     // MARK: Properties
     @StateObject var viewModel = ViewModel()
-    private var emptyMessage: String = "Your working list is empty. To add a working day, use the button below."
+    private var emptyViewMessage: String = "Your working list is empty. To add a working day, use the button below."
     
     var body: some View {
         NavigationView {
@@ -23,7 +23,7 @@ struct WorkingDaysView: View {
                         ContentUnavailableView {
                             Label("Your list is empty", systemImage: "scribble.variable")
                         } description: {
-                            Text(emptyMessage)
+                            Text(emptyViewMessage)
                         } actions: {
                             Button("Click", action: viewModel.addWorkingDay)
                             .font(.title3)
@@ -34,9 +34,6 @@ struct WorkingDaysView: View {
                     // MARK: - ListView
                     WorkingDaysListView(viewModel: viewModel)
                 }
-            }
-            .alert(viewModel.alert?.title ?? "Error Occured" , isPresented: Binding(value: $viewModel.alert)) {} message: {
-                Text(viewModel.alert?.message ?? "")
             }
             .animation(.easeInOut, value: viewModel.workingDaysList.isEmpty)
             .frame(maxHeight: .infinity)
