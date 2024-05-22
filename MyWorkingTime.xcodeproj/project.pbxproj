@@ -37,6 +37,7 @@
 		8509CFA72BF212F400C7ACB0 /* WorkingDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CFA52BF212F400C7ACB0 /* WorkingDay+CoreDataClass.swift */; };
 		8509CFA82BF212F400C7ACB0 /* WorkingDay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CFA62BF212F400C7ACB0 /* WorkingDay+CoreDataProperties.swift */; };
 		854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854520C72BF9F77D00437F5A /* CreateNewDayView.swift */; };
+		854ACAD22BFDA22E007EA22A /* CechInOutCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854ACAD12BFDA22E007EA22A /* CechInOutCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +72,7 @@
 		8509CFA52BF212F400C7ACB0 /* WorkingDay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8509CFA62BF212F400C7ACB0 /* WorkingDay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		854520C72BF9F77D00437F5A /* CreateNewDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewDayView.swift; sourceTree = "<group>"; };
+		854ACAD12BFDA22E007EA22A /* CechInOutCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CechInOutCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +220,7 @@
 				854520C72BF9F77D00437F5A /* CreateNewDayView.swift */,
 				8509CF822BF2111B00C7ACB0 /* DateIcon.swift */,
 				8509CF832BF2111B00C7ACB0 /* WorkingDaysListView.swift */,
+				854ACAD12BFDA22E007EA22A /* CechInOutCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				8509CF722BF2111100C7ACB0 /* UserDefaultsKey.swift in Sources */,
 				8509CFA72BF212F400C7ACB0 /* WorkingDay+CoreDataClass.swift in Sources */,
 				8509CFA82BF212F400C7ACB0 /* WorkingDay+CoreDataProperties.swift in Sources */,
+				854ACAD22BFDA22E007EA22A /* CechInOutCard.swift in Sources */,
 				8509CF962BF2111B00C7ACB0 /* WorkingDaysView.swift in Sources */,
 				8509CF892BF2111B00C7ACB0 /* DetailView.swift in Sources */,
 				8509CF712BF2111100C7ACB0 /* RoundedButtonLabel.swift in Sources */,

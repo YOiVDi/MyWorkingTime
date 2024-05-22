@@ -19,9 +19,9 @@ extension DetailView {
         @Published var pauseStartEdit: Date
         @Published var pauseFinishEdit: Date
         
-        // MARK: - Constant
-        let defaultTime = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: Date()) ?? Date()
-        let persistenceController = PersistenceController.shared
+        // MARK: - Private properties
+        private let defaultTime = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: Date()) ?? Date()
+        private let persistenceController = PersistenceController.shared
         
         // MARK: - Initialization
         init(model: WorkingDay) {
@@ -60,6 +60,23 @@ extension DetailView {
             day.addToPause(newPause)
             persistenceController.save()
             objectWillChange.send()
+        }
+        
+        func onSave() {
+            // Show error message or prevent submission
+            guard pauseFinishEdit > pauseStartEdit else {
+                print("Your Start of pause is bigger than finish pause.")
+                return
+            }
+            update(model, pause: selectedPause)
+            selectedPause = nil
+            onChange.toggle()
+        }
+        
+        func selectedPause(pause: Pause) {
+            selectedPause = pause
+            pauseStartEdit = pause.wrappedStartPause
+            pauseFinishEdit = pause.wrappedFinishPause
         }
     }
 }

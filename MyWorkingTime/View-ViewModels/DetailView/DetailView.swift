@@ -10,7 +10,6 @@ import SwiftUI
 struct DetailView: View {
     
     // MARK: Properties
-//    @State var model: WorkingDay
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: ViewModel
     

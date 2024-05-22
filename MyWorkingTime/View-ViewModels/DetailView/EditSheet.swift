@@ -31,9 +31,7 @@ struct EditSheet: View {
                                 Text("Finish: \(pause.wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
                             }
                             .onTapGesture {
-                                viewModel.selectedPause = pause
-                                viewModel.pauseStartEdit = pause.wrappedStartPause
-                                viewModel.pauseFinishEdit = pause.wrappedFinishPause
+                                viewModel.selectedPause(pause: pause)
                             }
                         }
                     }
@@ -50,14 +48,7 @@ struct EditSheet: View {
                     HStack {
                         Spacer()
                         Button("Save") {
-                            // Show error message or prevent submission
-                            guard viewModel.pauseFinishEdit > viewModel.pauseStartEdit else {
-                                print("Your Start of pause is bigger than finish pause.")
-                                return
-                            }
-                            viewModel.update(model, pause: viewModel.selectedPause)
-                            viewModel.selectedPause = nil
-                            viewModel.onChange.toggle()
+                            viewModel.onSave()
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
                         .shadow(color: .black, radius: 3, x: -1, y: 1)
