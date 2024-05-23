@@ -34,7 +34,7 @@ extension WorkingDay {
     }
     
     
-    public var WrappedWorkingHours: Int {
+    public var wrappedWorkingHours: Int {
         Int(workingHours)
     }
     

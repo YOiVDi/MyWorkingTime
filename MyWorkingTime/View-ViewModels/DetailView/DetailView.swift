@@ -76,10 +76,13 @@ struct DetailView: View {
     
     private var workingHoursSection: some View {
         Section("Working Hour's") {
-//            Text("\(model.wrappedWorkingHours.formatted(date: .omitted, time: .shortened))")
-            Text("\(viewModel.model.WrappedWorkingHours)")
+            Text("\(viewModel.model.wrappedWorkingHours)")
                 .font(.body)
                 .fontWeight(.semibold)
+            Text("Check-In: \(viewModel.model.wrappedCheckIn)")
+                .lineLimit(1)
+            Text("Check-Out: \(viewModel.model.wrappedCheckOut)")
+                .lineLimit(1)
         }
     }
     

@@ -11,7 +11,11 @@ extension DetailView {
     class ViewModel: ObservableObject {
         // MARK: - Public properties
         @Published var selectedPause: Pause?
-        @Published var model: WorkingDay
+        @Published var model: WorkingDay {
+            didSet {
+                objectWillChange.send()
+            }
+        }
         @Published private var selectedIndex: Int?
         @Published var onChange: Bool = false
         
@@ -36,10 +40,9 @@ extension DetailView {
         
         /// Deletes the given pause from the working day and saves the context.
         func deletePause(workingDay: WorkingDay, pause: Pause) {
-            workingDay.removeFromPause(pause)
+            workingDay.removeFromPauses(pause)
             persistenceController.container.viewContext.delete(pause)
             persistenceController.save()
-            objectWillChange.send()
         }
         
         /// Updates the working day and optionally the pause with the new values.
@@ -57,9 +60,9 @@ extension DetailView {
             let newPause = Pause(context: persistenceController.container.viewContext)
             newPause.startPause = pauseStartEdit
             newPause.finishPause = pauseFinishEdit
-            day.addToPause(newPause)
+            day.addToPauses(newPause)
             persistenceController.save()
-            objectWillChange.send()
+//            objectWillChange.send()
         }
         
         func onSave() {
