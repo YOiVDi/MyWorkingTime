@@ -20,6 +20,14 @@ extension Pause {
     @NSManaged public var startPause: Date?
     @NSManaged public var totalPause: Int16
     @NSManaged public var workingDay: WorkingDay?
+    
+    public var wrappedStartPause: Date {
+        startPause ?? Date.now
+    }
+    
+    public var wrappedFinishPause: Date {
+        finishPause ?? Date.now
+    }
 
 }
 

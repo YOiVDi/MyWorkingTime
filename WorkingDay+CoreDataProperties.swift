@@ -24,6 +24,34 @@ extension WorkingDay {
     @NSManaged public var checkIn: Date?
     @NSManaged public var checkOut: Date?
     @NSManaged public var pauses: NSSet?
+    
+    public var wrappedCompanyname: String {
+        companyName ?? ""
+    }
+    
+    public var wrappedDate: Date {
+        date ?? Date.now
+    }
+    
+    
+    public var WrappedWorkingHours: Int {
+        Int(workingHours)
+    }
+    
+    public var wrappedCheckIn: String {
+        checkIn?.formatted(date: .omitted, time: .shortened) ?? "No check-in time"
+    }
+    
+    public var wrappedCheckOut: String {
+        checkOut?.formatted(date: .omitted, time: .shortened) ?? "No check-out time"
+    }
+    
+    public var arrPause: [Pause] {
+        let setPause = pauses as? Set<Pause> ?? []
+        return setPause.sorted {
+            $0.startPause ?? Date() < $1.startPause ?? Date()
+        }
+    }
 
 }
 
