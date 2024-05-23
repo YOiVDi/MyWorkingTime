@@ -56,7 +56,7 @@ enum CustomAlerts: Error, LocalizedError , Equatable{
         case .userDefaultsIsEmpty:
             return "It looks like your settings are not filled in correctly. Please check your settings and try again to create a workday."
         case .pauseWillBeNotAdded:
-            return "The day with date \(Date().formatted(date: .abbreviated, time: .omitted)) not exist in your Working List."
+            return "The day with date \(Date().formatted(date: .abbreviated, time: .omitted)) does not exist in your worklist, please add the day and then try to start the timer."
         }
     }
 }
