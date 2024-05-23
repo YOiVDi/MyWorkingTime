@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Pause" representedClassName="Pause" syncable="YES">
         <attribute name="finishPause" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="startPause" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="totalPause" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="workingDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkingDay" inverseName="pause" inverseEntity="WorkingDay"/>
+        <relationship name="workingDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkingDay" inverseName="pauses" inverseEntity="WorkingDay"/>
     </entity>
     <entity name="WorkingDay" representedClassName="WorkingDay" syncable="YES">
+        <attribute name="checkIn" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="checkOut" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="companyName" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="workingHours" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="workOnWeekend" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <relationship name="pause" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Pause" inverseName="workingDay" inverseEntity="Pause"/>
+        <relationship name="pauses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Pause" inverseName="workingDay" inverseEntity="Pause"/>
     </entity>
 </model>

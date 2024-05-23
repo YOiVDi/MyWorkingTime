@@ -32,12 +32,12 @@
 		8509CF962BF2111B00C7ACB0 /* WorkingDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF862BF2111B00C7ACB0 /* WorkingDaysView.swift */; };
 		8509CF992BF2118100C7ACB0 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF982BF2118100C7ACB0 /* PersistenceController.swift */; };
 		8509CF9C2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF9A2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld */; };
-		8509CFA12BF2126700C7ACB0 /* Pause+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF9D2BF2126700C7ACB0 /* Pause+CoreDataClass.swift */; };
-		8509CFA22BF2126700C7ACB0 /* Pause+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF9E2BF2126700C7ACB0 /* Pause+CoreDataProperties.swift */; };
-		8509CFA72BF212F400C7ACB0 /* WorkingDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CFA52BF212F400C7ACB0 /* WorkingDay+CoreDataClass.swift */; };
-		8509CFA82BF212F400C7ACB0 /* WorkingDay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CFA62BF212F400C7ACB0 /* WorkingDay+CoreDataProperties.swift */; };
+		854454312BFE8BE400E90750 /* Pause+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8544542D2BFE8BE400E90750 /* Pause+CoreDataClass.swift */; };
+		854454322BFE8BE400E90750 /* Pause+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8544542E2BFE8BE400E90750 /* Pause+CoreDataProperties.swift */; };
+		854454332BFE8BE400E90750 /* WorkingDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8544542F2BFE8BE400E90750 /* WorkingDay+CoreDataClass.swift */; };
+		854454342BFE8BE400E90750 /* WorkingDay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854454302BFE8BE400E90750 /* WorkingDay+CoreDataProperties.swift */; };
 		854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854520C72BF9F77D00437F5A /* CreateNewDayView.swift */; };
-		854ACAD22BFDA22E007EA22A /* CechInOutCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854ACAD12BFDA22E007EA22A /* CechInOutCard.swift */; };
+		854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,12 +67,13 @@
 		8509CF862BF2111B00C7ACB0 /* WorkingDaysView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkingDaysView.swift; sourceTree = "<group>"; };
 		8509CF982BF2118100C7ACB0 /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		8509CF9B2BF2118C00C7ACB0 /* WorkingDay.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WorkingDay.xcdatamodel; sourceTree = "<group>"; };
-		8509CF9D2BF2126700C7ACB0 /* Pause+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pause+CoreDataClass.swift"; sourceTree = "<group>"; };
-		8509CF9E2BF2126700C7ACB0 /* Pause+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pause+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		8509CFA52BF212F400C7ACB0 /* WorkingDay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataClass.swift"; sourceTree = "<group>"; };
-		8509CFA62BF212F400C7ACB0 /* WorkingDay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		854454282BFE894900E90750 /* WorkingDay v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v2.xcdatamodel"; sourceTree = "<group>"; };
+		8544542D2BFE8BE400E90750 /* Pause+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pause+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		8544542E2BFE8BE400E90750 /* Pause+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pause+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		8544542F2BFE8BE400E90750 /* WorkingDay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		854454302BFE8BE400E90750 /* WorkingDay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		854520C72BF9F77D00437F5A /* CreateNewDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewDayView.swift; sourceTree = "<group>"; };
-		854ACAD12BFDA22E007EA22A /* CechInOutCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CechInOutCard.swift; sourceTree = "<group>"; };
+		854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInOutCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,7 +221,7 @@
 				854520C72BF9F77D00437F5A /* CreateNewDayView.swift */,
 				8509CF822BF2111B00C7ACB0 /* DateIcon.swift */,
 				8509CF832BF2111B00C7ACB0 /* WorkingDaysListView.swift */,
-				854ACAD12BFDA22E007EA22A /* CechInOutCard.swift */,
+				854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -250,10 +251,10 @@
 		8509CF972BF2116000C7ACB0 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				8509CFA52BF212F400C7ACB0 /* WorkingDay+CoreDataClass.swift */,
-				8509CFA62BF212F400C7ACB0 /* WorkingDay+CoreDataProperties.swift */,
-				8509CF9D2BF2126700C7ACB0 /* Pause+CoreDataClass.swift */,
-				8509CF9E2BF2126700C7ACB0 /* Pause+CoreDataProperties.swift */,
+				8544542D2BFE8BE400E90750 /* Pause+CoreDataClass.swift */,
+				8544542E2BFE8BE400E90750 /* Pause+CoreDataProperties.swift */,
+				8544542F2BFE8BE400E90750 /* WorkingDay+CoreDataClass.swift */,
+				854454302BFE8BE400E90750 /* WorkingDay+CoreDataProperties.swift */,
 				8509CF982BF2118100C7ACB0 /* PersistenceController.swift */,
 				8509CF9A2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld */,
 			);
@@ -333,11 +334,13 @@
 				8509CF902BF2111B00C7ACB0 /* SettingsView.swift in Sources */,
 				854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */,
 				8509CF722BF2111100C7ACB0 /* UserDefaultsKey.swift in Sources */,
-				8509CFA72BF212F400C7ACB0 /* WorkingDay+CoreDataClass.swift in Sources */,
-				8509CFA82BF212F400C7ACB0 /* WorkingDay+CoreDataProperties.swift in Sources */,
-				854ACAD22BFDA22E007EA22A /* CechInOutCard.swift in Sources */,
+				854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */,
 				8509CF962BF2111B00C7ACB0 /* WorkingDaysView.swift in Sources */,
 				8509CF892BF2111B00C7ACB0 /* DetailView.swift in Sources */,
+				854454312BFE8BE400E90750 /* Pause+CoreDataClass.swift in Sources */,
+				854454322BFE8BE400E90750 /* Pause+CoreDataProperties.swift in Sources */,
+				854454332BFE8BE400E90750 /* WorkingDay+CoreDataClass.swift in Sources */,
+				854454342BFE8BE400E90750 /* WorkingDay+CoreDataProperties.swift in Sources */,
 				8509CF712BF2111100C7ACB0 /* RoundedButtonLabel.swift in Sources */,
 				8509CF8C2BF2111B00C7ACB0 /* Buttons.swift in Sources */,
 				8509CF8E2BF2111B00C7ACB0 /* PauseTimerView.swift in Sources */,
@@ -346,8 +349,6 @@
 				8509CF702BF2111100C7ACB0 /* DocumentDirectory.swift in Sources */,
 				8509CF8D2BF2111B00C7ACB0 /* TimerView.swift in Sources */,
 				8509CF552BF210EE00C7ACB0 /* MyWorkingTimeApp.swift in Sources */,
-				8509CFA12BF2126700C7ACB0 /* Pause+CoreDataClass.swift in Sources */,
-				8509CFA22BF2126700C7ACB0 /* Pause+CoreDataProperties.swift in Sources */,
 				8509CF932BF2111B00C7ACB0 /* DateIcon.swift in Sources */,
 				8509CF9C2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld in Sources */,
 				8509CF6E2BF2111100C7ACB0 /* CustomAlerts.swift in Sources */,
@@ -571,9 +572,10 @@
 		8509CF9A2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				854454282BFE894900E90750 /* WorkingDay v2.xcdatamodel */,
 				8509CF9B2BF2118C00C7ACB0 /* WorkingDay.xcdatamodel */,
 			);
-			currentVersion = 8509CF9B2BF2118C00C7ACB0 /* WorkingDay.xcdatamodel */;
+			currentVersion = 854454282BFE894900E90750 /* WorkingDay v2.xcdatamodel */;
 			path = WorkingHours.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
