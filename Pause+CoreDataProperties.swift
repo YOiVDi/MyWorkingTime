@@ -2,7 +2,7 @@
 //  Pause+CoreDataProperties.swift
 //  MyWorkingTime
 //
-//  Created by Yordan Dimitrov on 13.05.24.
+//  Created by Yordan Dimitrov on 22.05.24.
 //
 //
 
@@ -16,18 +16,10 @@ extension Pause {
         return NSFetchRequest<Pause>(entityName: "Pause")
     }
 
-    @NSManaged public var startPause: Date?
     @NSManaged public var finishPause: Date?
+    @NSManaged public var startPause: Date?
     @NSManaged public var totalPause: Int16
     @NSManaged public var workingDay: WorkingDay?
-    
-    public var wrappedStartPause: Date {
-        startPause ?? Date.now
-    }
-    
-    public var wrappedFinishPause: Date {
-        finishPause ?? Date.now
-    }
 
 }
 

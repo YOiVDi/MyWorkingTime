@@ -13,31 +13,53 @@ extension WorkingDaysView {
     @MainActor class ViewModel: ObservableObject {
         
         // MARK: - Public Properties
-        @Published private(set) var workingDaysList: [WorkingDay] = []
         @Published var selections = Set<WorkingDay>()
         @Published var pendingSelections = Set<WorkingDay>()
-        @Published var singelSelect: WorkingDay? = nil
+        @Published var singleSelect: WorkingDay? = nil
         @Published var alert: CustomAlerts? = nil
         @Published var confirmationIsShowing = false
-        @Published var notADayWithTodayDate = false
         @Published var createNewDaySheet = false
+        @Published var showCheckInOutCard = false
         
+        /// Making custom day
         @Published var id = UUID()
         @Published var companyName: String?
         @Published var date = Date()
         @Published var workingHours = 0
         @Published var workOnWeekend = false
         
+        
         // MARK: - Private Properties
-        private var userSettings: UserSettings?
+        @Published private(set) var workingDaysList: [WorkingDay] = []
+        @Published private(set) var today: WorkingDay?
+        @Published private(set) var notADayWithTodayDate = false
+        
+        private(set) var userSettings: UserSettings?
         private let persistenceController = PersistenceController.shared
+        
+        // MARK: - Computed Properties
+        var checkIn: String {
+            if let today {
+                return today.wrappedCheckIn
+            } else {
+                return "No check-in time"
+            }
+        }
+        
+        var checkOut: String {
+            if let today {
+                return today.wrappedCheckOut
+            } else {
+                return "No check-Out time"
+            }
+        }
         
         
         // MARK: - Initialization
         init() {
             fetchWorkingDays(filter: nil, sortBy: [NSSortDescriptor(key: "date", ascending: true)])
             fetchUserSettings()
-            companyName = userSettings?.companyName
+            checkEntities()
         }
         
         // MARK: - Public Methods
@@ -94,38 +116,55 @@ extension WorkingDaysView {
             persistenceController.save()
         }
         
-        /// Alert cancel button
-        func handleDeleteAction(_ editMode:  Binding<EditMode>?) {
-               switch alert {
-               case .deleteAll:
-                   deleteSelectedWorkingDays(pendingSelections)
-                   selections.removeAll()
-                   editMode?.wrappedValue = .inactive
-                   pendingSelections.removeAll()
-               case .swipeDelete:
-                   if let selection = singelSelect {
-                       swipeDelete(day: selection)
-                       singelSelect = nil
-                   }
-               default:
-                   break
-               }
-               alert = nil
-           }
-        
-        ///  Alert cancel button
-         func handleCancelAction(_ editMode:  Binding<EditMode>?) {
-            switch alert {
-            case .deleteAll:
-                withAnimation {
-                    editMode?.wrappedValue = .active
+        /// Handle alerts buttons
+        func alertButtons(_ editMode:  Binding<EditMode>?) -> some View {
+           return  Group {
+                if alert == .deleteAll || alert == .swipeDelete {
+                    Button("Delete", role: .destructive) {
+                        self.handleDeleteAction(editMode)
+                    }
+                    Button("Cancel", role: .cancel) {
+                        self.handleCancelAction(editMode)
+                    }
+                } else {
+                    Button("OK") {}
                 }
-                selections = pendingSelections
-            default:
-                break
             }
-            alert = nil
         }
+        
+        
+        /// Check if today's date exists, if it does, assign to today's variable
+        func doesTodayExist() {
+            let workingDaysList = persistenceController.fetchRequest(filter: nil, sortBy: nil)
+            let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+            
+            today = workingDaysList.first(where: { workingDay in
+                let workingDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workingDay.wrappedDate)
+                return workingDayComponents == targetComponents
+            })
+        }
+        
+        /// Handle check-in action
+        func handleCheckIn() {
+            doesTodayExist()
+            guard let today = today else {
+                // Handle Error Here
+                return
+            }
+            today.checkIn = Date() // set check-in to time right now
+            persistenceController.save() // Save the updated check-in time
+        }
+        /// Handle check-out action
+        func handleCheckOut() {
+            doesTodayExist()
+            guard let today = today else {
+                // Handle Error Here
+                return
+            }
+            today.checkOut = Date()
+            persistenceController.save() // Save the updated check-out time
+        }
+        
         
         
         // MARK: - Private Methods
@@ -195,6 +234,50 @@ extension WorkingDaysView {
                 }
             }
             persistenceController.save()
+        }
+        
+        /// Alert cancel button
+       private func handleDeleteAction(_ editMode:  Binding<EditMode>?) {
+               switch alert {
+               case .deleteAll:
+                   deleteSelectedWorkingDays(pendingSelections)
+                   selections.removeAll()
+                   editMode?.wrappedValue = .inactive
+                   pendingSelections.removeAll()
+               case .swipeDelete:
+                   if let selection = singleSelect {
+                       swipeDelete(day: selection)
+                       singleSelect = nil
+                   }
+               default:
+                   break
+               }
+               alert = nil
+           }
+        
+        ///  Alert cancel button
+         private func handleCancelAction(_ editMode:  Binding<EditMode>?) {
+            switch alert {
+            case .deleteAll:
+                withAnimation {
+                    editMode?.wrappedValue = .active
+                }
+                selections = pendingSelections
+            case .swipeDelete:
+                singleSelect = nil
+            default:
+                break
+            }
+            alert = nil
+        }
+        
+        
+        /// Test purpose
+        func checkEntities() {
+            let workingDays = persistenceController.fetchRequestWorkingDays()
+            print("WorkingDays: \(workingDays.count)")
+            let pauses = persistenceController.fetchRequestPauses()
+            print("Pauses: \(pauses.count)")
         }
     }
 }

@@ -2,7 +2,7 @@
 //  Pause+CoreDataClass.swift
 //  MyWorkingTime
 //
-//  Created by Yordan Dimitrov on 13.05.24.
+//  Created by Yordan Dimitrov on 22.05.24.
 //
 //
 
