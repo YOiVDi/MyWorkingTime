@@ -11,8 +11,6 @@ import SwiftUI
 extension PauseTimerView {
     class PauseTimerViewModel: ObservableObject {
         // MARK: - Public propeties
-        @Published private(set) var elapsedTimeFrom: Double = 0
-        @Published private(set) var elapsedTime: TimeInterval = 0
         @Published var hours = 0
         @Published var minutes = 0
         @Published var seconds = 0
@@ -20,17 +18,21 @@ extension PauseTimerView {
         @Published var isStarted = false
         @Published var alert: CustomAlerts? = nil
         
-        // // MARK: - Private Properties
         let pauseTimes: [Int] = [5, 10, 15, 20, 25, 30] // at moment not in use
-        private let persistenceController = PersistenceController.shared
         
-        private var timer: Timer?
+        // // MARK: - Private Properties
+        @Published private(set) var elapsedTimeFrom: Double = 0
+        @Published private(set) var elapsedTime: TimeInterval = 0
         
         private(set) var dateInBackground: Date?
         private(set) var dateInActiveMode: Date?
         
         private(set) var beginPause: Date?
         private(set) var finishPause: Date?
+        
+        private let persistenceController = PersistenceController.shared
+        
+        private var timer: Timer?
         
         // MARK: - Computed properties
         // trimming of circle is based on elapsedTime
@@ -73,9 +75,7 @@ extension PauseTimerView {
         
         /// gives a initial value of timer and activate it
         func startTimer() {
-            if doesDayExist() == nil {
-                alert = .pauseWillBeNotAdded
-            }
+            guard doesTodayExist() != nil else { return }
             self.isStarted = true
             self.beginPause = Date()
             addNotification()
@@ -172,46 +172,35 @@ extension PauseTimerView {
             elapsedTime = elapsedTimeFrom
         }
         
-        private func doesDayExist() -> WorkingDay? {
+        private func doesTodayExist() -> WorkingDay? {
             let workingDaysList = PersistenceController.shared.fetchRequest(filter: nil, sortBy: nil)
             let date = Date()
             let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: date)
             
             guard let matchingDay = workingDaysList.first(where: { workingDay in
                 let workingDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workingDay.wrappedDate)
-                return workingDayComponents.year == targetComponents.year &&
-                       workingDayComponents.month == targetComponents.month &&
-                       workingDayComponents.day == targetComponents.day
-            }) else { return nil}
+                return workingDayComponents == targetComponents
+            }) else {
+                alert = .pauseWillBeNotAdded
+                return nil
+            }
             return matchingDay
         }
         
         /// Add pause to day if exist.
         func addPause() {
-//            let workingDaysList = PersistenceController.shared.fetchRequest(filter: nil, sortBy: nil)
-//            let date = Date()
-//            let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: date)
-
-            // Find the first WorkingDay object with the specified date
-//            if let matchingDay = workingDaysList.first(where: { workingDay in
-//                let workingDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workingDay.wrappedDate)
-//                return workingDayComponents.year == targetComponents.year &&
-//                       workingDayComponents.month == targetComponents.month &&
-//                       workingDayComponents.day == targetComponents.day
-//            }) {
-                guard let matchingDay = doesDayExist() else { return }
+                guard let matchingDay = doesTodayExist() else { return }
+                guard matchingDay.arrPause.count < 5 else {
+                print("hit maximum pauses")
+                return
+            }
                 guard let beginPause, let finishPause else { return }
                 let dayPause = Pause(context: persistenceController.container.viewContext)
                 dayPause.startPause = beginPause
                 dayPause.finishPause = finishPause
-                matchingDay.addToPause(dayPause)
+                matchingDay.addToPauses(dayPause)
                 // for test purpose
                 print("\(matchingDay.arrPause)")
-//            } else {
-//                // for test purpose
-//                // No matching object found
-//                print("No WorkingDay object found for \(date).")
-//            }
         }
         
         // Set finish pause time
@@ -235,7 +224,7 @@ extension PauseTimerView {
             let addRequest = {
                 let content = UNMutableNotificationContent()
                 content.title = "🤯 Pause is over"
-                content.subtitle = "Your break started at \(String(describing: self.beginPause?.formatted(date: .abbreviated, time: .shortened))), and ended now \(String(describing: self.finishPause?.formatted(date: .abbreviated, time: .shortened))) total break time  \(self.formatTime(self.elapsedTimeFrom))"
+                content.subtitle = "Your break started at \(String(describing: self.beginPause!.formatted(date: .omitted, time: .standard))), and ended now \(String(describing: Date().addingTimeInterval(self.elapsedTimeFrom).formatted(date: .omitted, time: .standard))) total break time  \(self.formatTime(self.elapsedTimeFrom))"
                 content.sound = UNNotificationSound.default
                 
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: self.elapsedTimeFrom, repeats: false)
@@ -260,7 +249,7 @@ extension PauseTimerView {
             }
         }
         
-        /// if timer doesn't work or is on pause remove notification request
+        /// Delete notification
         private func deleteNotification() {
             let center = UNUserNotificationCenter.current()
             center.removeAllPendingNotificationRequests()
