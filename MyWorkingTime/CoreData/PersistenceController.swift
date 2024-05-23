@@ -29,7 +29,7 @@ struct PersistenceController {
             pause.startPause = Date(timeIntervalSinceNow: 1200)
             pause.finishPause = Date(timeIntervalSinceNow: 1800)
             pause.totalPause = 10
-            workingDay.addToPause(pause)
+            workingDay.addToPauses(pause)
         }
         return workingDay
     }()
@@ -50,7 +50,6 @@ struct PersistenceController {
                 return
             }
         }
-        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
     }
     
     func save() {
@@ -76,5 +75,27 @@ struct PersistenceController {
             print("Error fetching \(error)")
         }
         return workingDaysList
+    }
+    
+    /// debug purpose 
+    func fetchRequestWorkingDays() -> [WorkingDay] {
+        var workingDaysList: [WorkingDay] = []
+        let request = NSFetchRequest<WorkingDay>(entityName: "WorkingDay")
+        do {
+            workingDaysList = try container.viewContext.fetch(request)
+        } catch {
+            print("Error fetching \(error)")
+        }
+        return workingDaysList
+    }
+    func fetchRequestPauses() -> [Pause] {
+        var pauses: [Pause] = []
+        let request = NSFetchRequest<Pause>(entityName: "Pause")
+        do {
+            pauses = try container.viewContext.fetch(request)
+        } catch {
+            print("Error fetching \(error)")
+        }
+        return pauses
     }
 }
