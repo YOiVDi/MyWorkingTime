@@ -14,40 +14,69 @@ struct WorkingDaysListView: View {
     
     var body: some View {
         // MARK: - List
-        List(selection: $viewModel.selections) {
-            ForEach(viewModel.workingDaysList, id: \.self) { workingDay in
-                NavigationLink(destination: DetailView(model: workingDay)) {
-                    VStack(alignment: .leading) {
-                        HStack(spacing: 10) {
-                            DateIconView(model: workingDay)
-                            Text(workingDay.wrappedCompanyname)
-                                .font(.title3).bold()
+        ZStack {
+            List(selection: $viewModel.selections) {
+                ForEach(viewModel.workingDaysList, id: \.self) { workingDay in
+                    NavigationLink(destination: DetailView(model: workingDay)) {
+                        VStack(alignment: .leading) {
+                            HStack(spacing: 10) {
+                                DateIconView(model: workingDay)
+                                Text(workingDay.wrappedCompanyname)
+                                    .font(.title3).bold()
+                            }
+                        }
+                        .swipeActions(allowsFullSwipe: false) {
+                            Button {
+                                viewModel.singleSelect = workingDay
+                                viewModel.alert = .swipeDelete
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                                    .tint(.red)
+                            }
                         }
                     }
-                    .swipeActions(allowsFullSwipe: false) {
-                        Button {
-                            viewModel.singelSelect = workingDay
-                            viewModel.alert = .swipeDelete
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                                .tint(.red)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.black.opacity(0))
+                }
+                //            .onDelete(perform: withAnimation(.smooth) {
+                //                viewModel.deleteWorkingDay })
+                .onMove(perform: withAnimation(.smooth) {
+                    viewModel.moveWorkingDay })
+            }
+            .scrollBounceBehavior(.basedOnSize)
+            .scrollContentBackground(.hidden)
+            .listRowSpacing(10)
+            .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
+                Button("Today", action: { viewModel.addWorkingDay() })
+                Button("My choose", action: { viewModel.createNewDaySheet = true })
+            }
+            
+            // MARK: - Card View
+            if viewModel.showCheckInOutCard {
+                CheckInOutCardView(viewModel: viewModel)
+                    .transition(.move(edge: .trailing))
+            }
+            
+            // MARK: - Card Button
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button {
+                        withAnimation {
+                            viewModel.showCheckInOutCard.toggle()
                         }
+                    } label: {
+                        Image(systemName: "person.text.rectangle.fill")
+                            .foregroundColor(.white)
+                            .frame(width: 50, height: 50)
+                            .background(.blue)
+                            .clipShape(Circle())
                     }
                 }
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.black.opacity(0))
+                .padding(.horizontal, 40)
             }
-            //            .onDelete(perform: withAnimation(.smooth) {
-            //                viewModel.deleteWorkingDay })
-            .onMove(perform: withAnimation(.smooth) {
-                viewModel.moveWorkingDay })
-        }
-        .scrollBounceBehavior(.basedOnSize)
-        .scrollContentBackground(.hidden)
-        .listRowSpacing(10)
-        .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
-            Button("Today", action: { viewModel.addWorkingDay() })
-            Button("My choose", action: { viewModel.createNewDaySheet = true })
+            .padding(.bottom, 70)
         }
         .sheet(isPresented: $viewModel.createNewDaySheet) {
             CreateNewDayView(viewModel: viewModel)
@@ -85,12 +114,8 @@ struct WorkingDaysListView: View {
             editMode?.wrappedValue = .inactive
         }
         .alert(viewModel.alert?.title ?? "Error Occured" , isPresented: Binding(value: $viewModel.alert)) {
-            Button("Delete", role: .destructive) {
-                viewModel.handleDeleteAction(editMode)
-            }
-            Button("Cancel", role: .cancel) {
-                viewModel.handleCancelAction(editMode)
-            }
+//            Buttons
+            viewModel.alertButtons(editMode)
         } message: {
             Text(viewModel.alert?.message ?? "")
         }
