@@ -13,7 +13,7 @@ struct CreateNewDayView: View {
     var body: some View {
         NavigationView {
             Form {
-                Text("Company name: \(viewModel.companyName ?? "")")
+                Text("Company name: \(viewModel.userSettings?.companyName ?? "")")
                 
                 DatePicker("Choose a day: ", selection: $viewModel.date, displayedComponents: .date)
                 
