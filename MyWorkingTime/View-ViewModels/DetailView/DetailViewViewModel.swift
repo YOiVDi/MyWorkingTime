@@ -11,11 +11,7 @@ extension DetailView {
     class ViewModel: ObservableObject {
         // MARK: - Public properties
         @Published var selectedPause: Pause?
-        @Published var model: WorkingDay {
-            didSet {
-                objectWillChange.send()
-            }
-        }
+        @Published var model: WorkingDay
         @Published private var selectedIndex: Int?
         @Published var onChange: Bool = false
         
@@ -62,7 +58,7 @@ extension DetailView {
             newPause.finishPause = pauseFinishEdit
             day.addToPauses(newPause)
             persistenceController.save()
-//            objectWillChange.send()
+            objectWillChange.send()
         }
         
         func onSave() {
