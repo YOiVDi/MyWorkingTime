@@ -15,39 +15,26 @@ struct DetailView: View {
     
     var body: some View {
         VStack {
-        List {
-            Group {
-                // Company section
-                companySection
-                // WorkingHours section
-                workingHoursSection
-                // Pause Section
-                pauseSection
-            }
-            //            .listRowSeparator(.hidden)
-        }
-        .listRowSpacing(10)
-        .scrollContentBackground(.hidden)
-        .scrollBounceBehavior(.basedOnSize)
-            HStack {
-                Spacer()
-                Button {
-                    viewModel.addPause(for: viewModel.model)
-                } label: {
-                    Text("Add Pause")
+            List {
+                Group {
+                    // Company section
+                    companySection
+                    // WorkingHours section
+                    workingHoursSection
+                    // Pause Section
+                    pauseSection
                 }
-                .buttonStyle(BorderedProminentButtonStyle())
-                .shadow(color: .black, radius: 3, x: -1, y: 1)
-                Spacer()
+                //            .listRowSeparator(.hidden)
             }
-            .disabled(viewModel.model.arrPause.count >= 5)
-            .padding(.bottom, 80)
-    }
+            .listRowSpacing(10)
+            .scrollContentBackground(.hidden)
+            .scrollBounceBehavior(.basedOnSize)
+        }
         
         
         // MARK: Edited Sheet
         .sheet(isPresented: $viewModel.onChange) {
-            EditSheet(model: viewModel.model, viewModel: viewModel)
+            EditSheet(viewModel: viewModel)
         }
         .toolbar {
             ToolbarItem {
@@ -87,29 +74,20 @@ struct DetailView: View {
     }
     
     private var pauseSection: some View {
-            Section("Pause") {
-                if viewModel.model.arrPause.count != 0  {
-                    ForEach(0..<viewModel.model.arrPause.count, id: \.self) { index in
-                        HStack {
-                            Text("Start: \(viewModel.model.arrPause[index].wrappedStartPause.formatted(date: .omitted, time: .shortened))")
-                                .font(.body)
-                                .fontWeight(.semibold)
-                            Text("Finish: \(viewModel.model.arrPause[index].wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
-                                .font(.body)
-                                .fontWeight(.semibold)
-                        }
-                        .swipeActions {
-                            let pause = viewModel.model.arrPause[index]
-                            Button("delete", role: .destructive) {
-                                viewModel.deletePause(workingDay: viewModel.model, pause: pause)
-                            }
-                        }
-                    }
+        Section("Pause") {
+            ForEach(viewModel.model.arrPause, id: \.id) { pause in
+                HStack {
+                    Text("Start: \(pause.wrappedStartPause.formatted(date: .omitted, time: .shortened))")
+                        .font(.body)
+                        .fontWeight(.semibold)
+                    Text("Finish: \(pause.wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
+                        .font(.body)
+                        .fontWeight(.semibold)
                 }
             }
+        }
     }
     init(model: WorkingDay) {
-        _dismiss = Environment(\.dismiss)
         _viewModel = StateObject(wrappedValue: ViewModel(model: model))
     }
 }

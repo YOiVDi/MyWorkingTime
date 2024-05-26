@@ -196,6 +196,7 @@ extension PauseTimerView {
             }
                 guard let beginPause, let finishPause else { return }
                 let dayPause = Pause(context: persistenceController.container.viewContext)
+                dayPause.uuid = UUID()
                 dayPause.startPause = beginPause
                 dayPause.finishPause = finishPause
                 matchingDay.addToPauses(dayPause)

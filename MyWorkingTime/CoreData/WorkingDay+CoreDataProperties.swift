@@ -2,7 +2,7 @@
 //  WorkingDay+CoreDataProperties.swift
 //  MyWorkingTime
 //
-//  Created by Yordan Dimitrov on 22.05.24.
+//  Created by Yordan Dimitrov on 26.05.24.
 //
 //
 
@@ -16,14 +16,16 @@ extension WorkingDay {
         return NSFetchRequest<WorkingDay>(entityName: "WorkingDay")
     }
 
+    @NSManaged public var checkIn: Date?
+    @NSManaged public var checkOut: Date?
     @NSManaged public var companyName: String?
     @NSManaged public var date: Date?
     @NSManaged public var id: UUID?
     @NSManaged public var workingHours: Int16
     @NSManaged public var workOnWeekend: Bool
-    @NSManaged public var checkIn: Date?
-    @NSManaged public var checkOut: Date?
     @NSManaged public var pauses: NSSet?
+    
+    
     
     public var wrappedCompanyname: String {
         companyName ?? ""
@@ -49,7 +51,7 @@ extension WorkingDay {
     public var arrPause: [Pause] {
         let setPause = pauses as? Set<Pause> ?? []
         return setPause.sorted {
-            $0.startPause ?? Date() < $1.startPause ?? Date()
+            $0.id < $1.id
         }
     }
 

@@ -37,7 +37,7 @@ struct CheckInOutCardView: View {
                         .frame(width: 100, height: 30)
                 }
                 .tint(.blue)
-                .disabled(viewModel.isCheckIn)
+                .disabled(viewModel.checkIn != "No check-in time")
                 
                 Button(role: .destructive) {
                     viewModel.handleCheckOut()
@@ -46,7 +46,7 @@ struct CheckInOutCardView: View {
                         .bold()
                         .frame(width: 100, height: 30)
                 }
-                .disabled(viewModel.isCheckOut)
+                .disabled(viewModel.checkOut != "No check-out time")
             }
             .padding()
             .buttonStyle(BorderedProminentButtonStyle())

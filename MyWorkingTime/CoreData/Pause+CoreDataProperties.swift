@@ -2,7 +2,7 @@
 //  Pause+CoreDataProperties.swift
 //  MyWorkingTime
 //
-//  Created by Yordan Dimitrov on 22.05.24.
+//  Created by Yordan Dimitrov on 26.05.24.
 //
 //
 
@@ -19,7 +19,9 @@ extension Pause {
     @NSManaged public var finishPause: Date?
     @NSManaged public var startPause: Date?
     @NSManaged public var totalPause: Int16
+    @NSManaged public var uuid: UUID?
     @NSManaged public var workingDay: WorkingDay?
+    
     
     public var wrappedStartPause: Date {
         startPause ?? Date.now
@@ -28,9 +30,13 @@ extension Pause {
     public var wrappedFinishPause: Date {
         finishPause ?? Date.now
     }
+    
+    public var id: UUID {
+        uuid ?? UUID()
+    }
 
 }
 
 extension Pause : Identifiable {
-
+    
 }

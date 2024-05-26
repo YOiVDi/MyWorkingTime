@@ -40,8 +40,8 @@ struct WorkingDaysListView: View {
                 }
                 //            .onDelete(perform: withAnimation(.smooth) {
                 //                viewModel.deleteWorkingDay })
-                .onMove(perform: withAnimation(.smooth) {
-                    viewModel.moveWorkingDay })
+//                .onMove(perform: withAnimation(.smooth) {
+//                    viewModel.moveWorkingDay })
             }
             .scrollBounceBehavior(.basedOnSize)
             .scrollContentBackground(.hidden)

@@ -8,65 +8,91 @@
 import SwiftUI
 
 struct EditSheet: View {
-    @State var model: WorkingDay
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: DetailView.ViewModel
     var body: some View {
         NavigationView {
-                List {
-                    Picker("WorkingHours's", selection: $viewModel.newWorkingTime) {
-                        ForEach(0..<9) {
-                            Text("\($0)")
-                        }
+            List {
+                Picker("WorkingHours's", selection: $viewModel.newWorkingTime) {
+                    ForEach(0..<9) {
+                        Text("\($0)")
                     }
-                    if model.arrPause.isEmpty { // if array is empty
-                        ContentUnavailableView("You have no pauses.", systemImage: "doc.fill", description: Text("To add pause return back to detail view and use, a 'Add Pause' button."))
-                    } else { // Showing if array is not empty
-                        ForEach(model.arrPause, id: \.self) { pause in
-                            HStack(spacing: 10) {
-                                Image(systemName: pause == viewModel.selectedPause ? "checkmark.circle" : "circle")
+                }
+                if viewModel.model.arrPause.isEmpty { // if array is empty
+                    ContentUnavailableView("You have no pauses.", systemImage: "doc.fill", description: Text("To add pause click on \(Image(systemName: "plus.circle.fill")) button."))
+                } else { // Showing if array is not empty
+                    Section("\(viewModel.model.arrPause.count <= 1 ? "Pause" : "Pauses")") {
+                        ForEach(viewModel.model.arrPause, id: \.id) { pause in
+                            HStack {
+                                Image(systemName: pause.id == viewModel.selectedPause?.id ? "checkmark.circle.fill" : "circle")
                                     .foregroundStyle(.blue)
                                 Text("Start: \(pause.wrappedStartPause.formatted(date: .omitted, time: .shortened))")
-                                Spacer()
                                 Text("Finish: \(pause.wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
                             }
                             .onTapGesture {
-                                viewModel.selectedPause(pause: pause)
-                                print(model.arrPause)
+                                if viewModel.selectedPause?.id == pause.id {
+                                    viewModel.selectedPause = nil
+                                } else {
+                                    viewModel.selectedPause = pause
+                                    viewModel.pauseStartEdit = pause.wrappedStartPause
+                                    viewModel.pauseFinishEdit = pause.wrappedFinishPause
+                                }
                             }
                         }
                     }
-                    
-                    // Edit pause time
-                    if viewModel.selectedPause != nil {
-                        VStack {
-                            DatePicker("New Start", selection: $viewModel.pauseStartEdit, displayedComponents: .hourAndMinute)
-                            DatePicker("New Finish", selection: $viewModel.pauseFinishEdit, displayedComponents: .hourAndMinute)
-                        }
-                    }
-                    
-                    // Button to save all changes
-                    HStack {
-                        Spacer()
-                        Button("Save") {
-                            viewModel.onSave()
-                        }
-                        .buttonStyle(BorderedProminentButtonStyle())
-                        .shadow(color: .black, radius: 3, x: -1, y: 1)
-                        Spacer()
+                }
+                
+                // Edit pause time
+                if viewModel.selectedPause != nil {
+                    VStack {
+                        DatePicker("New Start", selection: $viewModel.pauseStartEdit, displayedComponents: .hourAndMinute)
+                        DatePicker("New Finish", selection: $viewModel.pauseFinishEdit, displayedComponents: .hourAndMinute)
                     }
                 }
-                .onAppear {
-                    viewModel.newWorkingTime = Int(model.workingHours)
+                
+                // Button to save all changes
+                HStack {
+                    Spacer()
+                    Button("Update") {
+                        viewModel.update()
+                    }
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .shadow(color: .black, radius: 3, x: -1, y: 1)
+                    Spacer()
                 }
-                .onDisappear {
-                    viewModel.selectedPause = nil
+            }
+            .onAppear {
+                viewModel.newWorkingTime = Int(viewModel.model.workingHours)
+            }
+            .onDisappear {
+                viewModel.selectedPause = nil
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    buttons
                 }
-            .navigationTitle("Updating Details")
+            }
+        }
+        .navigationTitle("Editing \(viewModel.model.wrappedDate.formatted(date: .abbreviated, time: .omitted))")
+    }
+    private var buttons: some View {
+        if (viewModel.selectedPause != nil) {
+            Button {
+                viewModel.deletePause(pause: viewModel.selectedPause!)
+                viewModel.selectedPause = nil
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        } else {
+            Button {
+                viewModel.addPause(for: viewModel.model)
+            } label: {
+                Label("Add", systemImage: "plus.circle.fill")
+            }
         }
     }
 }
-
-#Preview {
-    EditSheet(model: PersistenceController.preview, viewModel: DetailView.ViewModel(model: WorkingDay()))
-}
+    
+    #Preview {
+        EditSheet(viewModel: DetailView.ViewModel(model: WorkingDay()))
+    }

@@ -33,8 +33,6 @@ extension WorkingDaysView {
         @Published private(set) var workingDaysList: [WorkingDay] = []
         @Published private(set) var today: WorkingDay?
         @Published private(set) var notADayWithTodayDate = false
-        @Published private(set) var isCheckIn = false
-        @Published private(set) var isCheckOut = false
         
         
         private(set) var userSettings: UserSettings?
@@ -112,7 +110,7 @@ extension WorkingDaysView {
             withAnimation {
                 guard let index = self.workingDaysList.firstIndex(where: { workingDay in
                     workingDay.wrappedDate == day.wrappedDate
-                }) else {return}
+                }) else { return }
                 persistenceController.container.viewContext.delete(day)
                 workingDaysList.remove(at: index)
             }
@@ -156,7 +154,6 @@ extension WorkingDaysView {
             }
             today.checkIn = Date() // set check-in to time right now
             persistenceController.save() // Save the updated check-in time
-            isCheckIn = true
             withAnimation(.easeInOut(duration: 1)){
                 showCheckInOutCard.toggle()
             }
@@ -170,7 +167,6 @@ extension WorkingDaysView {
             }
             today.checkOut = Date() // set check-out to time right now
             persistenceController.save() // Save the updated check-out time
-            isCheckOut = true
             withAnimation(.easeInOut(duration: 1)){
                 showCheckInOutCard.toggle()
             }

@@ -2,7 +2,7 @@
 //  WorkingDay+CoreDataClass.swift
 //  MyWorkingTime
 //
-//  Created by Yordan Dimitrov on 22.05.24.
+//  Created by Yordan Dimitrov on 26.05.24.
 //
 //
 
