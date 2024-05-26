@@ -32,6 +32,7 @@ struct EditSheet: View {
                             }
                             .onTapGesture {
                                 viewModel.selectedPause(pause: pause)
+                                print(model.arrPause)
                             }
                         }
                     }

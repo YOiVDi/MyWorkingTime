@@ -33,6 +33,9 @@ extension WorkingDaysView {
         @Published private(set) var workingDaysList: [WorkingDay] = []
         @Published private(set) var today: WorkingDay?
         @Published private(set) var notADayWithTodayDate = false
+        @Published private(set) var isCheckIn = false
+        @Published private(set) var isCheckOut = false
+        
         
         private(set) var userSettings: UserSettings?
         private let persistenceController = PersistenceController.shared
@@ -153,6 +156,10 @@ extension WorkingDaysView {
             }
             today.checkIn = Date() // set check-in to time right now
             persistenceController.save() // Save the updated check-in time
+            isCheckIn = true
+            withAnimation(.easeInOut(duration: 1)){
+                showCheckInOutCard.toggle()
+            }
         }
         /// Handle check-out action
         func handleCheckOut() {
@@ -161,8 +168,12 @@ extension WorkingDaysView {
                 // Handle Error Here
                 return
             }
-            today.checkOut = Date()
+            today.checkOut = Date() // set check-out to time right now
             persistenceController.save() // Save the updated check-out time
+            isCheckOut = true
+            withAnimation(.easeInOut(duration: 1)){
+                showCheckInOutCard.toggle()
+            }
         }
         
         

@@ -37,7 +37,7 @@ struct CheckInOutCardView: View {
                         .frame(width: 100, height: 30)
                 }
                 .tint(.blue)
-                .disabled(viewModel.today?.wrappedCheckIn != nil)
+                .disabled(viewModel.isCheckIn)
                 
                 Button(role: .destructive) {
                     viewModel.handleCheckOut()
@@ -46,7 +46,7 @@ struct CheckInOutCardView: View {
                         .bold()
                         .frame(width: 100, height: 30)
                 }
-                .disabled(viewModel.today?.wrappedCheckOut != nil)
+                .disabled(viewModel.isCheckOut)
             }
             .padding()
             .buttonStyle(BorderedProminentButtonStyle())
