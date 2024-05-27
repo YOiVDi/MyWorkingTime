@@ -14,8 +14,6 @@ extension PauseTimerView {
         @Published var hours = 0
         @Published var minutes = 0
         @Published var seconds = 0
-        @Published var isStopped = false
-        @Published var isStarted = false
         @Published var alert: CustomAlerts? = nil
         
         let pauseTimes: [Int] = [5, 10, 15, 20, 25, 30] // at moment not in use
@@ -23,6 +21,8 @@ extension PauseTimerView {
         // // MARK: - Private Properties
         @Published private(set) var elapsedTimeFrom: Double = 0
         @Published private(set) var elapsedTime: TimeInterval = 0
+        @Published private(set) var isStopped = false
+        @Published private(set) var isStarted = false
         
         private(set) var dateInBackground: Date?
         private(set) var dateInActiveMode: Date?
@@ -90,6 +90,17 @@ extension PauseTimerView {
             }
         }
         
+        /// Setting the timer duration
+        func setTimer() {
+            let hourToSeconds = (hours * 60) * 60
+            let minuteToSeconds = minutes * 60
+            let seconds = seconds
+            let pauseDuration = hourToSeconds + minuteToSeconds + seconds
+            
+            elapsedTimeFrom = Double(pauseDuration)
+            elapsedTime = elapsedTimeFrom
+        }
+        
         ///  invalidate timer
         func stopTimer() {
             isStopped = true
@@ -137,8 +148,48 @@ extension PauseTimerView {
         }
         
         
+        /// it's handle logic for Active scene phase
+        func handleActiveScenePhase() {
+            if dateInBackground != nil {
+                dateInActiveMode = Date()
+            }
+            
+            // for test purpose
+            print("Background: stopPause: \(String(describing: dateInActiveMode))")
+            
+            // If the timer is running, elapsedTime is greater than 0, and isStart == false, resume the timer.
+            // If we have captured the date when the app goes into the background (i.e., it is not nil),
+            // run pauseTimeCalculate, which calculates the time between when we went into the background
+            // and returned to active mode, then subtract that from elapsedTime.
+            
+            if (isTimerRunning && elapsedTime > 0) && isStarted == false {
+                resumeTimer()
+                if dateInBackground != nil {
+                    pauseTimeCalculate()
+                }
+            }
+        }
+        
+        
+        ///  it's handle logic for Background scene phase
+        func handleBackgroundScenePhase() {
+            
+            if isTimerRunning {
+                dateInBackground = Date()
+                timer?.invalidate()
+                isStopped = true
+                isStarted = false
+                
+                // for test purpose
+                print("Background: startPause: \(String(describing: dateInBackground))")
+            }
+        }
+        
+        
+        // MARK: - Private Methods
+        
         /// Calculate difference between start and stop pause to keep timer circle accurate.
-        func pauseTimeCalculate() {
+        private func pauseTimeCalculate() {
             // Calculate the time difference
             let calendar = Calendar.current
             let components = calendar.dateComponents([.hour, .minute, .second], from: dateInBackground ?? Date.now, to: dateInActiveMode ?? Date.now)
@@ -161,17 +212,6 @@ extension PauseTimerView {
              }
         }
         
-        /// Setting the timer duration
-        func setTimer() {
-            let hourToSeconds = (hours * 60) * 60
-            let minuteToSeconds = minutes * 60
-            let seconds = seconds
-            let pauseDuration = hourToSeconds + minuteToSeconds + seconds
-            
-            elapsedTimeFrom = Double(pauseDuration)
-            elapsedTime = elapsedTimeFrom
-        }
-        
         private func doesTodayExist() -> WorkingDay? {
             let workingDaysList = PersistenceController.shared.fetchRequest(filter: nil, sortBy: nil)
             let date = Date()
@@ -188,7 +228,7 @@ extension PauseTimerView {
         }
         
         /// Add pause to day if exist.
-        func addPause() {
+        private func addPause() {
                 guard let matchingDay = doesTodayExist() else { return }
                 guard matchingDay.arrPause.count < 5 else {
                 print("hit maximum pauses")
@@ -205,7 +245,7 @@ extension PauseTimerView {
         }
         
         // Set finish pause time
-        func finishPauseTime() {
+        private func finishPauseTime() {
             guard let beginPause else { return }
             finishPause = beginPause.addingTimeInterval(elapsedTimeFrom)
             // for test purpose
@@ -254,43 +294,6 @@ extension PauseTimerView {
         private func deleteNotification() {
             let center = UNUserNotificationCenter.current()
             center.removeAllPendingNotificationRequests()
-        }
-        
-        /// it's handle logic for Active scene phase
-        func handleActiveScenePhase() {
-            if dateInBackground != nil {
-                dateInActiveMode = Date()
-            }
-            
-            // for test purpose
-            print("Background: stopPause: \(String(describing: dateInActiveMode))")
-            
-            // If the timer is running, elapsedTime is greater than 0, and isStart == false, resume the timer.
-            // If we have captured the date when the app goes into the background (i.e., it is not nil),
-            // run pauseTimeCalculate, which calculates the time between when we went into the background
-            // and returned to active mode, then subtract that from elapsedTime.
-            
-            if (isTimerRunning && elapsedTime > 0) && isStarted == false {
-                resumeTimer()
-                if dateInBackground != nil {
-                    pauseTimeCalculate()
-                }
-            }
-        }
-        
-        
-        ///  it's handle logic for Background scene phase
-        func handleBackgroundScenePhase() {
-            
-            if isTimerRunning {
-                dateInBackground = Date()
-                timer?.invalidate()
-                isStopped = true
-                isStarted = false
-                
-                // for test purpose
-                print("Background: startPause: \(String(describing: dateInBackground))")
-            }
         }
     }
 }

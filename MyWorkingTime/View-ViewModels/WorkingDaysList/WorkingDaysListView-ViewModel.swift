@@ -31,7 +31,7 @@ extension WorkingDaysView {
         
         // MARK: - Private Properties
         @Published private(set) var workingDaysList: [WorkingDay] = []
-        @Published private(set) var today: WorkingDay?
+        @Published private(set) var todayCheckInCheckOut: WorkingDay?
         @Published private(set) var notADayWithTodayDate = false
         
         
@@ -40,16 +40,16 @@ extension WorkingDaysView {
         
         // MARK: - Computed Properties
         var checkIn: String {
-            if let today {
-                return today.wrappedCheckIn
+            if let todayCheckInCheckOut {
+                return todayCheckInCheckOut.wrappedCheckIn
             } else {
                 return "No check-in time"
             }
         }
         
         var checkOut: String {
-            if let today {
-                return today.wrappedCheckOut
+            if let todayCheckInCheckOut {
+                return todayCheckInCheckOut.wrappedCheckOut
             } else {
                 return "No check-Out time"
             }
@@ -60,6 +60,8 @@ extension WorkingDaysView {
         init() {
             fetchWorkingDays(filter: nil, sortBy: [NSSortDescriptor(key: "date", ascending: true)])
             fetchUserSettings()
+            
+            /// test purpose
             checkEntities()
         }
         
@@ -139,7 +141,7 @@ extension WorkingDaysView {
             let workingDaysList = persistenceController.fetchRequest(filter: nil, sortBy: nil)
             let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
             
-            today = workingDaysList.first(where: { workingDay in
+            todayCheckInCheckOut = workingDaysList.first(where: { workingDay in
                 let workingDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workingDay.wrappedDate)
                 return workingDayComponents == targetComponents
             })
@@ -148,7 +150,7 @@ extension WorkingDaysView {
         /// Handle check-in action
         func handleCheckIn() {
             doesTodayExist()
-            guard let today = today else {
+            guard let today = todayCheckInCheckOut else {
                 // Handle Error Here
                 return
             }
@@ -161,7 +163,7 @@ extension WorkingDaysView {
         /// Handle check-out action
         func handleCheckOut() {
             doesTodayExist()
-            guard let today = today else {
+            guard let today = todayCheckInCheckOut else {
                 // Handle Error Here
                 return
             }

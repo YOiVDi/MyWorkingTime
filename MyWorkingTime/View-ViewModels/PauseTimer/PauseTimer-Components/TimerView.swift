@@ -63,19 +63,16 @@ struct TimerView: View {
                         .frame(height: 100)
                         .padding(.horizontal, 80)
                         .padding(.bottom)
-                        .onChange(of: viewModel.hours) { oldValue, newValue in
-                            guard newValue != oldValue else {
-                                return }
+                        .onChange(of: viewModel.hours) {
+                            guard $0 != $1 else { return }
                             viewModel.setTimer()
                         }
-                        .onChange(of: viewModel.minutes) { oldValue, newValue in
-                            guard newValue != oldValue else {
-                                return }
+                        .onChange(of: viewModel.minutes) {
+                            guard $0 != $1 else { return }
                             viewModel.setTimer()
                         }
-                        .onChange(of: viewModel.seconds) { oldValue, newValue in
-                            guard newValue != oldValue else {
-                                return }
+                        .onChange(of: viewModel.seconds) {
+                            guard $0 != $1 else { return }
                             viewModel.setTimer()
                         }
                     }
