@@ -35,7 +35,7 @@ enum CustomAlerts: Error, LocalizedError , Equatable{
         case .userDefaultsIsEmpty:
             return "Workday could not be created"
         case .pauseWillBeNotAdded:
-            return "The pause will not be added!"
+            return "The timer will not start!"
         }
     }
     
@@ -54,9 +54,9 @@ enum CustomAlerts: Error, LocalizedError , Equatable{
         case .swipeDelete:
             return "If you click 'Delete', selected item will be deleted. Once you click 'Delete', the operation cannot be undo"
         case .userDefaultsIsEmpty:
-            return "It looks like your settings are not filled in correctly. Please check your settings and try again to create a workday."
+            return "It's looks like your settings are not filled in correctly. Please check your settings and try again to create a workday."
         case .pauseWillBeNotAdded:
-            return "The day with date \(Date().formatted(date: .abbreviated, time: .omitted)) does not exist in your worklist, please add the day and then try to start the timer."
+            return "The day with date \(Date().formatted(date: .abbreviated, time: .omitted)) doesn't exist in your worklist, please add the day and then try to start the timer."
         }
     }
 }

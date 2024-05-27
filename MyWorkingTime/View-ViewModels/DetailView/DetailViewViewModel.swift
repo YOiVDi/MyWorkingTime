@@ -5,14 +5,13 @@
 //  Created by Yordan Dimitrov on 09.05.24.
 //
 
-import Foundation
+import SwiftUI
 
 extension DetailView {
     class ViewModel: ObservableObject {
         // MARK: - Public properties
         @Published var selectedPause: Pause?
         @Published var model: WorkingDay
-        @Published private var selectedIndex: Int?
         @Published var onChange: Bool = false
         
         @Published var newWorkingTime: Int
@@ -26,19 +25,40 @@ extension DetailView {
         // MARK: - Initialization
         init(model: WorkingDay) {
             self.model = model
+            self.newWorkingTime = model.wrappedWorkingHours
             self.pauseStartEdit = defaultTime
             self.pauseFinishEdit = defaultTime
-            self.newWorkingTime = model.wrappedWorkingHours
         }
         
         
         
         // MARK: - Public Methods
         
+        func buttons() -> some View {
+            return Group {
+                if (selectedPause != nil) {
+                    Button(role: .destructive) {
+                        self.deletePause()
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                } else {
+                    Button {
+                        self.addPause(for: self.model)
+                    } label: {
+                        Label("Add", systemImage: "plus.circle.fill")
+                    }
+                }
+            }
+            .tint(selectedPause != nil ? .red : .blue)
+        }
+        
         /// Deletes the given pause from the working day and saves the context.
-        func deletePause(pause: Pause) {
+        func deletePause() {
+            guard let selectedPause else { return }
                 objectWillChange.send()
-                persistenceController.container.viewContext.delete(pause)
+                persistenceController.container.viewContext.delete(selectedPause)
+                self.selectedPause = nil
                 persistenceController.save()
         }
         
@@ -66,6 +86,16 @@ extension DetailView {
             newPause.finishPause = pauseFinishEdit
             day.addToPauses(newPause)
             persistenceController.save()
+        }
+        
+        func selectPause(_ pause: Pause) {
+            if selectedPause?.id == pause.id {
+                selectedPause = nil
+            } else {
+                selectedPause = pause
+                pauseStartEdit = pause.wrappedStartPause
+                pauseFinishEdit = pause.wrappedFinishPause
+            }
         }
     }
 }

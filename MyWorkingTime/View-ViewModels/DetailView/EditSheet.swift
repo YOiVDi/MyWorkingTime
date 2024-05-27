@@ -30,13 +30,7 @@ struct EditSheet: View {
                                 Text("Finish: \(pause.wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
                             }
                             .onTapGesture {
-                                if viewModel.selectedPause?.id == pause.id {
-                                    viewModel.selectedPause = nil
-                                } else {
-                                    viewModel.selectedPause = pause
-                                    viewModel.pauseStartEdit = pause.wrappedStartPause
-                                    viewModel.pauseFinishEdit = pause.wrappedFinishPause
-                                }
+                                viewModel.selectPause(pause)
                             }
                         }
                     }
@@ -61,6 +55,7 @@ struct EditSheet: View {
                     Spacer()
                 }
             }
+            .animation(.easeInOut, value: viewModel.selectedPause)
             .onAppear {
                 viewModel.newWorkingTime = Int(viewModel.model.workingHours)
             }
@@ -68,31 +63,27 @@ struct EditSheet: View {
                 viewModel.selectedPause = nil
             }
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.backward")
+                            Text("Back")
+                        }
+                    }
+                }
+                
                 ToolbarItem(placement: .topBarTrailing) {
-                    buttons
+                    viewModel.buttons()
                 }
             }
-        }
-        .navigationTitle("Editing \(viewModel.model.wrappedDate.formatted(date: .abbreviated, time: .omitted))")
-    }
-    private var buttons: some View {
-        if (viewModel.selectedPause != nil) {
-            Button {
-                viewModel.deletePause(pause: viewModel.selectedPause!)
-                viewModel.selectedPause = nil
-            } label: {
-                Label("Delete", systemImage: "trash")
-            }
-        } else {
-            Button {
-                viewModel.addPause(for: viewModel.model)
-            } label: {
-                Label("Add", systemImage: "plus.circle.fill")
-            }
+            .navigationTitle("Edit \(viewModel.model.wrappedDate.formatted(date: .abbreviated, time: .omitted))")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
-    
-    #Preview {
-        EditSheet(viewModel: DetailView.ViewModel(model: WorkingDay()))
-    }
+
+#Preview {
+    EditSheet(viewModel: DetailView.ViewModel(model: WorkingDay()))
+}
