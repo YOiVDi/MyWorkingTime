@@ -270,7 +270,7 @@ extension PauseTimerView {
                 
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: self.elapsedTimeFrom, repeats: false)
                 
-                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                let request = UNNotificationRequest(identifier: "RunTimer", content: content, trigger: trigger)
                 center.add(request)
             }
             // check if permission is granted
@@ -293,7 +293,8 @@ extension PauseTimerView {
         /// Delete notification
         private func deleteNotification() {
             let center = UNUserNotificationCenter.current()
-            center.removeAllPendingNotificationRequests()
+//            center.removeAllPendingNotificationRequests()
+            center.removePendingNotificationRequests(withIdentifiers: ["RunTimer"])
         }
     }
 }

@@ -14,6 +14,7 @@ struct CheckInOutCardView: View {
     var body: some View {
         VStack {
             HStack {
+                ///
                 Text(viewModel.userSettings?.companyName ?? "No Company")
                     .foregroundColor(.white)
                     .font(.title.bold())
@@ -23,8 +24,21 @@ struct CheckInOutCardView: View {
             Spacer()
             
             VStack(spacing: 20) {
-                Text("Check-In: \(viewModel.checkIn)")
-                Text("Check-Out: \(viewModel.checkOut)")
+                /// Handel Check-In
+                if let checkIn = viewModel.todayCheckInCheckOut?.checkIn{
+                    Text("Check-In: \(checkIn.formatted(.dateTime.hour().minute().second()))")
+                } else {
+                    Text("Check-In: No Check-In Time")
+                        .lineLimit(1)
+                }
+                
+                /// Handel Check-Out
+                if let checkOut = viewModel.todayCheckInCheckOut?.checkOut {
+                    Text("Check-Out: \(checkOut.formatted(.dateTime.hour().minute().second()))")
+                } else {
+                    Text("Check-Out: No Check-Out Time")
+                        .lineLimit(1)
+                }
             }
             .padding(.bottom)
             
@@ -37,7 +51,7 @@ struct CheckInOutCardView: View {
                         .frame(width: 100, height: 30)
                 }
                 .tint(.blue)
-                .disabled(viewModel.checkIn != "No check-in time")
+                .disabled(viewModel.todayCheckInCheckOut?.checkIn != nil)
                 
                 Button(role: .destructive) {
                     viewModel.handleCheckOut()
@@ -46,7 +60,7 @@ struct CheckInOutCardView: View {
                         .bold()
                         .frame(width: 100, height: 30)
                 }
-                .disabled(viewModel.checkOut != "No check-out time")
+                .disabled(viewModel.todayCheckInCheckOut?.checkOut != nil)
             }
             .padding()
             .buttonStyle(BorderedProminentButtonStyle())

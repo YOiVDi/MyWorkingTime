@@ -23,12 +23,17 @@ struct DetailView: View {
                     workingHoursSection
                     // Pause Section
                     pauseSection
+                    
+                    endOfTheDayTime
                 }
                 //            .listRowSeparator(.hidden)
             }
             .listRowSpacing(10)
             .scrollContentBackground(.hidden)
             .scrollBounceBehavior(.basedOnSize)
+//            Button("Calculation") {
+//                viewModel.calculatedWorkingTime()
+//            }
         }
         
         
@@ -66,27 +71,42 @@ struct DetailView: View {
             Text("\(viewModel.model.wrappedWorkingHours)")
                 .font(.body)
                 .fontWeight(.semibold)
-            Text("Check-In: \(viewModel.model.wrappedCheckIn)")
-                .lineLimit(1)
-            Text("Check-Out: \(viewModel.model.wrappedCheckOut)")
-                .lineLimit(1)
+            if let checkIn = viewModel.model.checkIn,
+               let checkOut = viewModel.model.checkOut {
+                Text("Check-In: \(checkIn.formatted(.dateTime.hour().minute().second()))")
+                    .lineLimit(1)
+                Text("Check-Out: \(checkOut.formatted(.dateTime.hour().minute().second()))")
+                    .lineLimit(1)
+            } else {
+                Text("Check-In: No Check-In Time")
+                    .lineLimit(1)
+                Text("Check-Out: No Check-Out Time")
+                    .lineLimit(1)
+            }
         }
     }
     
     private var pauseSection: some View {
-        Section("Pause") {
+        Section("\(viewModel.model.arrPause.count <= 1 ? "Pause" : "Pauses")") {
             ForEach(viewModel.model.arrPause, id: \.id) { pause in
                 HStack {
-                    Text("Start: \(pause.wrappedStartPause.formatted(date: .omitted, time: .shortened))")
+                    Text("Start: \(pause.wrappedStartPause.formatted(date: .omitted, time: .standard))")
                         .font(.body)
                         .fontWeight(.semibold)
-                    Text("Finish: \(pause.wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
+                    Text("Finish: \(pause.wrappedFinishPause.formatted(date: .omitted, time: .standard))")
                         .font(.body)
                         .fontWeight(.semibold)
                 }
             }
         }
     }
+    
+    private var endOfTheDayTime: some View {
+        Section("End Time") {
+            Text(viewModel.calculatedWorkingTime())
+        }
+    }
+    
     init(model: WorkingDay) {
         _viewModel = StateObject(wrappedValue: ViewModel(model: model))
     }

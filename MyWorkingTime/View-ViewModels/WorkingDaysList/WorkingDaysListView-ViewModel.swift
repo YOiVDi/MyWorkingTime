@@ -39,21 +39,6 @@ extension WorkingDaysView {
         private let persistenceController = PersistenceController.shared
         
         // MARK: - Computed Properties
-        var checkIn: String {
-            if let todayCheckInCheckOut {
-                return todayCheckInCheckOut.wrappedCheckIn
-            } else {
-                return "No check-in time"
-            }
-        }
-        
-        var checkOut: String {
-            if let todayCheckInCheckOut {
-                return todayCheckInCheckOut.wrappedCheckOut
-            } else {
-                return "No check-Out time"
-            }
-        }
         
         
         // MARK: - Initialization

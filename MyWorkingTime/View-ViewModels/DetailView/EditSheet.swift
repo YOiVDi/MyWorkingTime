@@ -13,10 +13,15 @@ struct EditSheet: View {
     var body: some View {
         NavigationView {
             List {
-                Picker("WorkingHours's", selection: $viewModel.newWorkingTime) {
-                    ForEach(0..<9) {
-                        Text("\($0)")
+                Section("Working Hour's") {
+                    Picker("WorkingHours's", selection: $viewModel.newWorkingTime) {
+                        ForEach(0..<9) {
+                            Text("\($0)")
+                        }
                     }
+                    DatePicker("Check-In", selection: $viewModel.checkIn, displayedComponents: .hourAndMinute)
+                    DatePicker("Check-Out", selection: $viewModel.checkOut, displayedComponents: .hourAndMinute)
+                    
                 }
                 if viewModel.model.arrPause.isEmpty { // if array is empty
                     ContentUnavailableView("You have no pauses.", systemImage: "doc.fill", description: Text("To add pause click on \(Image(systemName: "plus.circle.fill")) button."))
@@ -32,15 +37,14 @@ struct EditSheet: View {
                             .onTapGesture {
                                 viewModel.selectPause(pause)
                             }
+                            // Edit pause time
+                            if viewModel.selectedPause == pause {
+                                VStack {
+                                    DatePicker("New Start", selection: $viewModel.pauseStartEdit, displayedComponents: .hourAndMinute)
+                                    DatePicker("New Finish", selection: $viewModel.pauseFinishEdit, displayedComponents: .hourAndMinute)
+                                }
+                            }
                         }
-                    }
-                }
-                
-                // Edit pause time
-                if viewModel.selectedPause != nil {
-                    VStack {
-                        DatePicker("New Start", selection: $viewModel.pauseStartEdit, displayedComponents: .hourAndMinute)
-                        DatePicker("New Finish", selection: $viewModel.pauseFinishEdit, displayedComponents: .hourAndMinute)
                     }
                 }
                 
@@ -49,6 +53,7 @@ struct EditSheet: View {
                     Spacer()
                     Button("Update") {
                         viewModel.update()
+                        dismiss()
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .shadow(color: .black, radius: 3, x: -1, y: 1)

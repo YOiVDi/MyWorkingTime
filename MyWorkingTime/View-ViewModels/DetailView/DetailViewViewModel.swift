@@ -18,6 +18,9 @@ extension DetailView {
         @Published var pauseStartEdit: Date
         @Published var pauseFinishEdit: Date
         
+        @Published var checkIn: Date
+        @Published var checkOut: Date
+        
         // MARK: - Private properties
         private let defaultTime = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: Date()) ?? Date()
         private let persistenceController = PersistenceController.shared
@@ -28,6 +31,8 @@ extension DetailView {
             self.newWorkingTime = model.wrappedWorkingHours
             self.pauseStartEdit = defaultTime
             self.pauseFinishEdit = defaultTime
+            self.checkIn = model.checkIn ?? defaultTime
+            self.checkOut = model.checkOut ?? defaultTime
         }
         
         
@@ -65,12 +70,14 @@ extension DetailView {
         /// Updates the working day and optionally the pause with the new values.
         func update() {
             objectWillChange.send()
-            guard pauseFinishEdit > pauseStartEdit else {
-                print("Your Start of pause is bigger than finish pause.")
-                return
-            }
             model.workingHours = Int16(newWorkingTime)
+            model.checkIn = self.checkIn
+            model.checkOut = self.checkOut
             if let selectedPause {
+                guard pauseFinishEdit > pauseStartEdit else {
+                    print("Your Start of pause is bigger than finish pause.")
+                    return
+                }
                 selectedPause.startPause = pauseStartEdit
                 selectedPause.finishPause = pauseFinishEdit
             }
@@ -96,6 +103,29 @@ extension DetailView {
                 pauseStartEdit = pause.wrappedStartPause
                 pauseFinishEdit = pause.wrappedFinishPause
             }
+        }
+        
+        /// Under construction
+        func calculatedWorkingTime() -> String {
+            var time = ""
+            if let checkIn = model.checkIn, let checkOut = model.checkOut {
+                // Calculate the time interval in seconds
+                var timeInterval = checkOut.timeIntervalSince(checkIn)
+                
+                // If the time interval is negative, add 24 hours (86400 seconds)
+                if timeInterval < 0 {
+                    timeInterval += 24 * 60 * 60
+                }
+                
+                // Convert the time interval to hours, minutes, and seconds
+                let hours = Int(timeInterval) / 3600
+                let minutes = (Int(timeInterval) % 3600) / 60
+                let seconds = (Int(timeInterval) % 3600) % 60
+                
+                // Format the time as a string
+                time = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+            }
+            return time
         }
     }
 }

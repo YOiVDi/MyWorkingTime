@@ -26,7 +26,6 @@ extension WorkingDay {
     @NSManaged public var pauses: NSSet?
     
     
-    
     public var wrappedCompanyname: String {
         companyName ?? ""
     }
@@ -40,12 +39,12 @@ extension WorkingDay {
         Int(workingHours)
     }
     
-    public var wrappedCheckIn: String {
-        checkIn?.formatted(date: .omitted, time: .shortened) ?? "No check-in time"
+    public var wrappedCheckIn: Date? {
+        checkIn ?? nil
     }
     
-    public var wrappedCheckOut: String {
-        checkOut?.formatted(date: .omitted, time: .shortened) ?? "No check-out time"
+    public var wrappedCheckOut: Date? {
+        checkOut ?? nil
     }
     
     public var arrPause: [Pause] {
