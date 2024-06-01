@@ -18,6 +18,8 @@ struct WorkingDaysView: View {
         NavigationView {
             // MARK: - Main Stack
             ZStack(alignment: .bottomTrailing) {
+//                Color(red: 0, green: 0.102, blue: 0)
+//                    .ignoresSafeArea()
                 if viewModel.workingDaysList.isEmpty {
                     VStack {
                         ContentUnavailableView {

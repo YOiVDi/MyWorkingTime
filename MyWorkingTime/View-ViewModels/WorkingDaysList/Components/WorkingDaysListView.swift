@@ -38,10 +38,6 @@ struct WorkingDaysListView: View {
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.black.opacity(0))
                 }
-                //            .onDelete(perform: withAnimation(.smooth) {
-                //                viewModel.deleteWorkingDay })
-//                .onMove(perform: withAnimation(.smooth) {
-//                    viewModel.moveWorkingDay })
             }
             .scrollBounceBehavior(.basedOnSize)
             .scrollContentBackground(.hidden)
@@ -114,7 +110,7 @@ struct WorkingDaysListView: View {
             editMode?.wrappedValue = .inactive
         }
         .alert(viewModel.alert?.title ?? "Error Occured" , isPresented: Binding(value: $viewModel.alert)) {
-//            Buttons
+            //            Buttons
             viewModel.alertButtons(editMode)
         } message: {
             Text(viewModel.alert?.message ?? "")

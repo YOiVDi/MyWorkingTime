@@ -55,7 +55,10 @@ extension DetailView {
                     }
                 }
             }
-            .tint(selectedPause != nil ? .red : .blue)
+        }
+        
+        func editButton() {
+            self.onChange = true
         }
         
         /// Deletes the given pause from the working day and saves the context.
@@ -105,9 +108,11 @@ extension DetailView {
             }
         }
         
-        /// Under construction
+        
+        /// Calculate time between check-in and check-out
+        /// - Returns: return calculated time
         func calculatedWorkingTime() -> String {
-            var time = ""
+            var time = "Check-In and Check-Out data missing."
             if let checkIn = model.checkIn, let checkOut = model.checkOut {
                 // Calculate the time interval in seconds
                 var timeInterval = checkOut.timeIntervalSince(checkIn)
@@ -117,10 +122,16 @@ extension DetailView {
                     timeInterval += 24 * 60 * 60
                 }
                 
-                // Convert the time interval to hours, minutes, and seconds
-                let hours = Int(timeInterval) / 3600
-                let minutes = (Int(timeInterval) % 3600) / 60
-                let seconds = (Int(timeInterval) % 3600) % 60
+                // Convert the time interval to integer seconds
+                let totalSeconds = Int(round(timeInterval))
+                
+                // Convert the total seconds to hours, minutes, and seconds
+                let hours = totalSeconds / 3600
+                let minutes = (totalSeconds % 3600) / 60
+                let seconds = totalSeconds % 60
+                
+                // Add finish working time in Core-Data
+                print(totalSeconds)
                 
                 // Format the time as a string
                 time = String(format: "%02d:%02d:%02d", hours, minutes, seconds)

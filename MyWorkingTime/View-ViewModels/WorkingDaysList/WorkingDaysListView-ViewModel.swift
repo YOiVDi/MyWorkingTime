@@ -122,8 +122,8 @@ extension WorkingDaysView {
         
         
         /// Check if today's date exists, if it does, assign to today's variable
-        func doesTodayExist() {
-            let workingDaysList = persistenceController.fetchRequest(filter: nil, sortBy: nil)
+         func doesTodayExist() {
+//            let workingDaysList = persistenceController.fetchRequest(filter: nil, sortBy: nil)
             let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
             
             todayCheckInCheckOut = workingDaysList.first(where: { workingDay in
@@ -148,6 +148,7 @@ extension WorkingDaysView {
         /// Handle check-out action
         func handleCheckOut() {
             doesTodayExist()
+            guard todayCheckInCheckOut?.checkIn != nil else { return }
             guard let today = todayCheckInCheckOut else {
                 // Handle Error Here
                 return

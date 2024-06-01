@@ -12,7 +12,7 @@ struct EditSheet: View {
     @ObservedObject var viewModel: DetailView.ViewModel
     var body: some View {
         NavigationView {
-            List {
+            Form {
                 Section("Working Hour's") {
                     Picker("WorkingHours's", selection: $viewModel.newWorkingTime) {
                         ForEach(0..<9) {
