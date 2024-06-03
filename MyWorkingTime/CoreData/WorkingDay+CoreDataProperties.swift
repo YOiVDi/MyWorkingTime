@@ -2,7 +2,7 @@
 //  WorkingDay+CoreDataProperties.swift
 //  MyWorkingTime
 //
-//  Created by Yordan Dimitrov on 26.05.24.
+//  Created by Yordan Dimitrov on 03.06.24.
 //
 //
 
@@ -21,38 +21,42 @@ extension WorkingDay {
     @NSManaged public var companyName: String?
     @NSManaged public var date: Date?
     @NSManaged public var id: UUID?
+    @NSManaged public var workedTime: Int64
     @NSManaged public var workingHours: Int16
     @NSManaged public var workOnWeekend: Bool
     @NSManaged public var pauses: NSSet?
     
-    
     public var wrappedCompanyname: String {
-        companyName ?? ""
-    }
+         companyName ?? ""
+     }
+     
+     public var wrappedDate: Date {
+         date ?? Date.now
+     }
+     
+     
+     public var wrappedWorkingHours: Int {
+         Int(workingHours)
+     }
+     
+     public var wrappedCheckIn: Date? {
+         checkIn ?? nil
+     }
+     
+     public var wrappedCheckOut: Date? {
+         checkOut ?? nil
+     }
     
-    public var wrappedDate: Date {
-        date ?? Date.now
+    public var wrappedWorkedTime: Int{
+        Int(workedTime)
     }
-    
-    
-    public var wrappedWorkingHours: Int {
-        Int(workingHours)
-    }
-    
-    public var wrappedCheckIn: Date? {
-        checkIn ?? nil
-    }
-    
-    public var wrappedCheckOut: Date? {
-        checkOut ?? nil
-    }
-    
-    public var arrPause: [Pause] {
-        let setPause = pauses as? Set<Pause> ?? []
-        return setPause.sorted {
-            $0.id < $1.id
-        }
-    }
+     
+     public var arrPause: [Pause] {
+         let setPause = pauses as? Set<Pause> ?? []
+         return setPause.sorted {
+             $0.wrappedStartPause < $1.wrappedStartPause
+         }
+     }
 
 }
 

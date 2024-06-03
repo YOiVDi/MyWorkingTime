@@ -18,7 +18,7 @@ extension PauseTimerView {
         
         let pauseTimes: [Int] = [5, 10, 15, 20, 25, 30] // at moment not in use
         
-        // // MARK: - Private Properties
+        // MARK: - Private Properties
         @Published private(set) var elapsedTimeFrom: Double = 0
         @Published private(set) var elapsedTime: TimeInterval = 0
         @Published private(set) var isStopped = false
@@ -35,7 +35,7 @@ extension PauseTimerView {
         private var timer: Timer?
         
         // MARK: - Computed properties
-        // trimming of circle is based on elapsedTime
+        /// trimming of circle is based on elapsedTime
         var trimProgress: CGFloat {
             return elapsedTime == 0 ?  (timer != nil && elapsedTime == 0 ? 1 : 0) : 1 - (elapsedTime / elapsedTimeFrom)
         }
@@ -236,7 +236,7 @@ extension PauseTimerView {
             }
                 guard let beginPause, let finishPause else { return }
                 let dayPause = Pause(context: persistenceController.container.viewContext)
-                dayPause.uuid = UUID()
+                dayPause.identifier = String(Date().formatted(date: .omitted, time: .standard))
                 dayPause.startPause = beginPause
                 dayPause.finishPause = finishPause
                 matchingDay.addToPauses(dayPause)

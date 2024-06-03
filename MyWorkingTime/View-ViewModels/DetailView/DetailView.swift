@@ -111,7 +111,7 @@ struct DetailView: View {
     private var pauseSection: some View {
         Section("\(viewModel.model.arrPause.count <= 1 ? "Pause" : "Pauses")") {
             Group {
-                ForEach(viewModel.model.arrPause, id: \.id) { pause in
+                ForEach(viewModel.model.arrPause, id: \.self) { pause in
                     HStack {
                         Text("Start: \(pause.wrappedStartPause.formatted(date: .omitted, time: .standard))")
                         Text("Finish: \(pause.wrappedFinishPause.formatted(date: .omitted, time: .standard))")
@@ -129,7 +129,7 @@ struct DetailView: View {
     
     private var endOfTheDayTime: some View {
         Section("Total Working Hour's") {
-            Text(viewModel.calculatedWorkingTime())
+            Text(viewModel.workedTime)
                 .font(.body)
                 .fontWeight(.semibold)
         }
