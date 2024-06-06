@@ -21,6 +21,7 @@ extension PauseTimerView {
         // MARK: - Private Properties
         @Published private(set) var elapsedTimeFrom: Double = 0
         @Published private(set) var elapsedTime: TimeInterval = 0
+        @Published private(set) var overElapsedTime: TimeInterval = 0
         @Published private(set) var isStopped = false
         @Published private(set) var isStarted = false
         
@@ -33,6 +34,16 @@ extension PauseTimerView {
         private let persistenceController = PersistenceController.shared
         
         private var timer: Timer?
+        
+        
+        // MARK: - Initialization
+        
+        init() {
+            print("init")
+        }
+        deinit {
+            print("deinit")
+        }
         
         // MARK: - Computed properties
         /// trimming of circle is based on elapsedTime
@@ -64,30 +75,17 @@ extension PauseTimerView {
         var isTimerRunning: Bool {
             return timer != nil
         }
-         
-        // MARK: - Initialization
-        
-        init() {
-            
-        }
         
         // MARK: - Public Methods
         
         /// gives a initial value of timer and activate it
         func startTimer() {
             guard doesTodayExist() != nil else { return }
+            setTimer()
             self.isStarted = true
             self.beginPause = Date()
             addNotification()
-            DispatchQueue.main.asyncAfter(deadline: .now() + elapsedTimeFrom, execute: finishPauseTime)
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-                guard let self = self else { return }
-                if elapsedTime == 0 {
-                    stopTimer()
-                } else {
-                    self.elapsedTime -= 1
-                }
-            }
+            activateTimer()
         }
         
         /// Setting the timer duration
@@ -109,30 +107,25 @@ extension PauseTimerView {
             deleteNotification()
         }
         
-        /// reset the timer to its initial state
+        /// Reset the timer to its initial state
         func resetTimer() {
-            stopTimer()
+            timer?.invalidate()
+            finishPauseTime()
             isStarted = false
             isStopped = false
             dateInBackground = nil
             dateInActiveMode = nil
             elapsedTime = elapsedTimeFrom
             timer = nil
+            overElapsedTime = 0
             deleteNotification()
         }
+        
         /// allows the timer to resume from where it was last stopped
         func resumeTimer() {
             isStarted = true
             isStopped = false
-            guard elapsedTime != 0 else { return }
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-                guard let self = self else { return }
-                if elapsedTime == 0 {
-                    stopTimer()
-                } else {
-                    self.elapsedTime -= 1
-                }
-            }
+            activateTimer()
             addNotification()
         }
         
@@ -147,46 +140,30 @@ extension PauseTimerView {
             return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
         }
         
-        
-        /// it's handle logic for Active scene phase
-        func handleActiveScenePhase() {
-            if dateInBackground != nil {
-                dateInActiveMode = Date()
-            }
-            
-            // for test purpose
-            print("Background: stopPause: \(String(describing: dateInActiveMode))")
-            
-            // If the timer is running, elapsedTime is greater than 0, and isStart == false, resume the timer.
-            // If we have captured the date when the app goes into the background (i.e., it is not nil),
-            // run pauseTimeCalculate, which calculates the time between when we went into the background
-            // and returned to active mode, then subtract that from elapsedTime.
-            
-            if (isTimerRunning && elapsedTime > 0) && isStarted == false {
-                resumeTimer()
-                if dateInBackground != nil {
-                    pauseTimeCalculate()
-                }
-            }
-        }
-        
-        
-        ///  it's handle logic for Background scene phase
-        func handleBackgroundScenePhase() {
-            
-            if isTimerRunning {
-                dateInBackground = Date()
-                timer?.invalidate()
-                isStopped = true
-                isStarted = false
-                
-                // for test purpose
-                print("Background: startPause: \(String(describing: dateInBackground))")
-            }
-        }
+        func handleScenePhaseChange(_ newScenePhase: ScenePhase) {
+             switch newScenePhase {
+             case .active:
+                 handleActiveScenePhase()
+             case .background:
+                 handleBackgroundScenePhase()
+             default:
+                 break
+             }
+         }
         
         
         // MARK: - Private Methods
+        
+        private func activateTimer() {
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+                guard let self = self else { return }
+                if self.elapsedTime == 0 {
+                    self.overElapsedTime += 1
+                } else {
+                    self.elapsedTime -= 1
+                }
+            }
+        }
         
         /// Calculate difference between start and stop pause to keep timer circle accurate.
         private func pauseTimeCalculate() {
@@ -208,7 +185,14 @@ extension PauseTimerView {
                  // Subtract the calculated time difference from elapsedTime
                  elapsedTime -= Double(calcSeconds)
              } else {
-                 elapsedTime = 0
+                 if elapsedTime != 0 { 
+                     // If elapseTime is not equal to 0, subtract elapsedTime from calcSeconds
+                     // Reminder add to overElapsedTime
+                     overElapsedTime = Double(calcSeconds) - elapsedTime
+                     elapsedTime = 0
+                 } else {
+                     overElapsedTime += Double(calcSeconds)
+                 }
              }
         }
         
@@ -247,7 +231,7 @@ extension PauseTimerView {
         // Set finish pause time
         private func finishPauseTime() {
             guard let beginPause else { return }
-            finishPause = beginPause.addingTimeInterval(elapsedTimeFrom)
+            finishPause = beginPause.addingTimeInterval(elapsedTimeFrom + overElapsedTime)
             // for test purpose
             print("start: \(beginPause), finish: \(String(describing: self.finishPause))")
             if timer != nil {
@@ -262,13 +246,14 @@ extension PauseTimerView {
             let center = UNUserNotificationCenter.current()
             
             // setup notification
-            let addRequest = {
+            let addRequest = { [weak self] in
+                guard let self = self else { return }
                 let content = UNMutableNotificationContent()
-                content.title = "🤯 Pause is over"
-                content.subtitle = "Your break started at \(String(describing: self.beginPause!.formatted(date: .omitted, time: .standard))), and ended now \(String(describing: Date().addingTimeInterval(self.elapsedTimeFrom).formatted(date: .omitted, time: .standard))) total break time  \(self.formatTime(self.elapsedTimeFrom))"
+                content.title = self.elapsedTimeFrom >= 120 ? "⏱️ Your break will end in one minute" : "⏱️ Your break is over"
+                content.subtitle = self.elapsedTimeFrom >= 120 ? "If you don't stop the timer, time will start to run in overtime" : "You are now on overtime break."
                 content.sound = UNNotificationSound.default
                 
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: self.elapsedTimeFrom, repeats: false)
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval:self.elapsedTimeFrom >= 120 ? (self.elapsedTimeFrom - 60) : self.elapsedTimeFrom, repeats: false)
                 
                 let request = UNNotificationRequest(identifier: "RunTimer", content: content, trigger: trigger)
                 center.add(request)
@@ -293,8 +278,44 @@ extension PauseTimerView {
         /// Delete notification
         private func deleteNotification() {
             let center = UNUserNotificationCenter.current()
-//            center.removeAllPendingNotificationRequests()
             center.removePendingNotificationRequests(withIdentifiers: ["RunTimer"])
+        }
+        
+        /// it's handle logic for Active scene phase
+        private func handleActiveScenePhase() {
+            if dateInBackground != nil {
+                dateInActiveMode = Date()
+            }
+            
+            // for test purpose
+            print("Background: stopPause: \(String(describing: dateInActiveMode))")
+            
+            // If the timer is running, elapsedTime is greater than 0, and isStart == false, resume the timer.
+            // If we have captured the date when the app goes into the background (i.e., it is not nil),
+            // run pauseTimeCalculate, which calculates the time between when we went into the background
+            // and returned to active mode, then subtract that from elapsedTime.
+            
+            if isTimerRunning && isStarted == false {
+                resumeTimer()
+                if dateInBackground != nil {
+                    pauseTimeCalculate()
+                }
+            }
+        }
+        
+        
+        ///  it's handle logic for Background scene phase
+        private func handleBackgroundScenePhase() {
+            
+            if isTimerRunning {
+                dateInBackground = Date()
+                timer?.invalidate()
+                isStopped = true
+                isStarted = false
+                
+                // for test purpose
+                print("Background: startPause: \(String(describing: dateInBackground))")
+            }
         }
     }
 }
