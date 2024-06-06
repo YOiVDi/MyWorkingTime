@@ -63,33 +63,22 @@ struct TimerView: View {
                         .frame(height: 100)
                         .padding(.horizontal, 80)
                         .padding(.bottom)
-                        .onChange(of: viewModel.hours) {
-                            guard $0 != $1 else { return }
-                            viewModel.setTimer()
-                        }
-                        .onChange(of: viewModel.minutes) {
-                            guard $0 != $1 else { return }
-                            viewModel.setTimer()
-                        }
-                        .onChange(of: viewModel.seconds) {
-                            guard $0 != $1 else { return }
-                            viewModel.setTimer()
-                        }
                     }
                     .frame(width: 350)
                 } else {
-                    Text("\(viewModel.formatTime(viewModel.elapsedTime))")
-                        .foregroundColor(.green)
-                        .font(.largeTitle.bold())
+                    if viewModel.isTimerRunning && viewModel.elapsedTime != 0 {
+                        Text("\(viewModel.formatTime(viewModel.elapsedTime))")
+                            .foregroundColor(.green)
+                            .font(.largeTitle.bold())
+                    } else {
+                        Text("\(viewModel.formatTime(viewModel.overElapsedTime))")
+                            .foregroundColor(.red)
+                            .font(.largeTitle.bold())
+                    }
                 }
             }
             .onChange(of: scenePhase) {
-                if scenePhase == .active {
-                    viewModel.handleActiveScenePhase()
-                    
-                } else if scenePhase == .background {
-                    viewModel.handleBackgroundScenePhase()
-                }
+                viewModel.handleScenePhaseChange(scenePhase)
             }
             .alert(viewModel.alert?.title ?? "Error Occur", isPresented: Binding(value: $viewModel.alert)) {
                 
