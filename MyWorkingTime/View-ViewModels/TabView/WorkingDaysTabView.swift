@@ -10,18 +10,21 @@ import SwiftUI
 struct WorkingDaysTabView: View {
     var body: some View {
         TabView {
-            WorkingDaysView()
-                .tabItem {
-                    Label("List", systemImage: "list.bullet.circle")
-                }
-            PauseTimerView()
-                .tabItem {
-                    Label("Pause Timer", systemImage: "clock")
-                }
-            SettingsView()
-                .tabItem {
-                    Label("Settings", systemImage: "gear")
-                }
+            Group {
+                WorkingDaysView()
+                    .tabItem {
+                        Label("List", systemImage: "list.bullet.circle")
+                    }
+                PauseTimerView()
+                    .tabItem {
+                        Label("Pause Timer", systemImage: "clock")
+                    }
+                SettingsView()
+                    .tabItem {
+                        Label("Settings", systemImage: "gear")
+                    }
+            }
+            .toolbar(.visible, for: .tabBar)
         }
     }
 }

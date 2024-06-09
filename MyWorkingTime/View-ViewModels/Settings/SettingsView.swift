@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct SettingsView: View {
-    
     // MARK: Properties
     @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel = SettingsViewModel()
@@ -18,36 +17,51 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
                 Form {
-                    Section ("work information") {
-                        TextField("Company name", text: $viewModel.userSettings.companyName)
+                    Section ("Work Information") {
+                        TextField("Company name", text: $viewModel.companyName)
                             .autocorrectionDisabled()
-                            .onChange(of: viewModel.userSettings.companyName) {
-                                viewModel.trimWhiteSpace()
+                            .trimmedString($viewModel.companyName)
+//                        
+                        Picker("Work hour's", selection: $viewModel.workHours) {
+                            ForEach(0..<12) {
+                                Text("\($0)h")
                             }
-                        
-                        Picker("Working hour's", selection: $viewModel.userSettings.workingHours) {
-                            ForEach(0..<9) {
-                                Text("\($0)")
-                            }
-                        }
-                        
-                        Toggle("Work on weekends", isOn: $viewModel.userSettings.workOnWeekend)
-                            .onChange(of: viewModel.userSettings.workOnWeekend) {
-                                viewModel.workOnWeekend()
-                            }
-                        if viewModel.userSettings.workOnWeekend {
-                            Toggle("Saturday", isOn: $viewModel.userSettings.saturday)
-                            Toggle("Sunday", isOn: $viewModel.userSettings.sunday)
-                            Toggle("Holiday's", isOn: $viewModel.userSettings.holidays)
                         }
                     }
-                    Button("Save Settings", action: {viewModel.saveSettingsToUserDefaults()})
+                    
+                    Section("Weekend's") {
+                        Toggle("Work on weekends", isOn: $viewModel.workOnWeekends)
+                        
+                        if viewModel.workOnWeekends {
+                            Toggle("Saturday", isOn: $viewModel.workOnSaturday)
+                            if viewModel.workOnSaturday {
+                                Picker("Work hour's", selection: $viewModel.saturdayHours) {
+                                    ForEach(0..<12) {
+                                        Text("\($0)h")
+                                    }
+                                }
+                            }
+                            Toggle("Sunday", isOn: $viewModel.workOnSunday)
+                            if viewModel.workOnSunday {
+                                Picker("Work hour's", selection: $viewModel.sundayHours) {
+                                    ForEach(0..<12) {
+                                        Text("\($0)h")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Section("Holiday's") {
+                        Toggle("Holiday's", isOn: $viewModel.workOnHolidays)
+                        if viewModel.workOnHolidays {
+                            Picker("Work hour's", selection: $viewModel.holidaysHours) {
+                                ForEach(0..<12) {
+                                    Text("\($0)h")
+                                }
+                            }
+                        }
+                    }
                 }
-            .alert(viewModel.alert?.title ?? "Error Occured", isPresented: Binding(value: $viewModel.alert)) {
-                
-            } message: {
-                Text(viewModel.alert?.message ?? "")
-            }
             .scrollContentBackground(.hidden)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)

@@ -44,8 +44,8 @@ extension DetailView {
         init(model: WorkingDay) {
             self.model = model
             self.newWorkingTime = model.wrappedWorkingHours
-            self.pauseStartEdit = defaultTime
-            self.pauseFinishEdit = defaultTime
+            self.pauseStartEdit = model.checkOut ?? defaultTime
+            self.pauseFinishEdit = model.checkOut ?? defaultTime
             self.checkIn = model.checkIn ?? defaultTime
             self.checkOut = model.checkOut ?? defaultTime
         }
@@ -120,13 +120,21 @@ extension DetailView {
                 }
                 
                 // Update the selected pause's start and finish times
-                selectedPause.startPause = pauseStartEdit
-                selectedPause.finishPause = pauseFinishEdit
+                if pauseStartEdit == defaultTime || pauseFinishEdit == defaultTime {
+                    selectedPause.startPause = nil
+                    selectedPause.finishPause = nil
+                    print("nil")
+                } else {
+                    selectedPause.startPause = pauseStartEdit
+                    selectedPause.finishPause = pauseFinishEdit
+                    print("Notnil")
+                }
                 
                 // Print confirmation for debugging purposes
                 print("Pause passed date compare check")
                 print("Start: \(pauseStartEdit)")
                 print("Finish: \(pauseFinishEdit)")
+                print("default: \(defaultTime)")
             }
             
             // Reset the selected pause to nil

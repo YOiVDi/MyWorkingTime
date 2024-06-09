@@ -25,28 +25,26 @@ extension PauseTimerView {
         @Published private(set) var isStopped = false
         @Published private(set) var isStarted = false
         
+        /// Handle time in when app went into Background mode and went back in Active mode
         private(set) var dateInBackground: Date?
         private(set) var dateInActiveMode: Date?
         
+        // Handle when pause start and finish of pause
         private(set) var beginPause: Date?
-        private(set) var finishPause: Date?
+        private(set) var finishPause: Date? 
         
         private let persistenceController = PersistenceController.shared
         private let notificationManager = NotificationManager()
         private let pauseManager = PauseManager()
         private let scenePhaseHandler = ScenePhaseHandler()
         
+        /// Timer property
         private var timer: Timer?
         
         
         // MARK: - Initialization
         
-        init() {
-            print("init")
-        }
-        deinit {
-            print("deinit")
-        }
+        init() {}
         
         // MARK: - Computed properties
         /// Trimming of circle is based on elapsedTime
@@ -85,9 +83,9 @@ extension PauseTimerView {
         func startTimer() {
             guard doesTodayExist() != nil else { return }
             setTimer()
-            self.isStarted = true
-            self.beginPause = Date()
-            notificationManager.addNotification(elapsedTime)
+            isStarted = true
+            beginPause = Date()
+            addNotification()
             activateTimer()
         }
         
@@ -130,7 +128,7 @@ extension PauseTimerView {
             isStarted = true
             isStopped = false
             activateTimer()
-            notificationManager.addNotification(elapsedTime)
+            addNotification()
         }
         
         
@@ -232,6 +230,12 @@ extension PauseTimerView {
        // Set finish pause time
         private func finishPauseTime() {
             finishPause = pauseManager.finishPauseTime(beginPause: beginPause, elapsedTimeFrom: elapsedTimeFrom, overElapsedTime: overElapsedTime, persistenceController: persistenceController, workingDay: doesTodayExist())
+        }
+        private func addNotification() {
+            if elapsedTime != 0 {
+                notificationManager.addNotification(elapsedTime)
+                print("add Notification")
+            }
         }
     }
 }

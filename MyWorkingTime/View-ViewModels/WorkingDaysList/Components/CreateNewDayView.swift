@@ -28,7 +28,7 @@ struct CreateNewDayView: View {
                     viewModel.creatingDayOfUserChoice(dismiss)
                 }
             }
-            .navigationTitle("Create Day")
+            .navigationTitle("New working day")
         }
     }
 }

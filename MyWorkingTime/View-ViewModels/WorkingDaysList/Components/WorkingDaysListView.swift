@@ -39,7 +39,7 @@ struct WorkingDaysListView: View {
                     .listRowBackground(Color.black.opacity(0))
                 }
             }
-            .scrollBounceBehavior(.basedOnSize)
+//            .scrollBounceBehavior(.basedOnSize)
             .scrollContentBackground(.hidden)
             .listRowSpacing(10)
             .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
@@ -70,9 +70,11 @@ struct WorkingDaysListView: View {
                             .clipShape(Circle())
                     }
                 }
-                .padding(.horizontal, 40)
+//                .padding(.horizontal, 40)
+                .padding(.horizontal)
             }
-            .padding(.bottom, 70)
+//            .padding(.bottom, 70)
+            .padding(.bottom)
         }
         .sheet(isPresented: $viewModel.createNewDaySheet) {
             CreateNewDayView(viewModel: viewModel)

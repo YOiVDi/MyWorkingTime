@@ -43,20 +43,20 @@ struct DetailView: View {
         
         
         // MARK: Edited Sheet
-        .sheet(isPresented: $viewModel.onChange) {
-            EditSheet(viewModel: viewModel)
-        }
-        .toolbar {
-            ToolbarItem {
-                Button {
-                    withAnimation {
-                        viewModel.editButton()
-                    }
-                } label: {
-                    Text("Edit")
-                }
-            }
-        }
+//        .sheet(isPresented: $viewModel.onChange) {
+//            EditSheet(viewModel: viewModel)
+//        }
+//        .toolbar {
+//            ToolbarItem {
+//                Button {
+//                    withAnimation {
+//                        viewModel.editButton()
+//                    }
+//                } label: {
+//                    Text("Edit")
+//                }
+//            }
+//        }
         .navigationTitle("\(viewModel.model.wrappedDate.formatted(.dateTime.day().month()))")
         .onDisappear(perform: {
             dismiss()
