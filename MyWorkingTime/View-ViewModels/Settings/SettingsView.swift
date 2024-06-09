@@ -23,7 +23,7 @@ struct SettingsView: View {
                             .trimmedString($viewModel.companyName)
 //                        
                         Picker("Work hour's", selection: $viewModel.workHours) {
-                            ForEach(0..<12) {
+                            ForEach(0..<13) {
                                 Text("\($0)h")
                             }
                         }
@@ -36,7 +36,7 @@ struct SettingsView: View {
                             Toggle("Saturday", isOn: $viewModel.workOnSaturday)
                             if viewModel.workOnSaturday {
                                 Picker("Work hour's", selection: $viewModel.saturdayHours) {
-                                    ForEach(0..<12) {
+                                    ForEach(0..<13) {
                                         Text("\($0)h")
                                     }
                                 }
@@ -44,23 +44,25 @@ struct SettingsView: View {
                             Toggle("Sunday", isOn: $viewModel.workOnSunday)
                             if viewModel.workOnSunday {
                                 Picker("Work hour's", selection: $viewModel.sundayHours) {
-                                    ForEach(0..<12) {
+                                    ForEach(0..<13) {
                                         Text("\($0)h")
                                     }
                                 }
                             }
                         }
                     }
-                    Section("Holiday's") {
-                        Toggle("Holiday's", isOn: $viewModel.workOnHolidays)
-                        if viewModel.workOnHolidays {
-                            Picker("Work hour's", selection: $viewModel.holidaysHours) {
-                                ForEach(0..<12) {
-                                    Text("\($0)h")
-                                }
-                            }
-                        }
-                    }
+                    
+                    /// Need to be fix.
+//                    Section("Holiday's") {
+//                        Toggle("Holiday's", isOn: $viewModel.workOnHolidays)
+//                        if viewModel.workOnHolidays {
+//                            Picker("Work hour's", selection: $viewModel.holidaysHours) {
+//                                ForEach(0..<13) {
+//                                    Text("\($0)h")
+//                                }
+//                            }
+//                        }
+//                    }
                 }
             .scrollContentBackground(.hidden)
             .navigationTitle("Settings")

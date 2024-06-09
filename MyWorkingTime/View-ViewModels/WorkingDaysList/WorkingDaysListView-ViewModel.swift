@@ -48,6 +48,7 @@ extension WorkingDaysView {
             
             /// test purpose
             checkEntities()
+//            isWeekendOrHoliday()
         }
         
         // MARK: - Public Methods
@@ -160,8 +161,6 @@ extension WorkingDaysView {
             }
         }
         
-        
-        
         // MARK: - Private Methods
         
         /// Creates a new working day based on user settings.
@@ -176,7 +175,7 @@ extension WorkingDaysView {
             newWorkingDay.id = UUID()
             newWorkingDay.companyName = userSettings.companyName
             newWorkingDay.date = notADayWithTodayDate ? date : Date()
-            newWorkingDay.workingHours = Int16(notADayWithTodayDate ? workingHours : userSettings.workingHours)
+            newWorkingDay.workingHours = Int16(notADayWithTodayDate ? workingHours : isWeekend())
             newWorkingDay.workOnWeekend = notADayWithTodayDate ? workOnWeekend : userSettings.workOnWeekend
             
             // Add the new WorkingDay object to the list
@@ -185,6 +184,20 @@ extension WorkingDaysView {
             }
         }
         
+        /// Check if a day is weekend
+        /// - Returns: work hours for specific day as Int
+        private func isWeekend() -> Int {
+            let deconstructDate = Calendar.current
+            let weekDay = deconstructDate.dateComponents([.weekday], from: Date())
+            switch weekDay.weekday {
+            case 1:
+                return userSettings?.sundayHours ?? 0
+            case 7:
+                return userSettings?.saturdayHours ?? 0
+            default:
+                return userSettings?.workingHours ?? 0
+            }
+        }
         
         /// Fetches user settings from UserDefaults.
         private func fetchUserSettings() {
@@ -268,7 +281,7 @@ extension WorkingDaysView {
         
         
         /// Test purpose
-        func checkEntities() {
+        private func checkEntities() {
             let workingDays = persistenceController.fetchRequestWorkingDays()
             print("WorkingDays: \(workingDays.count)")
             let pauses = persistenceController.fetchRequestPauses()
