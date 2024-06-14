@@ -1,0 +1,874 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "%@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lldh" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldh"
+          }
+        }
+      }
+    },
+    "add" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "add"
+          }
+        }
+      }
+    },
+    "Add" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        }
+      }
+    },
+    "Are you sure?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sind Sie sicher?"
+          }
+        }
+      }
+    },
+    "Back" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurück"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        }
+      }
+    },
+    "Check-In" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check-In"
+          }
+        }
+      }
+    },
+    "Check-In: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check-In: %@"
+          }
+        }
+      }
+    },
+    "Check-In: No Check-In Time" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check-In: Keine Check-In Zeit"
+          }
+        }
+      }
+    },
+    "Check-Out" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check-Out"
+          }
+        }
+      }
+    },
+    "Check-Out: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check-Out: %@"
+          }
+        }
+      }
+    },
+    "Check-Out: No Check-Out Time" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check-Out: Keine Check-Out Zeit"
+          }
+        }
+      }
+    },
+    "Choose a day: " : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wählen Sie einen Tag:"
+          }
+        }
+      }
+    },
+    "Click" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klicken"
+          }
+        }
+      }
+    },
+    "Company" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unternehmen"
+          }
+        }
+      }
+    },
+    "Company name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name der Firma"
+          }
+        }
+      }
+    },
+    "Company name: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name der Firma: %@"
+          }
+        }
+      }
+    },
+    "Create day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag erstellen"
+          }
+        }
+      }
+    },
+    "Day Working Hour's" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeitszeiten am Tag"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        }
+      }
+    },
+    "Easily log today as a working day or choose a specific date, all with just a few clicks on your smartphone." : {
+      "comment" : "onboarding",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loggen Sie heute einfach als Arbeitstag oder wählen Sie ein bestimmtes Datum aus, alles mit nur wenigen Klicks auf Ihrem Smartphone."
+          }
+        }
+      }
+    },
+    "Edit %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeiten %@"
+          }
+        }
+      }
+    },
+    "Error Occur" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler aufgetreten"
+          }
+        }
+      }
+    },
+    "Error Occured" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler aufgetreten"
+          }
+        }
+      }
+    },
+    "Finish" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beenden"
+          }
+        }
+      }
+    },
+    "Finish: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beenden: %@"
+          }
+        }
+      }
+    },
+    "Hours" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Std."
+          }
+        }
+      }
+    },
+    "Hours." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Std."
+          }
+        }
+      }
+    },
+    "If you click 'Delete', all selected items will be deleted. Once you click 'Delete', the operation cannot be undo" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn Sie auf 'Löschen' klicken, werden alle ausgewählten Einträge gelöscht. Nachdem Sie auf 'Löschen' geklickt haben, kann die Aktion nicht rückgängig gemacht werden."
+          }
+        }
+      }
+    },
+    "If you click 'Delete', selected item will be deleted. Once you click 'Delete', the operation cannot be undo" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn Sie auf 'Löschen' klicken, wird der ausgewählte Eintrag gelöscht. Nachdem Sie auf 'Löschen' geklickt haben, kann die Aktion nicht rückgängig gemacht werden."
+          }
+        }
+      }
+    },
+    "It's looks like your settings are not filled in correctly. Please check your settings and try again to create a workday." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Einstellungen scheinen nicht korrekt ausgefüllt zu sein. Bitte überprüfen Sie Ihre Einstellungen und versuchen Sie erneut, einen Arbeitstag zu erstellen."
+          }
+        }
+      }
+    },
+    "Just One Click" : {
+      "comment" : "onboarding",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nur ein Klick"
+          }
+        }
+      }
+    },
+    "List" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liste"
+          }
+        }
+      }
+    },
+    "Min." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Min."
+          }
+        }
+      }
+    },
+    "My choice" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meine Wahl"
+          }
+        }
+      }
+    },
+    "Need to work on weekends? No problem. You can choose different working hours for the weekend. Whether you need to adjust the schedule for Saturday, Sunday, or both days, we've got you covered." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stellen Sie Ihre Timer-Dauer ein und genießen Sie Ihre Pausen. Kurz bevor Ihre Pause endet, erhalten Sie eine Benachrichtigung. Wenn Sie Ihre Pause versehentlich durch Gespräche oder Ablenkungen verlängern, keine Sorge – die Anwendung wird diese zusätzliche Zeit verfolgen und melden."
+          }
+        }
+      }
+    },
+    "New Finish" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neues Finish"
+          }
+        }
+      }
+    },
+    "New Start" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neustart"
+          }
+        }
+      }
+    },
+    "New working day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neuer Arbeitstag"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "One click" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nur ein Klick"
+          }
+        }
+      }
+    },
+    "Pause Timer" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausentimer"
+          }
+        }
+      }
+    },
+    "Please make sure all textfields are filled in." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte stellen Sie sicher, dass alle Textfelder ausgefüllt sind."
+          }
+        }
+      }
+    },
+    "Please make sure that the working hours are filled in correctly, they should be between 1 - 8 hours" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte stellen Sie sicher, dass die Arbeitsstunden korrekt ausgefüllt sind. Sie sollten zwischen 1 und 8 Stunden liegen."
+          }
+        }
+      }
+    },
+    "Reset" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurücksetzen"
+          }
+        }
+      }
+    },
+    "Resume" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortsetzen"
+          }
+        }
+      }
+    },
+    "Saturday" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samstag"
+          }
+        }
+      }
+    },
+    "Saved" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gespeichert"
+          }
+        }
+      }
+    },
+    "Sec." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sec."
+          }
+        }
+      }
+    },
+    "Set Timer" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer Einstellen"
+          }
+        }
+      }
+    },
+    "Set your timer durations and enjoy your pauses. Just before your pause ends, you'll receive a notification. If you accidentally extend your pause by talking or getting distracted, no worries—the application will track and report this extra time." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stellen Sie die Dauer Ihres Timers ein und genießen Sie Ihre Pausen. Kurz bevor Ihre Pause endet, erhalten Sie eine Benachrichtigung. Wenn Sie Ihre Pause versehentlich durch Gespräche oder Ablenkungen verlängern, keine Sorge – die Anwendung wird diese zusätzliche Zeit verfolgen und melden."
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        }
+      }
+    },
+    "Start" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        }
+      }
+    },
+    "Start: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start: %@"
+          }
+        }
+      }
+    },
+    "Stop" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stoppen"
+          }
+        }
+      }
+    },
+    "Sunday" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonntag"
+          }
+        }
+      }
+    },
+    "The day cannot be added" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Tag kann nicht hinzugefügt werden."
+          }
+        }
+      }
+    },
+    "The day with date %@ doesn't exist in your worklist, please add the day and then try to start the timer." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Tag mit dem Datum %@ existiert nicht in Ihrer Arbeitsliste. Bitte fügen Sie den Tag hinzu und versuchen Sie dann, den Timer zu starten."
+          }
+        }
+      }
+    },
+    "The day you are trying to add already exists in your list." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Tag, den Sie hinzufügen möchten, existiert bereits in Ihrer Liste."
+          }
+        }
+      }
+    },
+    "The timer will not start!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Timer wird nicht gestartet!"
+          }
+        }
+      }
+    },
+    "There are no check-In data" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es gibt keine check-In-Daten."
+          }
+        }
+      }
+    },
+    "There are no check-out data" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es gibt keine check-Out-Daten."
+          }
+        }
+      }
+    },
+    "Timer" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer"
+          }
+        }
+      }
+    },
+    "To add pause click on %@ button." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um eine Pause hinzuzufügen, klicken Sie auf die %@-Taste."
+          }
+        }
+      }
+    },
+    "Today" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute"
+          }
+        }
+      }
+    },
+    "Total Working Hour's" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamtarbeitszeit"
+          }
+        }
+      }
+    },
+    "Unable to save your settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen können nicht gespeichert werden."
+          }
+        }
+      }
+    },
+    "Update" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update"
+          }
+        }
+      }
+    },
+    "Want to create a working day with date:" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Möchten Sie einen Arbeitstag mit Datum erstellen?"
+          }
+        }
+      }
+    },
+    "Weekend's" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wochenende"
+          }
+        }
+      }
+    },
+    "Work hour's" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeitsstunden"
+          }
+        }
+      }
+    },
+    "Work Information" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeitsinformationen"
+          }
+        }
+      }
+    },
+    "Work on weekends" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeiten am Wochenende"
+          }
+        }
+      }
+    },
+    "Work On Weekends" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeiten am Wochenende"
+          }
+        }
+      }
+    },
+    "Workday could not be created" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Arbeitstag konnte nicht erstellt werden."
+          }
+        }
+      }
+    },
+    "Working hour's" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeitsstunden"
+          }
+        }
+      }
+    },
+    "Working Hour's" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeitsstunden"
+          }
+        }
+      }
+    },
+    "Working Hours" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeitsstunden"
+          }
+        }
+      }
+    },
+    "WorkingHours's" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeitsstunden"
+          }
+        }
+      }
+    },
+    "You can add today as a working day or choose a specific date, all with just a few clicks on your smartphone." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können heute als Arbeitstag hinzufügen oder ein bestimmtes Datum auswählen, alles mit nur wenigen Klicks auf Ihrem Smartphone."
+          }
+        }
+      }
+    },
+    "You can edit the day and manually add the breaks." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können den Tag bearbeiten und manuell Pausen hinzufügen."
+          }
+        }
+      }
+    },
+    "You have no pauses." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie haben keine Pausen."
+          }
+        }
+      }
+    },
+    "Your list is empty" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Liste ist leer."
+          }
+        }
+      }
+    },
+    "Your settings has been saved." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Einstellungen wurden gespeichert."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
