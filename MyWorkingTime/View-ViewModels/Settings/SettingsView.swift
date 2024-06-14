@@ -10,7 +10,6 @@ import SwiftUI
 
 struct SettingsView: View {
     // MARK: Properties
-    @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel = SettingsViewModel()
     
     // MARK: Body

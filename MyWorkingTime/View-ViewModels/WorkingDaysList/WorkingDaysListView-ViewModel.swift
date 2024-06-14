@@ -48,7 +48,6 @@ extension WorkingDaysView {
             
             /// test purpose
             checkEntities()
-//            isWeekendOrHoliday()
         }
         
         // MARK: - Public Methods

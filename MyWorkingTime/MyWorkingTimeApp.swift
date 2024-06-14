@@ -11,7 +11,7 @@ import SwiftUI
 struct MyWorkingTimeApp: App {
     var body: some Scene {
         WindowGroup {
-            WorkingDaysTabView()
+            MainAppView()
         }
     }
 }

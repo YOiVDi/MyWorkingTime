@@ -40,6 +40,9 @@ struct DetailView: View {
             .scrollContentBackground(.hidden)
             .scrollBounceBehavior(.basedOnSize)
         }
+        .onAppear(perform: {
+            viewModel.calculatedWorkingTime()
+        })
         
         
         // MARK: Edited Sheet

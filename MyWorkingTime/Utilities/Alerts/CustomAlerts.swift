@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum CustomAlerts: Error, LocalizedError , Equatable{
     case emptyCompanyName
@@ -18,7 +19,7 @@ enum CustomAlerts: Error, LocalizedError , Equatable{
     case pauseWillBeNotAdded
     
     
-    var title: String {
+    var title: LocalizedStringKey {
         switch self {
         case .emptyCompanyName:
             return "Unable to save your settings"
@@ -39,7 +40,7 @@ enum CustomAlerts: Error, LocalizedError , Equatable{
         }
     }
     
-    var message: String {
+    var message: LocalizedStringKey {
         switch self {
         case .emptyCompanyName:
             return "Please make sure all textfields are filled in."
