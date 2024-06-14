@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		850286B22C16DC74004D3EA5 /* OnboardTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850286B12C16DC74004D3EA5 /* OnboardTabView.swift */; };
+		850286B42C16DCAE004D3EA5 /* OnboardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850286B32C16DCAE004D3EA5 /* OnboardItem.swift */; };
+		850286B62C16DD59004D3EA5 /* OnboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850286B52C16DD59004D3EA5 /* OnboardViewModel.swift */; };
+		850286B82C16F215004D3EA5 /* OnboardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850286B72C16F215004D3EA5 /* OnboardItemView.swift */; };
 		8509CF552BF210EE00C7ACB0 /* MyWorkingTimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF542BF210EE00C7ACB0 /* MyWorkingTimeApp.swift */; };
 		8509CF592BF210F000C7ACB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8509CF582BF210F000C7ACB0 /* Assets.xcassets */; };
 		8509CF5C2BF210F000C7ACB0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8509CF5B2BF210F000C7ACB0 /* Preview Assets.xcassets */; };
@@ -36,6 +40,8 @@
 		8522E7682C117C5600FFB75D /* PauseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8522E7672C117C5600FFB75D /* PauseManager.swift */; };
 		8522E76A2C1183C800FFB75D /* ScenePhaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8522E7692C1183C800FFB75D /* ScenePhaseHandler.swift */; };
 		8522E76C2C130E2000FFB75D /* TrimmedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8522E76B2C130E2000FFB75D /* TrimmedString.swift */; };
+		852C8F612C19972100B511F9 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C8F602C19972100B511F9 /* MainAppView.swift */; };
+		852C8F632C1AD61C00B511F9 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 852C8F622C1AD61C00B511F9 /* Localizable.xcstrings */; };
 		854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854520C72BF9F77D00437F5A /* CreateNewDayView.swift */; };
 		854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */; };
 		8553703C2C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855370382C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift */; };
@@ -46,6 +52,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		850286B12C16DC74004D3EA5 /* OnboardTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardTabView.swift; sourceTree = "<group>"; };
+		850286B32C16DCAE004D3EA5 /* OnboardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardItem.swift; sourceTree = "<group>"; };
+		850286B52C16DD59004D3EA5 /* OnboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewModel.swift; sourceTree = "<group>"; };
+		850286B72C16F215004D3EA5 /* OnboardItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardItemView.swift; sourceTree = "<group>"; };
 		8509CF512BF210EE00C7ACB0 /* MyWorkingTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyWorkingTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8509CF542BF210EE00C7ACB0 /* MyWorkingTimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWorkingTimeApp.swift; sourceTree = "<group>"; };
 		8509CF582BF210F000C7ACB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -76,6 +86,8 @@
 		8522E7672C117C5600FFB75D /* PauseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseManager.swift; sourceTree = "<group>"; };
 		8522E7692C1183C800FFB75D /* ScenePhaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenePhaseHandler.swift; sourceTree = "<group>"; };
 		8522E76B2C130E2000FFB75D /* TrimmedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimmedString.swift; sourceTree = "<group>"; };
+		852C8F602C19972100B511F9 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
+		852C8F622C1AD61C00B511F9 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		854454282BFE894900E90750 /* WorkingDay v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v2.xcdatamodel"; sourceTree = "<group>"; };
 		854520C72BF9F77D00437F5A /* CreateNewDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewDayView.swift; sourceTree = "<group>"; };
 		854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInOutCardView.swift; sourceTree = "<group>"; };
@@ -101,6 +113,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		850286B02C16DC16004D3EA5 /* OnboardView */ = {
+			isa = PBXGroup;
+			children = (
+				850286B12C16DC74004D3EA5 /* OnboardTabView.swift */,
+				850286B52C16DD59004D3EA5 /* OnboardViewModel.swift */,
+				850286B72C16F215004D3EA5 /* OnboardItemView.swift */,
+			);
+			path = OnboardView;
+			sourceTree = "<group>";
+		};
 		8509CF482BF210EE00C7ACB0 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +148,7 @@
 				8509CF632BF2110300C7ACB0 /* Model */,
 				8509CF882BF2111B00C7ACB0 /* View-ViewModels */,
 				8509CF582BF210F000C7ACB0 /* Assets.xcassets */,
+				852C8F622C1AD61C00B511F9 /* Localizable.xcstrings */,
 				85784E932C16582B00609089 /* LaunchScreen.storyboard */,
 				8509CF5A2BF210F000C7ACB0 /* Preview Content */,
 			);
@@ -144,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				8509CF622BF2110300C7ACB0 /* UserSettings.swift */,
+				850286B32C16DCAE004D3EA5 /* OnboardItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -257,6 +281,8 @@
 		8509CF882BF2111B00C7ACB0 /* View-ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				852C8F5F2C19970400B511F9 /* App */,
+				850286B02C16DC16004D3EA5 /* OnboardView */,
 				8509CF762BF2111B00C7ACB0 /* DetailView */,
 				8509CF7C2BF2111B00C7ACB0 /* PauseTimer */,
 				8509CF7F2BF2111B00C7ACB0 /* Settings */,
@@ -294,6 +320,14 @@
 				8522E7692C1183C800FFB75D /* ScenePhaseHandler.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		852C8F5F2C19970400B511F9 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				852C8F602C19972100B511F9 /* MainAppView.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -338,6 +372,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 8509CF482BF210EE00C7ACB0;
 			productRefGroup = 8509CF522BF210EE00C7ACB0 /* Products */;
@@ -356,6 +391,7 @@
 			files = (
 				85784E942C16582B00609089 /* LaunchScreen.storyboard in Resources */,
 				8509CF5C2BF210F000C7ACB0 /* Preview Assets.xcassets in Resources */,
+				852C8F632C1AD61C00B511F9 /* Localizable.xcstrings in Resources */,
 				8509CF592BF210F000C7ACB0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,6 +405,7 @@
 			files = (
 				8509CF902BF2111B00C7ACB0 /* SettingsView.swift in Sources */,
 				8522E76C2C130E2000FFB75D /* TrimmedString.swift in Sources */,
+				852C8F612C19972100B511F9 /* MainAppView.swift in Sources */,
 				854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */,
 				8509CF722BF2111100C7ACB0 /* UserDefaultsKey.swift in Sources */,
 				854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */,
@@ -377,10 +414,13 @@
 				8509CF712BF2111100C7ACB0 /* RoundedButtonLabel.swift in Sources */,
 				8509CF8C2BF2111B00C7ACB0 /* Buttons.swift in Sources */,
 				8509CF8E2BF2111B00C7ACB0 /* PauseTimerView.swift in Sources */,
+				850286B62C16DD59004D3EA5 /* OnboardViewModel.swift in Sources */,
 				8509CF942BF2111B00C7ACB0 /* WorkingDaysListView.swift in Sources */,
 				8522E7682C117C5600FFB75D /* PauseManager.swift in Sources */,
 				8509CF642BF2110300C7ACB0 /* UserSettings.swift in Sources */,
+				850286B42C16DCAE004D3EA5 /* OnboardItem.swift in Sources */,
 				8509CF702BF2111100C7ACB0 /* DocumentDirectory.swift in Sources */,
+				850286B22C16DC74004D3EA5 /* OnboardTabView.swift in Sources */,
 				8522E7662C1177CA00FFB75D /* NotificationManager.swift in Sources */,
 				8509CF8D2BF2111B00C7ACB0 /* TimerView.swift in Sources */,
 				8522E76A2C1183C800FFB75D /* ScenePhaseHandler.swift in Sources */,
@@ -395,6 +435,7 @@
 				8553703E2C0CA03100BDCD12 /* Pause+CoreDataClass.swift in Sources */,
 				8509CF8A2BF2111B00C7ACB0 /* DetailViewViewModel.swift in Sources */,
 				8509CF952BF2111B00C7ACB0 /* WorkingDaysListView-ViewModel.swift in Sources */,
+				850286B82C16F215004D3EA5 /* OnboardItemView.swift in Sources */,
 				8509CF6F2BF2111100C7ACB0 /* Binding.swift in Sources */,
 				8509CF8F2BF2111B00C7ACB0 /* PauseTimerViewModel.swift in Sources */,
 				855370502C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift in Sources */,
