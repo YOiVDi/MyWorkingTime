@@ -22,9 +22,7 @@ class ScenePhaseHandler {
     }
     
     func handleBackgroundScenePhase(timerRunning: Bool, setBackgroundDate: @escaping (Date) -> Void, stopTimer: @escaping () -> Void, setStopped: @escaping (Bool) -> Void, setStarted: @escaping (Bool) -> Void) {
-        print("went to background")
         if timerRunning {
-            print("went to if statment")
             setBackgroundDate(Date())
             stopTimer()
             setStopped(true)

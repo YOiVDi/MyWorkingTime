@@ -44,7 +44,7 @@ struct WorkingDaysListView: View {
             .listRowSpacing(10)
             .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
                 Button("Today", action: { viewModel.addWorkingDay() })
-                Button("My choice", action: { viewModel.createNewDaySheet = true })
+                Button("Different Date", action: { viewModel.createNewDaySheet = true })
             }
             
             // MARK: - Card View

@@ -85,7 +85,6 @@ extension PauseTimerView {
             setTimer()
             isStarted = true
             beginPause = Date()
-            addNotification()
             activateTimer()
         }
         
@@ -128,7 +127,6 @@ extension PauseTimerView {
             isStarted = true
             isStopped = false
             activateTimer()
-            addNotification()
         }
         
         
@@ -171,6 +169,7 @@ extension PauseTimerView {
         // MARK: - Private Methods
         
         private func activateTimer() {
+            addNotification()
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
                 guard let self = self else { return }
                 if self.elapsedTime == 0 {
@@ -200,6 +199,7 @@ extension PauseTimerView {
              if elapsedTime >= Double(calcSeconds) {
                  // Subtract the calculated time difference from elapsedTime
                  elapsedTime -= Double(calcSeconds)
+                 print("elapsedTime: \(elapsedTime)")
              } else {
                  if elapsedTime != 0 { 
                      // If elapseTime is not equal to 0, subtract elapsedTime from calcSeconds
@@ -207,11 +207,13 @@ extension PauseTimerView {
                      overElapsedTime = Double(calcSeconds) - elapsedTime
                      elapsedTime = 0
                  } else {
+                     // add background time to overElapsedTime
                      overElapsedTime += Double(calcSeconds)
                  }
              }
         }
         
+        // Check if today exist as a day in our list 
         private func doesTodayExist() -> WorkingDay? {
             let workingDaysList = PersistenceController.shared.fetchRequest(filter: nil, sortBy: nil)
             let date = Date()

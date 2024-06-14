@@ -31,7 +31,7 @@ struct TimerView: View {
                 if !viewModel.isTimerRunning {
                     VStack {
                         Text("Set Timer")
-                            .font(.title)
+                            .font(.title2)
                         HStack {
                             VStack {
                                 Picker("Hours.", selection: $viewModel.hours) {

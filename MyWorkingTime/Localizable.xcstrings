@@ -224,6 +224,16 @@
         }
       }
     },
+    "Different Date" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anderes Datum"
+          }
+        }
+      }
+    },
     "Easily log today as a working day or choose a specific date, all with just a few clicks on your smartphone." : {
       "comment" : "onboarding",
       "extractionState" : "manual",
@@ -364,16 +374,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Min."
-          }
-        }
-      }
-    },
-    "My choice" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Meine Wahl"
           }
         }
       }

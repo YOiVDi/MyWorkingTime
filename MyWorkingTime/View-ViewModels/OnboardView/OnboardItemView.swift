@@ -16,16 +16,19 @@ struct OnboardItemView: View {
             Color.black
                 .ignoresSafeArea()
             VStack {
-                Image(item.image)
-                    .resizable()
-                    .scaledToFill()
+                item.image
+                    .font(.system(size: 200))
+                    .foregroundColor(.white)
+                    .shadow(radius: 10)
+                    .frame(maxWidth: .infinity)
                     .frame(height: 250)
+                    .background(RadialGradient(gradient: Gradient(colors: [.blue, .white]), center: .center, startRadius: 5, endRadius: 500))
                     .clipShape(.rect(cornerRadius: 10))
-                    .padding(.horizontal)
+                    .padding(.horizontal, 5)
                 Text(item.title)
                     .font(.title.bold())
                     .multilineTextAlignment(.center)
-                    .padding(.top, 20)
+                    .padding(.top, 30)
                     .padding(.horizontal)
                     .foregroundColor(.white)
                 Text(item.content)
@@ -34,6 +37,7 @@ struct OnboardItemView: View {
                     .padding(.horizontal)
                     .foregroundColor(.gray)
                     .font(.body.bold())
+                    .minimumScaleFactor(0.5)
                 if item == viewModel.onboardItems.last {
                     Button {
                         viewModel.isOnboarding()
@@ -47,7 +51,7 @@ struct OnboardItemView: View {
                 }
                 Spacer()
             }
-            .padding(.top, 150)
+            .padding(.top, 100)
         }
     }
 }

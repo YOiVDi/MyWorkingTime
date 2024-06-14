@@ -29,6 +29,8 @@ struct Buttons: View {
                             } label: {
                                 Label("Reset", systemImage: "arrow.circlepath")
                                     .frame(maxWidth: 120)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.3)
                             }
                             .tint(.orange)
                             Button {
@@ -72,6 +74,8 @@ struct Buttons: View {
                             } label: {
                                 Label("Reset", systemImage: "arrow.circlepath")
                                     .frame(maxWidth: 120)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.3)
                             }
                             .tint(.orange)
                             Button {
