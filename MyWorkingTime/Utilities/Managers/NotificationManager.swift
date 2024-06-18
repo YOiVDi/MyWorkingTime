@@ -7,27 +7,23 @@
 
 import Foundation
 import UserNotificationsUI
+import SwiftUI
 
 class NotificationManager {
     
     /// Adding notification to NotificationCenter
-    func addNotification(_ timeInterval: Double) {
-        guard timeInterval > 60  else { return }
-        let notificationTime = timeInterval - 60
+    func addNotification(timeInterval: Double, title: String, subtitle: String, identifier: String) {
         let center = UNUserNotificationCenter.current()
         
         let addRequest = {
             let content = UNMutableNotificationContent()
-//            content.title = timeInterval >= 120 ? "⏱️ Your break will end in one minute" : "⏱️ Your break is over"
-            content.title = "⏱️ One minute left until you finish the break"
-//            content.subtitle = timeInterval >= 120 ? "If you don't stop the timer, time will start to run in overtime" : "You are now on overtime break."
-            content.subtitle = "If you don't stop the timer, time will start to run in overtime"
+            content.title = title            
+            content.subtitle = subtitle
             content.sound = UNNotificationSound.default
             
-//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval >= 120 ? (timeInterval - 60) : timeInterval, repeats: false)
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: notificationTime, repeats: false)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
             
-            let request = UNNotificationRequest(identifier: "RunTimer", content: content, trigger: trigger)
+            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             center.add(request)
         }
         
@@ -47,8 +43,15 @@ class NotificationManager {
     }
     
     /// Delete notification
-    func deleteNotification() {
+    func deleteNotification(identifier: [String]) {
         let center = UNUserNotificationCenter.current()
-        center.removePendingNotificationRequests(withIdentifiers: ["RunTimer"])
+        center.removePendingNotificationRequests(withIdentifiers: identifier)
     }
+    
+//    func checkNotificationExists(identifier: String, completion: @escaping (Bool) -> Void) {
+//        UNUserNotificationCenter.current().getDeliveredNotifications { requests in
+//            let exists = requests.contains(where: {$0.request.identifier == identifier})
+//            completion(exists)
+//        }
+//    }
 }

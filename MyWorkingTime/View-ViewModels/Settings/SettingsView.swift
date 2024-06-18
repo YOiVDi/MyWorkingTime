@@ -10,11 +10,12 @@ import SwiftUI
 
 struct SettingsView: View {
     // MARK: Properties
-    @StateObject var viewModel = SettingsViewModel()
+//    @StateObject var viewModel = SettingsViewModel()
+    @EnvironmentObject var viewModel: SettingsViewModel
     
     // MARK: Body
     var body: some View {
-        NavigationView {
+//        NavigationView {
                 Form {
                     Section ("Work Information") {
                         TextField("Company name", text: $viewModel.companyName)
@@ -62,7 +63,7 @@ struct SettingsView: View {
 //                            }
 //                        }
 //                    }
-                }
+//                }
             .scrollContentBackground(.hidden)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)

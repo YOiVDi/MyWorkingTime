@@ -48,7 +48,7 @@ struct CheckInOutCardView: View {
                 } label: {
                     Text("Check-In")
                         .bold()
-                        .frame(width: 100, height: 30)
+                        .frame(width: 120, height: 30)
                 }
                 .tint(.blue)
                 .disabled(viewModel.todayCheckInCheckOut?.checkIn != nil)
@@ -58,7 +58,7 @@ struct CheckInOutCardView: View {
                 } label: {
                     Text("Check-Out")
                         .bold()
-                        .frame(width: 100, height: 30)
+                        .frame(width: 120, height: 30)
                 }
                 .disabled(viewModel.todayCheckInCheckOut?.checkOut != nil)
             }

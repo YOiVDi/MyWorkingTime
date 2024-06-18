@@ -33,6 +33,7 @@ extension PauseTimerView {
         private(set) var beginPause: Date?
         private(set) var finishPause: Date? 
         
+        
         private let persistenceController = PersistenceController.shared
         private let notificationManager = NotificationManager()
         private let pauseManager = PauseManager()
@@ -40,6 +41,8 @@ extension PauseTimerView {
         
         /// Timer property
         private var timer: Timer?
+        
+        private var timerNotificationSet = false
         
         
         // MARK: - Initialization
@@ -105,7 +108,7 @@ extension PauseTimerView {
             isStopped = true
             isStarted = false
             timer?.invalidate()
-            notificationManager.deleteNotification()
+            notificationManager.deleteNotification(identifier: ["timer"])
         }
         
         /// Reset the timer to its initial state
@@ -119,7 +122,8 @@ extension PauseTimerView {
             elapsedTime = elapsedTimeFrom
             timer = nil
             overElapsedTime = 0
-            notificationManager.deleteNotification()
+            notificationManager.deleteNotification(identifier: ["timer"])
+            timerNotificationSet = false
         }
         
         /// Allows the timer to resume from where it was last stopped
@@ -199,7 +203,6 @@ extension PauseTimerView {
              if elapsedTime >= Double(calcSeconds) {
                  // Subtract the calculated time difference from elapsedTime
                  elapsedTime -= Double(calcSeconds)
-                 print("elapsedTime: \(elapsedTime)")
              } else {
                  if elapsedTime != 0 { 
                      // If elapseTime is not equal to 0, subtract elapsedTime from calcSeconds
@@ -234,9 +237,11 @@ extension PauseTimerView {
             finishPause = pauseManager.finishPauseTime(beginPause: beginPause, elapsedTimeFrom: elapsedTimeFrom, overElapsedTime: overElapsedTime, persistenceController: persistenceController, workingDay: doesTodayExist())
         }
         private func addNotification() {
+            guard !timerNotificationSet && elapsedTimeFrom >= 120 else { return }
             if elapsedTime != 0 {
-                notificationManager.addNotification(elapsedTime)
+                notificationManager.addNotification(timeInterval: elapsedTimeFrom - 60, title: String(localized: "⏱️ One minute left until you finish the break❗️"), subtitle: String(localized: "If you don't stop the timer, time will start to run in overtime"), identifier: "timer")
                 print("add Notification")
+                timerNotificationSet = true
             }
         }
     }

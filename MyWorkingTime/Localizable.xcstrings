@@ -34,12 +34,22 @@
         }
       }
     },
+    "⏱️ One minute left until you finish the break❗️" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏱️Eine Minute bis zum Ende der Pause❗️"
+          }
+        }
+      }
+    },
     "add" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "add"
+            "value" : "hinzufügen"
           }
         }
       }
@@ -49,7 +59,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add"
+            "value" : "Hinzufügen"
           }
         }
       }
@@ -89,7 +99,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check-In"
+            "value" : "Arbeitsbeginn"
           }
         }
       }
@@ -99,7 +109,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check-In: %@"
+            "value" : "Arbeitsbeginn: %@"
           }
         }
       }
@@ -109,7 +119,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check-In: Keine Check-In Zeit"
+            "value" : "Arbeitsbeginn: Keine Eingetragenen Zeiten"
           }
         }
       }
@@ -119,7 +129,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check-Out"
+            "value" : "Arbeitsende"
           }
         }
       }
@@ -129,7 +139,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check-Out: %@"
+            "value" : "Arbeitsende: %@"
           }
         }
       }
@@ -139,7 +149,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check-Out: Keine Check-Out Zeit"
+            "value" : "Arbeitsende: Keine Eingetragenen Zeiten"
           }
         }
       }
@@ -155,6 +165,7 @@
       }
     },
     "Click" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -246,6 +257,9 @@
         }
       }
     },
+    "Edit" : {
+
+    },
     "Edit %@" : {
       "localizations" : {
         "de" : {
@@ -336,6 +350,16 @@
         }
       }
     },
+    "If you don't stop the timer, time will start to run in overtime" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du den Timer nicht stoppst, läuft die Zeit in die Überstunden."
+          }
+        }
+      }
+    },
     "It's looks like your settings are not filled in correctly. Please check your settings and try again to create a workday." : {
       "localizations" : {
         "de" : {
@@ -414,6 +438,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neuer Arbeitstag"
+          }
+        }
+      }
+    },
+    "Next" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiter"
           }
         }
       }
@@ -865,6 +899,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ihre Einstellungen wurden gespeichert."
+          }
+        }
+      }
+    },
+    "Your working list is empty. To add a working day, use the button below." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Arbeitsliste ist leer. Um einen Arbeitstag hinzuzufügen, benutze den Button unten."
           }
         }
       }

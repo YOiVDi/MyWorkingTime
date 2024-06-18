@@ -19,7 +19,9 @@ struct WorkingDaysTabView: View {
                     .tabItem {
                         Label("Pause Timer", systemImage: "clock")
                     }
-                SettingsView()
+                NavigationView {
+                    SettingsView()
+                }
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }

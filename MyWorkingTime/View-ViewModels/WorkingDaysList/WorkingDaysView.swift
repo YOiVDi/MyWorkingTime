@@ -12,14 +12,12 @@ struct WorkingDaysView: View {
     
     // MARK: Properties
     @StateObject var viewModel = ViewModel()
-    private var emptyViewMessage: String = "Your working list is empty. To add a working day, use the button below."
+    private var emptyViewMessage: LocalizedStringKey = "Your working list is empty. To add a working day, use the button below."
     
     var body: some View {
         NavigationView {
             // MARK: - Main Stack
             ZStack(alignment: .bottomTrailing) {
-//                Color(red: 0, green: 0.102, blue: 0)
-//                    .ignoresSafeArea()
                 if viewModel.workingDaysList.isEmpty {
                     VStack {
                         ContentUnavailableView {
@@ -27,10 +25,21 @@ struct WorkingDaysView: View {
                         } description: {
                             Text(emptyViewMessage)
                         } actions: {
-                            Button("Click", action: viewModel.addWorkingDay)
-                            .font(.title3)
-                            .buttonStyle(BorderedProminentButtonStyle())
+                            Button {
+                                viewModel.confirmationIsShowing = true
+                            } label: {
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundColor(.blue)
+                            }
+                            .font(.system(size: 40))
                         }
+                    }
+                    .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
+                        Button("Today", action: { viewModel.addWorkingDay() })
+                        Button("Different Date", action: { viewModel.createNewDaySheet = true })
+                    }
+                    .sheet(isPresented: $viewModel.createNewDaySheet) {
+                        CreateNewDayView(viewModel: viewModel)
                     }
                 } else {
                     // MARK: - ListView

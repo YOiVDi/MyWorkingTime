@@ -13,6 +13,8 @@ import SwiftUI
         @Published private(set) var onboardItems: [OnboardItem] = []
         @Published private(set) var finishOnboarding = UserDefaults.standard.bool(forKey: "isOnboarding")
 //        @Published private(set) var finishOnboarding = false // for test purpose
+        @Published var tabBarSelection = 0
+        
         
         init() {
             load()
@@ -21,6 +23,12 @@ import SwiftUI
         func isOnboarding() {
             finishOnboarding = true
             UserDefaults.standard.set(finishOnboarding, forKey: "isOnboarding")
+        }
+        
+        func nextPage() {
+            if tabBarSelection < onboardItems.count - 1 {
+                    tabBarSelection += 1
+            }
         }
         
         private func load() {

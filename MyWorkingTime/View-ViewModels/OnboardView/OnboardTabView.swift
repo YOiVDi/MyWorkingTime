@@ -9,14 +9,19 @@ import SwiftUI
 
 struct OnBoardTabView: View {
     @ObservedObject var viewModel: OnBoardItems
+    
     var body: some View {
-        TabView {
-            ForEach(viewModel.onboardItems, id: \.self) { item in
-                OnboardItemView(viewModel: viewModel, item: item)
+        TabView(selection: $viewModel.tabBarSelection) {
+            ForEach(viewModel.onboardItems.indices, id: \.self) { index in
+                    OnboardItemView(viewModel: viewModel, item: viewModel.onboardItems[index])
+                        .tag(index)
             }
+            OnboardSettingsView(viewModel: viewModel)
+                .tag(3)
         }
-        .background(.black)
         .tabViewStyle(.page(indexDisplayMode: .never))
+        .animation(.easeInOut(duration: 0.5), value: viewModel.tabBarSelection)
+        .background(.black)
     }
 }
 

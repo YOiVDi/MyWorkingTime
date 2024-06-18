@@ -104,8 +104,8 @@ extension DetailView {
             
             // Update the model's working hours, check-in, and check-out times
             model.workingHours = Int16(newWorkingTime)
-            model.checkIn = self.checkIn
-            model.checkOut = self.checkOut
+            model.checkIn = self.checkIn == defaultTime ? nil : self.checkIn
+            model.checkOut = self.checkOut == defaultTime ? nil : self.checkOut
             
             // If a pause is selected, update its start and finish times
             if let selectedPause {

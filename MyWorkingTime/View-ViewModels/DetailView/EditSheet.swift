@@ -38,6 +38,15 @@ struct EditSheet: View {
                                 .onTapGesture {
                                     viewModel.selectPause(pause)
                                 }
+                                .swipeActions  {
+                                    Button {
+                                        viewModel.selectedPause = pause
+                                        viewModel.deletePause()
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                            .tint(.red)
+                                    }
+                                }
                                 // Edit pause time
                                 if viewModel.selectedPause == pause {
                                     VStack {

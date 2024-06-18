@@ -175,7 +175,6 @@ extension WorkingDaysView {
             newWorkingDay.companyName = userSettings.companyName
             newWorkingDay.date = notADayWithTodayDate ? date : Date()
             newWorkingDay.workingHours = Int16(notADayWithTodayDate ? workingHours : isWeekend())
-            newWorkingDay.workOnWeekend = notADayWithTodayDate ? workOnWeekend : userSettings.workOnWeekend
             
             // Add the new WorkingDay object to the list
             withAnimation {

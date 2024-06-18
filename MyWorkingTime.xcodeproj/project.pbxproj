@@ -49,6 +49,7 @@
 		855370502C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553704E2C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift */; };
 		855370512C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553704F2C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift */; };
 		85784E942C16582B00609089 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85784E932C16582B00609089 /* LaunchScreen.storyboard */; };
+		859067092C1EE363007C4184 /* OnboardSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859067082C1EE363007C4184 /* OnboardSettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +101,7 @@
 		8553704F2C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		856960742C031F6C00686655 /* WorkingDay v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v3.xcdatamodel"; sourceTree = "<group>"; };
 		85784E932C16582B00609089 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		859067082C1EE363007C4184 /* OnboardSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardSettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				850286B12C16DC74004D3EA5 /* OnboardTabView.swift */,
 				850286B52C16DD59004D3EA5 /* OnboardViewModel.swift */,
 				850286B72C16F215004D3EA5 /* OnboardItemView.swift */,
+				859067082C1EE363007C4184 /* OnboardSettingsView.swift */,
 			);
 			path = OnboardView;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */,
 				8509CF722BF2111100C7ACB0 /* UserDefaultsKey.swift in Sources */,
 				854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */,
+				859067092C1EE363007C4184 /* OnboardSettingsView.swift in Sources */,
 				8509CF962BF2111B00C7ACB0 /* WorkingDaysView.swift in Sources */,
 				8509CF892BF2111B00C7ACB0 /* DetailView.swift in Sources */,
 				8509CF712BF2111100C7ACB0 /* RoundedButtonLabel.swift in Sources */,

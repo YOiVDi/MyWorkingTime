@@ -38,17 +38,31 @@ struct OnboardItemView: View {
                     .foregroundColor(.gray)
                     .font(.body.bold())
                     .minimumScaleFactor(0.5)
-                if item == viewModel.onboardItems.last {
-                    Button {
-                        viewModel.isOnboarding()
-                    } label: {
-                        Text("Finish")
-                            .font(.title3.bold())
-                            .padding(.horizontal)
+                VStack {
+                    Spacer()
+                    Group {
+                        if item == viewModel.onboardItems.last {
+                            Button {
+                                viewModel.tabBarSelection = 3
+                            } label: {
+                                Text("Next")
+                                    .frame(width: 120)
+                            }
+                            .buttonStyle(BorderedProminentButtonStyle())
+                        } else {
+                            Button {
+                                viewModel.nextPage()
+                            } label: {
+                                Text("Next")
+                                    .frame(width: 120)
+                            }
+                        }
                     }
+                    .font(.title3.bold())
                     .buttonStyle(BorderedProminentButtonStyle())
-                    .padding(.top)
                 }
+                .padding(.top)
+                .padding(.bottom, 30)
                 Spacer()
             }
             .padding(.top, 100)

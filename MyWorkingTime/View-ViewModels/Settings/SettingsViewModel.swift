@@ -58,7 +58,7 @@ extension SettingsView {
         // MARK: - Methods
         
         /// Save data to UserDefaults
-        private func saveSettingsToUserDefaults() {
+        private func encodeUserSettings() {
             let settings = UserSettings(
                 companyName: companyName,
                 workingHours: workHours,
@@ -80,7 +80,7 @@ extension SettingsView {
         }
         
         /// Retrieve saved date from UserDefaults
-        private func retrieveSettingsFromUserDefaults() -> UserSettings {
+        private func decodeUserSettings() -> UserSettings {
             guard let userData = settings else {
                 return UserSettings(
                     companyName: "",
@@ -115,7 +115,7 @@ extension SettingsView {
         
         /// Set retrieved data from UserDefaults
         private func setRetrievedData() {
-            let savedSettings = retrieveSettingsFromUserDefaults()
+            let savedSettings = decodeUserSettings()
             companyName = savedSettings.companyName
             workHours = savedSettings.workingHours
             workOnWeekends = savedSettings.workOnWeekend
@@ -137,7 +137,7 @@ extension SettingsView {
             )
             .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
             .sink { [weak self] _, _, _, _ in
-                self?.saveSettingsToUserDefaults()
+                self?.encodeUserSettings()
             }
             .store(in: &cancellables)
             
@@ -148,7 +148,7 @@ extension SettingsView {
             )
             .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
             .sink { [weak self] _, _, _ in
-                self?.saveSettingsToUserDefaults()
+                self?.encodeUserSettings()
             }
             .store(in: &cancellables)
             
@@ -156,7 +156,7 @@ extension SettingsView {
                 .combineLatest($holidaysHours)
                 .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
                 .sink { [weak self] _, _ in
-                    self?.saveSettingsToUserDefaults()
+                    self?.encodeUserSettings()
                 }
                 .store(in: &cancellables)
         }
