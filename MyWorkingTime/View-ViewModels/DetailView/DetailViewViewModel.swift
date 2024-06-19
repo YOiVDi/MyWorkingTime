@@ -153,9 +153,9 @@ extension DetailView {
             objectWillChange.send()
             
             // Initialize pauseStartEdit to the current date and time
-            pauseStartEdit = Date()
+            pauseStartEdit = model.wrappedDate
             // Initialize pauseStartEdit to the current date and time + 15 min
-            pauseFinishEdit = Date(timeIntervalSinceNow: 900)
+            pauseFinishEdit = Date(timeInterval: 900, since: pauseStartEdit)
             
             // Create a new Pause entity in the Core Data context
             let newPause = Pause(context: persistenceController.container.viewContext)

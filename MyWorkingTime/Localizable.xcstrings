@@ -35,11 +35,22 @@
       }
     },
     "⏱️ One minute left until you finish the break❗️" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "⏱️Eine Minute bis zum Ende der Pause❗️"
+          }
+        }
+      }
+    },
+    "⏱️ One minute left until your break ends❗️" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eine Minute bis zum Ende deiner Pause❗️"
           }
         }
       }
@@ -258,7 +269,14 @@
       }
     },
     "Edit" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeiten"
+          }
+        }
+      }
     },
     "Edit %@" : {
       "localizations" : {
@@ -350,7 +368,18 @@
         }
       }
     },
+    "If you don't stop the timer, overtime will begin." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du den Timer nicht stoppst, beginnt die Überzeit."
+          }
+        }
+      }
+    },
     "If you don't stop the timer, time will start to run in overtime" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -759,6 +788,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wochenende"
+          }
+        }
+      }
+    },
+    "When you create a new day with a specific date, you can add check-ins, check-outs, and pauses after the day is created. Simply click on the day you created in the upper right corner via the edit button, and you will be able to edit that day. From there, you can update your check-in and check-out times, as well as add pauses." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du einen neuen Tag mit einem bestimmten Datum erstellst, kannst du nach der Erstellung des Tages Check-ins, Check-outs und Pausen hinzufügen. Klicke einfach auf den erstellten Tag in der oberen rechten Ecke über die Bearbeiten-Schaltfläche, und du kannst diesen Tag bearbeiten. Von dort aus kannst du deine Check-in- und Check-out-Zeiten aktualisieren sowie Pausen hinzufügen."
           }
         }
       }

@@ -160,6 +160,13 @@ extension WorkingDaysView {
             }
         }
         
+        func checkUserDefaults() {
+            fetchUserSettings()
+            self.companyName = userSettings?.companyName
+            self.workingHours = userSettings?.workingHours ?? 0
+            print("set initial")
+        }
+        
         // MARK: - Private Methods
         
         /// Creates a new working day based on user settings.
@@ -210,6 +217,8 @@ extension WorkingDaysView {
                 print("Failed to decode user settings data:", error.localizedDescription)
                 return
             }
+            
+            print("fetch usersettings")
         }
         
         /// Fetches working days with optional filtering and sorting.

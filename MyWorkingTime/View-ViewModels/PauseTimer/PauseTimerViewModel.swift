@@ -239,7 +239,7 @@ extension PauseTimerView {
         private func addNotification() {
             guard !timerNotificationSet && elapsedTimeFrom >= 120 else { return }
             if elapsedTime != 0 {
-                notificationManager.addNotification(timeInterval: elapsedTimeFrom - 60, title: String(localized: "⏱️ One minute left until you finish the break❗️"), subtitle: String(localized: "If you don't stop the timer, time will start to run in overtime"), identifier: "timer")
+                notificationManager.addNotification(timeInterval: elapsedTimeFrom - 60, title: String(localized: "⏱️ One minute left until your break ends❗️"), subtitle: String(localized: "If you don't stop the timer, overtime will begin."), identifier: "timer")
                 print("add Notification")
                 timerNotificationSet = true
             }

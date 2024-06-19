@@ -111,6 +111,9 @@ struct WorkingDaysListView: View {
             viewModel.selections.removeAll()
             editMode?.wrappedValue = .inactive
         }
+        .onDisappear {
+            viewModel.showCheckInOutCard = false
+        }
         .alert(viewModel.alert?.title ?? "Error Occured" , isPresented: Binding(value: $viewModel.alert)) {
             //            Buttons
             viewModel.alertButtons(editMode)

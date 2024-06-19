@@ -21,7 +21,6 @@ struct OnBoardTabView: View {
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
         .animation(.easeInOut(duration: 0.5), value: viewModel.tabBarSelection)
-        .background(.black)
     }
 }
 

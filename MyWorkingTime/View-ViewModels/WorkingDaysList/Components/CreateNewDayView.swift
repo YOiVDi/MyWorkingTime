@@ -26,7 +26,7 @@ struct CreateNewDayView: View {
                             }
                         }
                     } footer: {
-                        // ADD INFORMATION ABOUT PAUSE AND CHECK-IN, CHECK-OUT
+                        Text("When you create a new day with a specific date, you can add check-ins, check-outs, and pauses after the day is created. Simply click on the day you created in the upper right corner via the edit button, and you will be able to edit that day. From there, you can update your check-in and check-out times, as well as add pauses.")
                     }
                 }
                 HStack {
@@ -40,6 +40,7 @@ struct CreateNewDayView: View {
                 }
             }
             .navigationTitle("New working day")
+            .onAppear {viewModel.checkUserDefaults()}
         }
     }
 }

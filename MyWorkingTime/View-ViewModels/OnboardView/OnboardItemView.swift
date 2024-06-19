@@ -13,8 +13,6 @@ struct OnboardItemView: View {
     let item: OnboardItem
     var body: some View {
         ZStack {
-            Color.black
-                .ignoresSafeArea()
             VStack {
                 item.image
                     .font(.system(size: 200))
