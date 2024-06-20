@@ -28,9 +28,11 @@ struct WorkingDaysTabView: View {
             }
             .toolbar(.visible, for: .tabBar)
         }
+        .navigationViewStyle(.stack)
     }
 }
 
 #Preview {
     WorkingDaysTabView()
+        .environmentObject(SettingsView.SettingsViewModel())
 }

@@ -72,5 +72,6 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView()
+        SettingsView()
+        .environmentObject(SettingsView.SettingsViewModel())
 }

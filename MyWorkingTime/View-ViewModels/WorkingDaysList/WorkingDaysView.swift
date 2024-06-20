@@ -32,11 +32,11 @@ struct WorkingDaysView: View {
                                     .foregroundColor(.blue)
                             }
                             .font(.system(size: 40))
+                            .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
+                                Button("Today", action: { viewModel.addWorkingDay() })
+                                Button("Different Date", action: { viewModel.createNewDaySheet = true })
+                            }
                         }
-                    }
-                    .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
-                        Button("Today", action: { viewModel.addWorkingDay() })
-                        Button("Different Date", action: { viewModel.createNewDaySheet = true })
                     }
                     .sheet(isPresented: $viewModel.createNewDaySheet) {
                         CreateNewDayView(viewModel: viewModel)
@@ -51,6 +51,7 @@ struct WorkingDaysView: View {
             .navigationTitle("Working Hours")
             .navigationBarTitleDisplayMode(.inline)
         }
+        .navigationViewStyle(.stack)
     }
 }
 

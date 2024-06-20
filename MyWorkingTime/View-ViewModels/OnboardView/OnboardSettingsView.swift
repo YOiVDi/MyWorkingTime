@@ -32,4 +32,5 @@ struct OnboardSettingsView: View {
 
 #Preview {
     OnboardSettingsView(viewModel: OnBoardItems())
+        .environmentObject(SettingsView.SettingsViewModel())
 }

@@ -38,14 +38,15 @@ struct WorkingDaysListView: View {
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.black.opacity(0))
                 }
+
             }
 //            .scrollBounceBehavior(.basedOnSize)
             .scrollContentBackground(.hidden)
             .listRowSpacing(10)
-            .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
-                Button("Today", action: { viewModel.addWorkingDay() })
-                Button("Different Date", action: { viewModel.createNewDaySheet = true })
-            }
+//            .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
+//                Button("Today", action: { viewModel.addWorkingDay() })
+//                Button("Different Date", action: { viewModel.createNewDaySheet = true })
+//            }
             
             // MARK: - Card View
             if viewModel.showCheckInOutCard {
@@ -92,6 +93,10 @@ struct WorkingDaysListView: View {
                         viewModel.confirmationIsShowing = true
                     } label: {
                         Label("add", systemImage: "plus.circle.fill")
+                    }
+                    .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
+                        Button("Today", action: { viewModel.addWorkingDay() })
+                        Button("Different Date", action: { viewModel.createNewDaySheet = true })
                     }
                 } else {
                     Button(role: .destructive) {

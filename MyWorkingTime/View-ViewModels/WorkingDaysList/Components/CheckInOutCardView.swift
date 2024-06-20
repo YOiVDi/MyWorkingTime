@@ -65,7 +65,7 @@ struct CheckInOutCardView: View {
             .padding()
             .buttonStyle(BorderedProminentButtonStyle())
         }
-        .frame(maxWidth: .infinity, maxHeight: 230)
+        .frame(maxWidth: 375, maxHeight: 230)
         .background(colorScheme == .light ? .cyan : .gray)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding()
