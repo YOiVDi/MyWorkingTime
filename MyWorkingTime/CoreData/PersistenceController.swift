@@ -13,7 +13,7 @@ struct PersistenceController {
     static let shared = PersistenceController()
     
     // Storage for Core Data
-    let container: NSPersistentContainer
+    let container: NSPersistentCloudKitContainer
     
     // A test configuration for SwiftUI previews
     static var preview: WorkingDay = {
@@ -39,17 +39,20 @@ struct PersistenceController {
     init(inMemory: Bool = false) {
         // If you didn't name your model Main you'll need
         // to change this name below.
-        container = NSPersistentContainer(name: "WorkingHours")
+        container = NSPersistentCloudKitContainer(name: "WorkingHours")
         
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         }
+        
         container.loadPersistentStores { description, error in
             if let error = error {
                 print("Error to load PersistenceStores: \(error)")
                 return
             }
         }
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
     
     func save() {
@@ -77,7 +80,7 @@ struct PersistenceController {
         return workingDaysList
     }
     
-    /// debug purpose 
+    /// For debugging purposes
     func fetchRequestWorkingDays() -> [WorkingDay] {
         var workingDaysList: [WorkingDay] = []
         let request = NSFetchRequest<WorkingDay>(entityName: "WorkingDay")
@@ -88,6 +91,7 @@ struct PersistenceController {
         }
         return workingDaysList
     }
+    
     func fetchRequestPauses() -> [Pause] {
         var pauses: [Pause] = []
         let request = NSFetchRequest<Pause>(entityName: "Pause")
