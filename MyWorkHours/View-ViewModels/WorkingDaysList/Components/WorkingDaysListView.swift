@@ -130,7 +130,7 @@ struct WorkingDaysListView: View {
 
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         WorkingDaysListView(viewModel: WorkingDaysView.ViewModel())
     }
 }
