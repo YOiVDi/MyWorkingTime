@@ -1,6 +1,6 @@
 //
-//  MyWorkingTimeApp.swift
-//  MyWorkingTime
+//  MyWorkHoursApp.swift
+//  MyWorkHours
 //
 //  Created by Yordan Dimitrov on 13.05.24.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct MyWorkingTimeApp: App {
+struct MyWorkHoursApp: App {
     @StateObject var settings = SettingsView.SettingsViewModel()
     var body: some Scene {
         WindowGroup {

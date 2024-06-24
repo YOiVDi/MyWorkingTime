@@ -11,7 +11,7 @@
 		850286B42C16DCAE004D3EA5 /* OnboardItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850286B32C16DCAE004D3EA5 /* OnboardItem.swift */; };
 		850286B62C16DD59004D3EA5 /* OnboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850286B52C16DD59004D3EA5 /* OnboardViewModel.swift */; };
 		850286B82C16F215004D3EA5 /* OnboardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850286B72C16F215004D3EA5 /* OnboardItemView.swift */; };
-		8509CF552BF210EE00C7ACB0 /* MyWorkingTimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF542BF210EE00C7ACB0 /* MyWorkingTimeApp.swift */; };
+		8509CF552BF210EE00C7ACB0 /* MyWorkHoursApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF542BF210EE00C7ACB0 /* MyWorkHoursApp.swift */; };
 		8509CF592BF210F000C7ACB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8509CF582BF210F000C7ACB0 /* Assets.xcassets */; };
 		8509CF5C2BF210F000C7ACB0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8509CF5B2BF210F000C7ACB0 /* Preview Assets.xcassets */; };
 		8509CF642BF2110300C7ACB0 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF622BF2110300C7ACB0 /* UserSettings.swift */; };
@@ -57,8 +57,8 @@
 		850286B32C16DCAE004D3EA5 /* OnboardItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardItem.swift; sourceTree = "<group>"; };
 		850286B52C16DD59004D3EA5 /* OnboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewModel.swift; sourceTree = "<group>"; };
 		850286B72C16F215004D3EA5 /* OnboardItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardItemView.swift; sourceTree = "<group>"; };
-		8509CF512BF210EE00C7ACB0 /* MyWorkingTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyWorkingTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8509CF542BF210EE00C7ACB0 /* MyWorkingTimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWorkingTimeApp.swift; sourceTree = "<group>"; };
+		8509CF512BF210EE00C7ACB0 /* MyWorkHours.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyWorkHours.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8509CF542BF210EE00C7ACB0 /* MyWorkHoursApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWorkHoursApp.swift; sourceTree = "<group>"; };
 		8509CF582BF210F000C7ACB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8509CF5B2BF210F000C7ACB0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8509CF622BF2110300C7ACB0 /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 		856960742C031F6C00686655 /* WorkingDay v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v3.xcdatamodel"; sourceTree = "<group>"; };
 		85784E932C16582B00609089 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		859067082C1EE363007C4184 /* OnboardSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardSettingsView.swift; sourceTree = "<group>"; };
-		85E62E562C25E32F00BB7543 /* MyWorkingTime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyWorkingTime.entitlements; sourceTree = "<group>"; };
+		85E62E562C25E32F00BB7543 /* MyWorkHours.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyWorkHours.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +130,7 @@
 		8509CF482BF210EE00C7ACB0 = {
 			isa = PBXGroup;
 			children = (
-				8509CF532BF210EE00C7ACB0 /* MyWorkingTime */,
+				8509CF532BF210EE00C7ACB0 /* MyWorkHours */,
 				8509CF522BF210EE00C7ACB0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -138,16 +138,16 @@
 		8509CF522BF210EE00C7ACB0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8509CF512BF210EE00C7ACB0 /* MyWorkingTime.app */,
+				8509CF512BF210EE00C7ACB0 /* MyWorkHours.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8509CF532BF210EE00C7ACB0 /* MyWorkingTime */ = {
+		8509CF532BF210EE00C7ACB0 /* MyWorkHours */ = {
 			isa = PBXGroup;
 			children = (
-				85E62E562C25E32F00BB7543 /* MyWorkingTime.entitlements */,
-				8509CF542BF210EE00C7ACB0 /* MyWorkingTimeApp.swift */,
+				85E62E562C25E32F00BB7543 /* MyWorkHours.entitlements */,
+				8509CF542BF210EE00C7ACB0 /* MyWorkHoursApp.swift */,
 				8509CF972BF2116000C7ACB0 /* CoreData */,
 				8509CF6D2BF2111100C7ACB0 /* Utilities */,
 				8509CF632BF2110300C7ACB0 /* Model */,
@@ -157,7 +157,7 @@
 				85784E932C16582B00609089 /* LaunchScreen.storyboard */,
 				8509CF5A2BF210F000C7ACB0 /* Preview Content */,
 			);
-			path = MyWorkingTime;
+			path = MyWorkHours;
 			sourceTree = "<group>";
 		};
 		8509CF5A2BF210F000C7ACB0 /* Preview Content */ = {
@@ -352,7 +352,7 @@
 			);
 			name = MyWorkingTime;
 			productName = MyWorkingTime;
-			productReference = 8509CF512BF210EE00C7ACB0 /* MyWorkingTime.app */;
+			productReference = 8509CF512BF210EE00C7ACB0 /* MyWorkHours.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -370,7 +370,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8509CF4C2BF210EE00C7ACB0 /* Build configuration list for PBXProject "MyWorkTime" */;
+			buildConfigurationList = 8509CF4C2BF210EE00C7ACB0 /* Build configuration list for PBXProject "MyWorkHours" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -430,7 +430,7 @@
 				8522E7662C1177CA00FFB75D /* NotificationManager.swift in Sources */,
 				8509CF8D2BF2111B00C7ACB0 /* TimerView.swift in Sources */,
 				8522E76A2C1183C800FFB75D /* ScenePhaseHandler.swift in Sources */,
-				8509CF552BF210EE00C7ACB0 /* MyWorkingTimeApp.swift in Sources */,
+				8509CF552BF210EE00C7ACB0 /* MyWorkHoursApp.swift in Sources */,
 				8509CF932BF2111B00C7ACB0 /* DateIcon.swift in Sources */,
 				8509CF9C2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld in Sources */,
 				8509CF6E2BF2111100C7ACB0 /* CustomAlerts.swift in Sources */,
@@ -577,15 +577,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = BlackClockAppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MyWorkingTime/MyWorkingTime.entitlements;
+				CODE_SIGN_ENTITLEMENTS = MyWorkHours/MyWorkHours.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"MyWorkingTime/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"MyWorkHours/Preview Content\"";
 				DEVELOPMENT_TEAM = J46847B4XU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MyWorkingTime/Info.plist;
+				INFOPLIST_FILE = MyWorkHours/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -597,8 +597,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.yoid.MyWorkingTime;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = me.yoid.MyWorkHours;
+				PRODUCT_NAME = MyWorkHours;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -611,15 +611,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = BlackClockAppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MyWorkingTime/MyWorkingTime.entitlements;
+				CODE_SIGN_ENTITLEMENTS = MyWorkHours/MyWorkHours.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"MyWorkingTime/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"MyWorkHours/Preview Content\"";
 				DEVELOPMENT_TEAM = J46847B4XU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MyWorkingTime/Info.plist;
+				INFOPLIST_FILE = MyWorkHours/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -631,8 +631,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.yoid.MyWorkingTime;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = me.yoid.MyWorkHours;
+				PRODUCT_NAME = MyWorkHours;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -643,7 +643,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8509CF4C2BF210EE00C7ACB0 /* Build configuration list for PBXProject "MyWorkTime" */ = {
+		8509CF4C2BF210EE00C7ACB0 /* Build configuration list for PBXProject "MyWorkHours" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8509CF5D2BF210F000C7ACB0 /* Debug */,

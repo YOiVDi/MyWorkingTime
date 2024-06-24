@@ -1,6 +1,6 @@
 //
 //  OnboardItemView.swift
-//  MyWorkingTime
+//  MyWorkHours
 //
 //  Created by Yordan Dimitrov on 10.06.24.
 //

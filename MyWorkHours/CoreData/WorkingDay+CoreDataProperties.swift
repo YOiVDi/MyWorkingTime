@@ -1,6 +1,6 @@
 //
 //  WorkingDay+CoreDataProperties.swift
-//  MyWorkingTime
+//  MyWorkHours
 //
 //  Created by Yordan Dimitrov on 03.06.24.
 //

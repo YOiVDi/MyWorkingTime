@@ -1,6 +1,6 @@
 //
 //  NotificationManager.swift
-//  MyWorkingTime
+//  MyWorkHours
 //
 //  Created by Yordan Dimitrov on 06.06.24.
 //

@@ -1,6 +1,6 @@
 //
 //  CreateNewDay.swift
-//  MyWorkingTime
+//  MyWorkHours
 //
 //  Created by Yordan Dimitrov on 19.05.24.
 //

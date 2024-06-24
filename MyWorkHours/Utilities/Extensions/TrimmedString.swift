@@ -1,6 +1,6 @@
 //
 //  Trimming.swift
-//  MyWorkingTime
+//  MyWorkHours
 //
 //  Created by Yordan Dimitrov on 07.06.24.
 //

@@ -1,6 +1,6 @@
 //
 //  CechInOutCard.swift
-//  MyWorkingTime
+//  MyWorkHours
 //
 //  Created by Yordan Dimitrov on 22.05.24.
 //

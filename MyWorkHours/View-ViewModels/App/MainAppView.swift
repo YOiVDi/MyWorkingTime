@@ -1,6 +1,6 @@
 //
 //  AppView.swift
-//  MyWorkingTime
+//  MyWorkHours
 //
 //  Created by Yordan Dimitrov on 12.06.24.
 //
