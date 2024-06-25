@@ -48,7 +48,7 @@
 		8553703E2C0CA03100BDCD12 /* Pause+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553703A2C0CA03100BDCD12 /* Pause+CoreDataClass.swift */; };
 		855370502C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553704E2C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift */; };
 		855370512C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553704F2C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift */; };
-		85784E942C16582B00609089 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85784E932C16582B00609089 /* LaunchScreen.storyboard */; };
+		857CD5E42C2AB48900095005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 857CD5E32C2AB48900095005 /* LaunchScreen.storyboard */; };
 		859067092C1EE363007C4184 /* OnboardSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859067082C1EE363007C4184 /* OnboardSettingsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -100,7 +100,7 @@
 		8553704E2C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pause+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8553704F2C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		856960742C031F6C00686655 /* WorkingDay v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v3.xcdatamodel"; sourceTree = "<group>"; };
-		85784E932C16582B00609089 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		857CD5E32C2AB48900095005 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		859067082C1EE363007C4184 /* OnboardSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardSettingsView.swift; sourceTree = "<group>"; };
 		85E62E562C25E32F00BB7543 /* MyWorkHours.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyWorkHours.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,7 +154,7 @@
 				8509CF882BF2111B00C7ACB0 /* View-ViewModels */,
 				8509CF582BF210F000C7ACB0 /* Assets.xcassets */,
 				852C8F622C1AD61C00B511F9 /* Localizable.xcstrings */,
-				85784E932C16582B00609089 /* LaunchScreen.storyboard */,
+				857CD5E32C2AB48900095005 /* LaunchScreen.storyboard */,
 				8509CF5A2BF210F000C7ACB0 /* Preview Content */,
 			);
 			path = MyWorkHours;
@@ -394,8 +394,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85784E942C16582B00609089 /* LaunchScreen.storyboard in Resources */,
 				8509CF5C2BF210F000C7ACB0 /* Preview Assets.xcassets in Resources */,
+				857CD5E42C2AB48900095005 /* LaunchScreen.storyboard in Resources */,
 				852C8F632C1AD61C00B511F9 /* Localizable.xcstrings in Resources */,
 				8509CF592BF210F000C7ACB0 /* Assets.xcassets in Resources */,
 			);
@@ -575,7 +575,7 @@
 		8509CF602BF210F000C7ACB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = BlackClockAppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = ClockIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MyWorkHours/MyWorkHours.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -588,7 +588,7 @@
 				INFOPLIST_FILE = MyWorkHours/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -609,7 +609,7 @@
 		8509CF612BF210F000C7ACB0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = BlackClockAppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = ClockIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MyWorkHours/MyWorkHours.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -622,7 +622,7 @@
 				INFOPLIST_FILE = MyWorkHours/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;

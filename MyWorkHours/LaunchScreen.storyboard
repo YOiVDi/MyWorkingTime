@@ -22,11 +22,15 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlackClock" translatesAutoresizingMaskIntoConstraints="NO" id="33s-7c-ChH">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenLogo" translatesAutoresizingMaskIntoConstraints="NO" id="cVA-E5-FbT">
+                                <rect key="frame" x="16" y="226.66666666666663" width="361" height="399"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="399" id="3WI-Hq-L4S"/>
+                                    <constraint firstAttribute="width" constant="361" id="P8i-f1-LH0"/>
+                                </constraints>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MyWorkHours" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb" userLabel="MyWorkHours">
-                                <rect key="frame" x="30" y="176" width="333" height="52"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MyWorkTime" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb" userLabel="MyWorkTime">
+                                <rect key="frame" x="0.0" y="58.999999999999986" width="393" height="167.66666666666663"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -35,14 +39,12 @@
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="33s-7c-ChH" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="4uo-4V-pgA"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="117" id="FUA-pc-NlK"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="GJd-Yh-RWb" secondAttribute="bottom" constant="590" id="GQy-8j-Uma"/>
-                            <constraint firstAttribute="trailing" secondItem="33s-7c-ChH" secondAttribute="trailing" id="bT1-AF-9Ha"/>
-                            <constraint firstItem="33s-7c-ChH" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="fUO-Zu-1Wg"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="GJd-Yh-RWb" secondAttribute="trailing" constant="14" id="gHF-rs-7bH"/>
-                            <constraint firstAttribute="bottom" secondItem="33s-7c-ChH" secondAttribute="bottom" id="nR2-rI-gjd"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="14" id="tFA-bs-zM9"/>
+                            <constraint firstItem="cVA-E5-FbT" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="6To-5c-hJd"/>
+                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="XXT-Gs-I6z"/>
+                            <constraint firstItem="cVA-E5-FbT" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="YZQ-uo-70Y"/>
+                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="bsT-1W-kG2"/>
+                            <constraint firstItem="cVA-E5-FbT" firstAttribute="top" secondItem="GJd-Yh-RWb" secondAttribute="bottom" id="kB8-p8-N3x"/>
+                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="wmZ-hG-rnJ"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -52,6 +54,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BlackClock" width="245.33332824707031" height="245.33332824707031"/>
+        <image name="LaunchScreenLogo" width="1024" height="1024"/>
     </resources>
 </document>
