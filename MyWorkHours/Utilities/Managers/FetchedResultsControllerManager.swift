@@ -1,6 +1,6 @@
 //
 //  FetchedResultsControllerManager.swift
-//  MyWorkingTime
+//  MyWorkHours
 //
 //  Created by Yordan Dimitrov on 30.06.24.
 //
