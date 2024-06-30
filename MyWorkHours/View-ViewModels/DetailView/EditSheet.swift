@@ -101,5 +101,6 @@ struct EditSheet: View {
 }
 
 #Preview {
-    EditSheet(viewModel: DetailView.ViewModel(model: WorkingDay()))
+    let persistenceController = PersistenceController.shared
+    return EditSheet(viewModel: DetailView.ViewModel(model: WorkingDay(), persistenceController: persistenceController))
 }

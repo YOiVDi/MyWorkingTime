@@ -5,23 +5,31 @@
 //  Created by Yordan Dimitrov on 12.06.24.
 //
 
+import CoreData
 import SwiftUI
 
 struct MainAppView: View {
     @StateObject var viewModel = OnBoardItems()
+    let persistenceController: PersistenceController
     var body: some View {
         Group {
-            if viewModel.finishOnboarding == false {
+            if !viewModel.finishOnboarding {
                 OnBoardTabView(viewModel: viewModel)
                     .transition(.move(edge: .bottom))
             } else {
-                WorkingDaysTabView()
+                WorkingDaysTabView(persistenceController: persistenceController)
+                    .transition(.move(edge: .bottom))
             }
         }
         .animation(.easeIn(duration: 0.5), value: viewModel.finishOnboarding)
     }
+    
+    init(persistenceController: PersistenceController) {
+        self.persistenceController = persistenceController
+    }
 }
 
 #Preview {
-    MainAppView()
+    let persistenceController = PersistenceController.shared
+    return MainAppView(persistenceController: persistenceController)
 }

@@ -13,11 +13,11 @@ struct OnBoardTabView: View {
     var body: some View {
         TabView(selection: $viewModel.tabBarSelection) {
             ForEach(viewModel.onboardItems.indices, id: \.self) { index in
-                    OnboardItemView(viewModel: viewModel, item: viewModel.onboardItems[index])
-                        .tag(index)
+                OnboardItemView(viewModel: viewModel, item: viewModel.onboardItems[index])
+                    .tag(index)
             }
             OnboardSettingsView(viewModel: viewModel)
-                .tag(3)
+                .tag(viewModel.onboardItems.count)
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
         .animation(.easeInOut(duration: 0.5), value: viewModel.tabBarSelection)

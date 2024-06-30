@@ -34,7 +34,7 @@ extension PauseTimerView {
         private(set) var finishPause: Date? 
         
         
-        private let persistenceController = PersistenceController.shared
+//        private let persistenceController = PersistenceController.shared
         private let notificationManager = NotificationManager()
         private let pauseManager = PauseManager()
         private let scenePhaseHandler = ScenePhaseHandler()
@@ -234,7 +234,7 @@ extension PauseTimerView {
         
        // Set finish pause time
         private func finishPauseTime() {
-            finishPause = pauseManager.finishPauseTime(beginPause: beginPause, elapsedTimeFrom: elapsedTimeFrom, overElapsedTime: overElapsedTime, persistenceController: persistenceController, workingDay: doesTodayExist())
+            finishPause = pauseManager.finishPauseTime(beginPause: beginPause, elapsedTimeFrom: elapsedTimeFrom, overElapsedTime: overElapsedTime, workingDay: doesTodayExist())
         }
         private func addNotification() {
             guard !timerNotificationSet && elapsedTimeFrom >= 120 else { return }

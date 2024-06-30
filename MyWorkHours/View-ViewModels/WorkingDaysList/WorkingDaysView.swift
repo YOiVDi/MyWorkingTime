@@ -11,7 +11,7 @@ import SwiftUI
 struct WorkingDaysView: View {
     
     // MARK: Properties
-    @StateObject var viewModel = ViewModel()
+    @StateObject var viewModel: ViewModel
     private var emptyViewMessage: LocalizedStringKey = "Your working list is empty. To add a working day, use the button below."
     
     var body: some View {
@@ -53,8 +53,13 @@ struct WorkingDaysView: View {
         }
         .navigationViewStyle(.stack)
     }
+    
+    init(persistenceController: PersistenceController) {
+        _viewModel = StateObject(wrappedValue: ViewModel(persistenceController: persistenceController))
+    }
 }
 
 #Preview {
-    WorkingDaysView()
+    let persistenceController = PersistenceController.shared
+    return WorkingDaysView(persistenceController: persistenceController)
 }

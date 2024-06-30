@@ -17,7 +17,7 @@ struct WorkingDaysListView: View {
         ZStack {
             List(selection: $viewModel.selections) {
                 ForEach(viewModel.workingDaysList, id: \.self) { workingDay in
-                    NavigationLink(destination: DetailView(model: workingDay)) {
+                    NavigationLink(destination: DetailView(model: workingDay, persistenceController: viewModel.persistenceController)) {
                         VStack(alignment: .leading) {
                             HStack(spacing: 10) {
                                 DateIconView(model: workingDay)
@@ -131,7 +131,8 @@ struct WorkingDaysListView: View {
 
 #Preview {
     NavigationView {
-        WorkingDaysListView(viewModel: WorkingDaysView.ViewModel())
+        let persistenceController = PersistenceController.shared
+        WorkingDaysListView(viewModel: WorkingDaysView.ViewModel(persistenceController: persistenceController))
     }
 }
 

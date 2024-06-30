@@ -50,6 +50,7 @@
 		855370512C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553704F2C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift */; };
 		857CD5E42C2AB48900095005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 857CD5E32C2AB48900095005 /* LaunchScreen.storyboard */; };
 		859067092C1EE363007C4184 /* OnboardSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859067082C1EE363007C4184 /* OnboardSettingsView.swift */; };
+		85DDD1DE2C315B26009D4C29 /* FetchedResultsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DDD1DD2C315B25009D4C29 /* FetchedResultsControllerManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +103,7 @@
 		856960742C031F6C00686655 /* WorkingDay v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v3.xcdatamodel"; sourceTree = "<group>"; };
 		857CD5E32C2AB48900095005 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		859067082C1EE363007C4184 /* OnboardSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardSettingsView.swift; sourceTree = "<group>"; };
+		85DDD1DD2C315B25009D4C29 /* FetchedResultsControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultsControllerManager.swift; sourceTree = "<group>"; };
 		85E62E562C25E32F00BB7543 /* MyWorkHours.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyWorkHours.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -315,6 +317,7 @@
 			children = (
 				8522E7652C1177CA00FFB75D /* NotificationManager.swift */,
 				8522E7672C117C5600FFB75D /* PauseManager.swift */,
+				85DDD1DD2C315B25009D4C29 /* FetchedResultsControllerManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				8522E76C2C130E2000FFB75D /* TrimmedString.swift in Sources */,
 				852C8F612C19972100B511F9 /* MainAppView.swift in Sources */,
 				854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */,
+				85DDD1DE2C315B26009D4C29 /* FetchedResultsControllerManager.swift in Sources */,
 				8509CF722BF2111100C7ACB0 /* UserDefaultsKey.swift in Sources */,
 				854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */,
 				859067092C1EE363007C4184 /* OnboardSettingsView.swift in Sources */,
@@ -580,7 +584,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyWorkHours/MyWorkHours.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"MyWorkHours/Preview Content\"";
 				DEVELOPMENT_TEAM = J46847B4XU;
 				ENABLE_PREVIEWS = YES;
@@ -589,7 +593,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UIStatusBarStyle = LaunchScreenLogo;
+				INFOPLIST_KEY_UIStatusBarStyle = ClockIcon;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -597,7 +601,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.yoid.MyWorkHours;
+				PRODUCT_BUNDLE_IDENTIFIER = me.yoid.MyWorkingTime;
 				PRODUCT_NAME = MyWorkHours;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -614,7 +618,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyWorkHours/MyWorkHours.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"MyWorkHours/Preview Content\"";
 				DEVELOPMENT_TEAM = J46847B4XU;
 				ENABLE_PREVIEWS = YES;
@@ -623,7 +627,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UIStatusBarStyle = LaunchScreenLogo;
+				INFOPLIST_KEY_UIStatusBarStyle = ClockIcon;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -631,7 +635,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.yoid.MyWorkHours;
+				PRODUCT_BUNDLE_IDENTIFIER = me.yoid.MyWorkingTime;
 				PRODUCT_NAME = MyWorkHours;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

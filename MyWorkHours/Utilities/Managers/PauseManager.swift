@@ -24,7 +24,7 @@ class PauseManager {
         persistenceController.save()
     }
     
-    func finishPauseTime(beginPause: Date?, elapsedTimeFrom: Double, overElapsedTime: Double, persistenceController: PersistenceController, workingDay: WorkingDay?) -> Date? {
+    func finishPauseTime(beginPause: Date?, elapsedTimeFrom: Double, overElapsedTime: Double, workingDay: WorkingDay?) -> Date? {
         guard let beginPause = beginPause else { return nil }
         let finishPause = beginPause.addingTimeInterval(elapsedTimeFrom + overElapsedTime)
         if workingDay != nil {

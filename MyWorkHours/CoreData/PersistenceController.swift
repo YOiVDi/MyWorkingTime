@@ -36,7 +36,7 @@ struct PersistenceController {
     
     // An initializer to load Core Data, optionally able
     // to use an in-memory store.
-    init(inMemory: Bool = false) {
+    private init(inMemory: Bool = false) {
         // If you didn't name your model Main you'll need
         // to change this name below.
         container = NSPersistentCloudKitContainer(name: "WorkingHours")
@@ -51,8 +51,9 @@ struct PersistenceController {
                 return
             }
         }
+        
         container.viewContext.automaticallyMergesChangesFromParent = true
-        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
     }
     
     func save() {
@@ -79,27 +80,5 @@ struct PersistenceController {
         }
         return workingDaysList
     }
-    
-    /// For debugging purposes
-    func fetchRequestWorkingDays() -> [WorkingDay] {
-        var workingDaysList: [WorkingDay] = []
-        let request = NSFetchRequest<WorkingDay>(entityName: "WorkingDay")
-        do {
-            workingDaysList = try container.viewContext.fetch(request)
-        } catch {
-            print("Error fetching \(error)")
-        }
-        return workingDaysList
-    }
-    
-    func fetchRequestPauses() -> [Pause] {
-        var pauses: [Pause] = []
-        let request = NSFetchRequest<Pause>(entityName: "Pause")
-        do {
-            pauses = try container.viewContext.fetch(request)
-        } catch {
-            print("Error fetching \(error)")
-        }
-        return pauses
-    }
+
 }

@@ -24,7 +24,7 @@ extension DetailView {
         
         // MARK: - Private properties
         private let defaultTime = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: Date()) ?? Date()
-        private let persistenceController = PersistenceController.shared
+        private let persistenceController: PersistenceController
         private var time = "Check-In and Check-Out data missing."
         
         // MARK: - Computed properties
@@ -41,13 +41,17 @@ extension DetailView {
         
         
         // MARK: - Initialization
-        init(model: WorkingDay) {
+        init(model: WorkingDay, persistenceController: PersistenceController) {
+            /// init properties
             self.model = model
             self.newWorkingTime = model.wrappedWorkingHours
             self.pauseStartEdit = model.checkOut ?? defaultTime
             self.pauseFinishEdit = model.checkOut ?? defaultTime
             self.checkIn = model.checkIn ?? defaultTime
             self.checkOut = model.checkOut ?? defaultTime
+            
+            /// init persistenceController
+            self.persistenceController = persistenceController
         }
         
         
@@ -99,8 +103,6 @@ extension DetailView {
         
         /// Updates the working day and optionally the pause with the new values.
         func update() {
-            // Notify any observers that the object will change
-            objectWillChange.send()
             
             // Update the model's working hours, check-in, and check-out times
             model.workingHours = Int16(newWorkingTime)
@@ -130,6 +132,9 @@ extension DetailView {
                     print("Notnil")
                 }
                 
+                // Notify any observers that the object will change
+                objectWillChange.send()
+                
                 // Print confirmation for debugging purposes
                 print("Pause passed date compare check")
                 print("Start: \(pauseStartEdit)")
@@ -149,8 +154,6 @@ extension DetailView {
         
         /// Adds a new pause to the working day.
         func addPause(for day: WorkingDay) {
-            // Notify any observers that the object will change
-            objectWillChange.send()
             
             // Initialize pauseStartEdit to the current date and time
             pauseStartEdit = model.wrappedDate
@@ -174,6 +177,9 @@ extension DetailView {
             
             // Select currently created pause
             selectedPause = newPause
+            
+            // Notify any observers that the object will change
+            objectWillChange.send()
             
             // Save the changes to the persistence controller
             persistenceController.save()

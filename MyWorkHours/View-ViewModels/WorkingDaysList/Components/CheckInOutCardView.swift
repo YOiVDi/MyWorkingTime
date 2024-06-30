@@ -74,5 +74,6 @@ struct CheckInOutCardView: View {
 }
 
 #Preview {
-    CheckInOutCardView(viewModel: WorkingDaysView.ViewModel())
+    let persistenceController = PersistenceController.shared
+    return CheckInOutCardView(viewModel: WorkingDaysView.ViewModel(persistenceController: persistenceController))
 }

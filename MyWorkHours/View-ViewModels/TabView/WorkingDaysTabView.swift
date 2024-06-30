@@ -5,13 +5,17 @@
 //  Created by Yordan Dimitrov on 20.03.24.
 //
 
+import CoreData
 import SwiftUI
 
 struct WorkingDaysTabView: View {
+    
+    let persistenceController: PersistenceController
+    
     var body: some View {
         TabView {
             Group {
-                WorkingDaysView()
+                WorkingDaysView(persistenceController: persistenceController)
                     .tabItem {
                         Label("List", systemImage: "list.bullet.circle")
                     }
@@ -30,9 +34,14 @@ struct WorkingDaysTabView: View {
         }
         .navigationViewStyle(.stack)
     }
+    
+    init(persistenceController: PersistenceController) {
+        self.persistenceController = persistenceController
+    }
 }
 
 #Preview {
-    WorkingDaysTabView()
+    let persistenceController = PersistenceController.shared
+    return WorkingDaysTabView(persistenceController: persistenceController)
         .environmentObject(SettingsView.SettingsViewModel())
 }

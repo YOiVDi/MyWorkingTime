@@ -138,14 +138,14 @@ struct DetailView: View {
         }
     }
     
-    init(model: WorkingDay) {
-        _viewModel = StateObject(wrappedValue: ViewModel(model: model))
+    init(model: WorkingDay, persistenceController: PersistenceController) {
+        _viewModel = StateObject(wrappedValue: ViewModel(model: model, persistenceController: PersistenceController.shared))
     }
 }
 
 #Preview {
     NavigationView {
-        
-        DetailView(model: PersistenceController.preview)
+        let persistenceController = PersistenceController.shared
+        DetailView(model: PersistenceController.preview, persistenceController: persistenceController)
     }
 }

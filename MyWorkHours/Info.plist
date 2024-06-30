@@ -4,12 +4,13 @@
 <dict>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIImageName</key>
-		<string></string>
+		<string>LaunchScreenLogo</string>
 	</dict>
 </dict>
 </plist>

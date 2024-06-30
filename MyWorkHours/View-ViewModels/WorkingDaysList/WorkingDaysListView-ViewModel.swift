@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import CloudKit
 import SwiftUI
 
 
@@ -36,18 +37,24 @@ extension WorkingDaysView {
         
         
         private(set) var userSettings: UserSettings?
-        private let persistenceController = PersistenceController.shared
+        private let fetchedResultsControllerManager: FetchedResultsControllerManager
+        
+         // MARK: - Container
+        let persistenceController: PersistenceController
         
         // MARK: - Computed Properties
         
         
         // MARK: - Initialization
-        init() {
-            fetchWorkingDays(filter: nil, sortBy: [NSSortDescriptor(key: "date", ascending: true)])
+        init(persistenceController: PersistenceController) {
+            self.persistenceController = persistenceController
+            fetchedResultsControllerManager = FetchedResultsControllerManager(persistenceController: persistenceController)
+            workingDaysList = fetchedResultsControllerManager.items
             fetchUserSettings()
-            
-            /// test purpose
-            checkEntities()
+            fetchedResultsControllerManager.$items
+                .receive(on: RunLoop.main)
+                .assign(to: &$workingDaysList)
+            //            registerCloudKitSubscription()
         }
         
         // MARK: - Public Methods
@@ -59,10 +66,7 @@ extension WorkingDaysView {
                 alert = .userDefaultsIsEmpty
                 return
             }
-            createNewWorkingDay(userSettings: userSettings)
-            fetchWorkingDays(filter: nil, sortBy: [NSSortDescriptor(key: "date", ascending: true)])
-
-            persistenceController.save()
+            fetchedResultsControllerManager.addItem(userSettings: userSettings, notADayWithTodayDate: notADayWithTodayDate, date: date, workingHours: workingHours, isWeekend: isWeekend)
         }
         
         /// Create a day from a user-selected date
@@ -73,226 +77,177 @@ extension WorkingDaysView {
             notADayWithTodayDate = false
         }
         
-        /// Moves a working day within the array.
-        func moveWorkingDay(from source: IndexSet, to destination: Int) {
-            withAnimation {
-                workingDaysList.move(fromOffsets: source, toOffset: destination)
-            }
-            persistenceController.save()
-        }
-        
-        /// Deletes a working day at specified offsets.
-        func deleteWorkingDay(at offsets: IndexSet) {
-            withAnimation {
-                guard let index = offsets.first else { return }
-                let entity = workingDaysList[index]
-                persistenceController.container.viewContext.delete(entity)
-                workingDaysList.remove(atOffsets: offsets)
-            }
-            persistenceController.save()
-        }
-        
         /// Deletes a selected working day.
         func swipeDelete(day: WorkingDay) {
             withAnimation {
-                guard let index = self.workingDaysList.firstIndex(where: { workingDay in
-                    workingDay.wrappedDate == day.wrappedDate
-                }) else { return }
-                persistenceController.container.viewContext.delete(day)
-                workingDaysList.remove(at: index)
+                fetchedResultsControllerManager.deleteDay(day)
             }
-            persistenceController.save()
+            
         }
-        
-        /// Handle alerts buttons
-        func alertButtons(_ editMode:  Binding<EditMode>?) -> some View {
-           return  Group {
-                if alert == .deleteAll || alert == .swipeDelete {
-                    Button("Delete", role: .destructive) {
-                        self.handleDeleteAction(editMode)
+            
+            /// Handle alerts buttons
+            func alertButtons(_ editMode:  Binding<EditMode>?) -> some View {
+                return  Group {
+                    if alert == .deleteAll || alert == .swipeDelete {
+                        Button("Delete", role: .destructive) {
+                            self.handleDeleteAction(editMode)
+                        }
+                        Button("Cancel", role: .cancel) {
+                            self.handleCancelAction(editMode)
+                        }
+                    } else {
+                        Button("OK") {}
                     }
-                    Button("Cancel", role: .cancel) {
-                        self.handleCancelAction(editMode)
-                    }
-                } else {
-                    Button("OK") {}
                 }
             }
-        }
-        
-        
-        /// Check if today's date exists, if it does, assign to today's variable
-         func doesTodayExist() {
-//            let workingDaysList = persistenceController.fetchRequest(filter: nil, sortBy: nil)
-            let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
             
-            todayCheckInCheckOut = workingDaysList.first(where: { workingDay in
-                let workingDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workingDay.wrappedDate)
-                return workingDayComponents == targetComponents
-            })
-        }
-        
-        /// Handle check-in action
-        func handleCheckIn() {
-            doesTodayExist()
-            guard let today = todayCheckInCheckOut else {
-                // Handle Error Here
-                return
+            
+            /// Check if today's date exists, if it does, assign to today's variable
+            func doesTodayExist() {
+                //            let workingDaysList = persistenceController.fetchRequest(filter: nil, sortBy: nil)
+                let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+                
+                todayCheckInCheckOut = workingDaysList.first(where: { workingDay in
+                    let workingDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workingDay.wrappedDate)
+                    return workingDayComponents == targetComponents
+                })
             }
-            today.checkIn = Date() // set check-in to time right now
-            persistenceController.save() // Save the updated check-in time
-            withAnimation(.easeInOut(duration: 1)){
-                showCheckInOutCard.toggle()
-            }
-        }
-        /// Handle check-out action
-        func handleCheckOut() {
-            doesTodayExist()
-            guard todayCheckInCheckOut?.checkIn != nil else { return }
-            guard let today = todayCheckInCheckOut else {
-                // Handle Error Here
-                return
-            }
-            today.checkOut = Date() // set check-out to time right now
-            persistenceController.save() // Save the updated check-out time
-            withAnimation(.easeInOut(duration: 1)){
-                showCheckInOutCard.toggle()
-            }
-        }
-        
-        func checkUserDefaults() {
-            fetchUserSettings()
-            self.companyName = userSettings?.companyName
-            self.workingHours = userSettings?.workingHours ?? 0
-            print("set initial")
-        }
-        
-        // MARK: - Private Methods
-        
-        /// Creates a new working day based on user settings.
-        /// - Parameter userSettings: Predefined user settings for initializing a new working day.
-        private func createNewWorkingDay(userSettings: UserSettings) {
-                guard !doesDayExist() else {
-                    alert = .dayExist
+            
+            /// Handle check-in action
+            func handleCheckIn() {
+                doesTodayExist()
+                guard let today = todayCheckInCheckOut else {
+                    // Handle Error Here
                     return
                 }
-            
-            let newWorkingDay = WorkingDay(context: persistenceController.container.viewContext)
-            newWorkingDay.id = UUID()
-            newWorkingDay.companyName = userSettings.companyName
-            newWorkingDay.date = notADayWithTodayDate ? date : Date()
-            newWorkingDay.workingHours = Int16(notADayWithTodayDate ? workingHours : isWeekend())
-            
-            // Add the new WorkingDay object to the list
-            withAnimation {
-                workingDaysList.append(newWorkingDay)
+                today.checkIn = Date() // set check-in to time right now
+//                fetchedResultsControllerManager.save() // Save the updated check-in time
+                withAnimation(.easeInOut(duration: 1)){
+                    showCheckInOutCard.toggle()
+                }
+                persistenceController.save()
             }
-        }
-        
-        /// Check if a day is weekend
-        /// - Returns: work hours for specific day as Int
-        private func isWeekend() -> Int {
-            let deconstructDate = Calendar.current
-            let weekDay = deconstructDate.dateComponents([.weekday], from: Date())
-            switch weekDay.weekday {
-            case 1:
-                return userSettings?.sundayHours ?? 0
-            case 7:
-                return userSettings?.saturdayHours ?? 0
-            default:
-                return userSettings?.workingHours ?? 0
-            }
-        }
-        
-        /// Fetches user settings from UserDefaults.
-        private func fetchUserSettings() {
-            guard let userData = UserDefaults.standard.data(forKey: "userSettings") else {
-                // THERE ERROR MUST BE HANDLE !!!
-                return
+            /// Handle check-out action
+            func handleCheckOut() {
+                doesTodayExist()
+                guard todayCheckInCheckOut?.checkIn != nil else { return }
+                guard let today = todayCheckInCheckOut else {
+                    // Handle Error Here
+                    return
+                }
+                today.checkOut = Date() // set check-out to time right now
+//                fetchedResultsControllerManager.save() // Save the updated check-out time
+                withAnimation(.easeInOut(duration: 1)){
+                    showCheckInOutCard.toggle()
+                }
+                persistenceController.save()
             }
             
-            do {
-                self.userSettings = try JSONDecoder().decode(UserSettings.self, from: userData)
-            } catch {
-                print("Failed to decode user settings data:", error.localizedDescription)
-                return
+            func checkUserDefaults() {
+                fetchUserSettings()
+                self.companyName = userSettings?.companyName
+                self.workingHours = userSettings?.workingHours ?? 0
+                print("set initial")
             }
             
-            print("fetch usersettings")
-        }
-        
-        /// Fetches working days with optional filtering and sorting.
-        private func fetchWorkingDays(filter: NSPredicate?, sortBy: [NSSortDescriptor]?) {
-            workingDaysList = persistenceController.fetchRequest(filter: filter, sortBy: sortBy)
-        }
-        
-        /// Checks if a working day already exists for the specified date.
-       private func doesDayExist() -> Bool {
-            let targetDate = notADayWithTodayDate ? self.date : Date()
+            // MARK: - Private Methods
             
-            let calendar = Calendar.current
-            
-            let itemExist = workingDaysList.contains { day in
-                return calendar.isDate(day.wrappedDate, inSameDayAs: targetDate)
-            }
-            return itemExist
-        }
-        
-        
-        /// Deletes multiple selected working days.
-        private func deleteSelectedWorkingDays(_ selection: Set<WorkingDay>) {
-            for object in selection {
-                if let index = workingDaysList.firstIndex(where: {$0 == object}) {
-                    let entity = workingDaysList[index]
-                    persistenceController.container.viewContext.delete(entity)
-                    workingDaysList.remove(at: index)
+            /// Check if a day is weekend
+            /// - Returns: work hours for specific day as Int
+            private func isWeekend() -> Int {
+                let deconstructDate = Calendar.current
+                let weekDay = deconstructDate.dateComponents([.weekday], from: Date())
+                switch weekDay.weekday {
+                case 1:
+                    return userSettings?.sundayHours ?? 0
+                case 7:
+                    return userSettings?.saturdayHours ?? 0
+                default:
+                    return userSettings?.workingHours ?? 0
                 }
             }
-            persistenceController.save()
-        }
-        
-        /// Alert cancel button
-       private func handleDeleteAction(_ editMode:  Binding<EditMode>?) {
-               switch alert {
-               case .deleteAll:
-                   deleteSelectedWorkingDays(pendingSelections)
-                   selections.removeAll()
-                   editMode?.wrappedValue = .inactive
-                   pendingSelections.removeAll()
-               case .swipeDelete:
-                   if let selection = singleSelect {
-                       swipeDelete(day: selection)
-                       singleSelect = nil
-                   }
-               default:
-                   break
-               }
-               alert = nil
-           }
-        
-        ///  Alert cancel button
-         private func handleCancelAction(_ editMode:  Binding<EditMode>?) {
-            switch alert {
-            case .deleteAll:
-                withAnimation {
-                    editMode?.wrappedValue = .active
+            
+            /// Fetches user settings from UserDefaults.
+            private func fetchUserSettings() {
+                guard let userData = UserDefaults.standard.data(forKey: "userSettings") else {
+                    // THERE ERROR MUST BE HANDLE !!!
+                    return
                 }
-                selections = pendingSelections
-            case .swipeDelete:
-                singleSelect = nil
-            default:
-                break
+                
+                do {
+                    self.userSettings = try JSONDecoder().decode(UserSettings.self, from: userData)
+                } catch {
+                    print("Failed to decode user settings data:", error.localizedDescription)
+                    return
+                }
+                
+                print("fetch usersettings")
             }
-            alert = nil
-        }
-        
-        
-        /// Test purpose
-        private func checkEntities() {
-            let workingDays = persistenceController.fetchRequestWorkingDays()
-            print("WorkingDays: \(workingDays.count)")
-            let pauses = persistenceController.fetchRequestPauses()
-            print("Pauses: \(pauses.count)")
-        }
+            
+            
+            /// Deletes multiple selected working days.
+            private func deleteSelectedWorkingDays(_ selection: Set<WorkingDay>) {
+                fetchedResultsControllerManager.deleteSelectedWorkingDays(selection)
+            }
+            
+            /// Alert cancel button
+            private func handleDeleteAction(_ editMode:  Binding<EditMode>?) {
+                switch alert {
+                case .deleteAll:
+                    deleteSelectedWorkingDays(pendingSelections)
+                    selections.removeAll()
+                    editMode?.wrappedValue = .inactive
+                    pendingSelections.removeAll()
+                case .swipeDelete:
+                    if let selection = singleSelect {
+                        swipeDelete(day: selection)
+                        singleSelect = nil
+                    }
+                default:
+                    break
+                }
+                alert = nil
+            }
+            
+            ///  Alert cancel button
+            private func handleCancelAction(_ editMode:  Binding<EditMode>?) {
+                switch alert {
+                case .deleteAll:
+                    withAnimation {
+                        editMode?.wrappedValue = .active
+                    }
+                    selections = pendingSelections
+                case .swipeDelete:
+                    singleSelect = nil
+                default:
+                    break
+                }
+                alert = nil
+            }
+            
+            //        private func registerCloudKitSubscription() {
+            //            let predicate = NSPredicate(value: true)
+            //            let subscription = CKQuerySubscription(
+            //                recordType: "WorkingDay",
+            //                predicate: predicate,
+            //                subscriptionID: "workingday_add_remove_edit",
+            //                options: [.firesOnRecordCreation, .firesOnRecordDeletion, .firesOnRecordUpdate]
+            //            )
+            //
+            //            let notificationInfo = CKSubscription.NotificationInfo()
+            //            notificationInfo.shouldSendContentAvailable = true // Silent notification
+            //            notificationInfo.soundName = "default"
+            //
+            //            subscription.notificationInfo = notificationInfo
+            //
+            //            CKContainer.default().publicCloudDatabase.save(subscription) { subscription, error in
+            //                if let error = error {
+            //                    print("Failed to subscribe to CloudKit changes: \(error)")
+            //                } else {
+            //                    print("Successfully subscribed to CloudKit changes.")
+            //                }
+            //            }
+//                    }
+            
     }
 }

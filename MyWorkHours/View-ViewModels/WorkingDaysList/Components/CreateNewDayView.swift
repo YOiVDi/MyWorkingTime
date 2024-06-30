@@ -46,5 +46,6 @@ struct CreateNewDayView: View {
 }
 
 #Preview {
-    CreateNewDayView(viewModel: WorkingDaysView.ViewModel())
+    let persistenceController = PersistenceController.shared
+    return CreateNewDayView(viewModel: WorkingDaysView.ViewModel(persistenceController: persistenceController))
 }
