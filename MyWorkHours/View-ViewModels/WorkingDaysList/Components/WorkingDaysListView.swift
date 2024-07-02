@@ -43,11 +43,6 @@ struct WorkingDaysListView: View {
 //            .scrollBounceBehavior(.basedOnSize)
             .scrollContentBackground(.hidden)
             .listRowSpacing(10)
-//            .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
-//                Button("Today", action: { viewModel.addWorkingDay() })
-//                Button("Different Date", action: { viewModel.createNewDaySheet = true })
-//            }
-            
             // MARK: - Card View
             if viewModel.showCheckInOutCard {
                 CheckInOutCardView(viewModel: viewModel)
@@ -71,10 +66,8 @@ struct WorkingDaysListView: View {
                             .clipShape(Circle())
                     }
                 }
-//                .padding(.horizontal, 40)
                 .padding(.horizontal)
             }
-//            .padding(.bottom, 70)
             .padding(.bottom)
         }
         .sheet(isPresented: $viewModel.createNewDaySheet) {

@@ -61,12 +61,16 @@ extension WorkingDaysView {
         
         /// add a new working day
         func addWorkingDay() {
+            guard !doesDayExist() else {
+                alert = .dayExist
+                return
+            }
             fetchUserSettings()
             guard let userSettings else {
                 alert = .userDefaultsIsEmpty
                 return
             }
-            fetchedResultsControllerManager.addItem(userSettings: userSettings, notADayWithTodayDate: notADayWithTodayDate, date: date, workingHours: workingHours, isWeekend: isWeekend)
+            persistenceController.addItem(userSettings: userSettings, notADayWithTodayDate: notADayWithTodayDate, date: date, workingHours: workingHours, isWeekend: isWeekend)
         }
         
         /// Create a day from a user-selected date
@@ -80,7 +84,7 @@ extension WorkingDaysView {
         /// Deletes a selected working day.
         func swipeDelete(day: WorkingDay) {
             withAnimation {
-                fetchedResultsControllerManager.deleteDay(day)
+                persistenceController.deleteDay(day)
             }
             
         }
@@ -104,7 +108,6 @@ extension WorkingDaysView {
             
             /// Check if today's date exists, if it does, assign to today's variable
             func doesTodayExist() {
-                //            let workingDaysList = persistenceController.fetchRequest(filter: nil, sortBy: nil)
                 let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
                 
                 todayCheckInCheckOut = workingDaysList.first(where: { workingDay in
@@ -151,6 +154,18 @@ extension WorkingDaysView {
             }
             
             // MARK: - Private Methods
+        
+        /// Checks if a working day already exists for the specified date.
+        private func doesDayExist() -> Bool {
+            let targetDate = notADayWithTodayDate ? date : Date()
+            
+            let calendar = Calendar.current
+            
+            let itemExist = workingDaysList.contains { day in
+                return calendar.isDate(day.wrappedDate, inSameDayAs: targetDate)
+            }
+            return itemExist
+        }
             
             /// Check if a day is weekend
             /// - Returns: work hours for specific day as Int
@@ -185,9 +200,9 @@ extension WorkingDaysView {
             }
             
             
-            /// Deletes multiple selected working days.
+            /// Deletes multiple selection of working days.
             private func deleteSelectedWorkingDays(_ selection: Set<WorkingDay>) {
-                fetchedResultsControllerManager.deleteSelectedWorkingDays(selection)
+                persistenceController.deleteSelectedWorkingDays(selection, items: workingDaysList)
             }
             
             /// Alert cancel button

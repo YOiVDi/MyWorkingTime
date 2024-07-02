@@ -80,5 +80,44 @@ struct PersistenceController {
         }
         return workingDaysList
     }
+    
+    /// Delete workday
+    func deleteDay(_ item: WorkingDay) {
+        let context = container.viewContext
+        context.delete(item)
+        
+        do {
+            try context.save()
+        } catch {
+            context.rollback()
+            print("Failed to delete item: \(error)")
+        }
+        save()
+    }
+    
+    /// Delete selected days
+    func deleteSelectedWorkingDays(_ selection: Set<WorkingDay>, items: [WorkingDay]) {
+         let context = container.viewContext
+        for object in selection {
+            if let index = items.firstIndex(where: {$0 == object}) {
+                let entity = items[index]
+                context.delete(entity)
+            }
+        }
+         save()
+    }
+    
+    /// Creates a new workday based on user settings.
+    /// - Parameter userSettings: Predefined user settings for initializing a new working day.
+    func addItem(userSettings: UserSettings, notADayWithTodayDate: Bool, date: Date, workingHours: Int, isWeekend: @escaping () -> Int) {
+        let context = container.viewContext
+        let newWorkingDay = WorkingDay(context: context)
+        newWorkingDay.id = UUID()
+        newWorkingDay.companyName = userSettings.companyName
+        newWorkingDay.date = notADayWithTodayDate ? date : Date()
+        newWorkingDay.workingHours = Int16(notADayWithTodayDate ? workingHours : isWeekend())
+
+        save()
+    }
 
 }
