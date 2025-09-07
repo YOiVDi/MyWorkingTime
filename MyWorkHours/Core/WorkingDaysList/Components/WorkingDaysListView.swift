@@ -17,7 +17,7 @@ struct WorkingDaysListView: View {
         ZStack {
             List(selection: $viewModel.selections) {
                 ForEach(viewModel.workingDaysList, id: \.self) { workingDay in
-                    NavigationLink(destination: DetailView(model: workingDay, persistenceController: viewModel.persistenceController)) {
+                    NavigationLink(destination: DetailView(model: workingDay, modelPause: workingDay.arrPause, persistenceController: viewModel.persistenceController)) {
                         VStack(alignment: .leading) {
                             HStack(spacing: 10) {
                                 DateIconView(model: workingDay)

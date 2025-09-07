@@ -115,6 +115,9 @@
         }
       }
     },
+    "Check-In: " : {
+
+    },
     "Check-In: %@" : {
       "localizations" : {
         "de" : {
@@ -144,6 +147,9 @@
           }
         }
       }
+    },
+    "Check-Out: " : {
+
     },
     "Check-Out: %@" : {
       "localizations" : {
@@ -206,7 +212,11 @@
         }
       }
     },
+    "Company name: " : {
+
+    },
     "Company name: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -852,6 +862,9 @@
         }
       }
     },
+    "Working Day Detail's" : {
+
+    },
     "Working hour's" : {
       "localizations" : {
         "de" : {
@@ -863,6 +876,7 @@
       }
     },
     "Working Hour's" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -871,6 +885,9 @@
           }
         }
       }
+    },
+    "Working hour's: " : {
+
     },
     "Working Hours" : {
       "localizations" : {
@@ -882,7 +899,14 @@
         }
       }
     },
+    "WorkingHour's" : {
+
+    },
+    "WorkingHour's: " : {
+
+    },
     "WorkingHours's" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

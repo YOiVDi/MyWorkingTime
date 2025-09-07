@@ -17,7 +17,7 @@ struct MainAppView: View {
                 OnBoardTabView(viewModel: viewModel)
                     .transition(.move(edge: .bottom))
             } else {
-                WorkingDaysTabView(persistenceController: persistenceController)
+                WorkDaysTabView(persistenceController: persistenceController)
                     .transition(.move(edge: .bottom))
             }
         }

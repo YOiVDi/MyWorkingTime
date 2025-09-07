@@ -19,16 +19,4 @@ struct MyWorkHoursApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
-    private func fetchDataOnLaunch(context: NSManagedObjectContext) {
-          // Example fetch request
-          let fetchRequest: NSFetchRequest<WorkingDay> = WorkingDay.fetchRequest()
-          
-          do {
-              let fetchedObjects = try context.fetch(fetchRequest)
-              // Handle fetchedObjects (e.g., update @State or @ObservedObject variables)
-              print("Fetched objects: \(fetchedObjects)")
-          } catch {
-              print("Error fetching data: \(error)")
-          }
-      }
 }

@@ -37,8 +37,6 @@ struct PersistenceController {
     // An initializer to load Core Data, optionally able
     // to use an in-memory store.
     private init(inMemory: Bool = false) {
-        // If you didn't name your model Main you'll need
-        // to change this name below.
         container = NSPersistentCloudKitContainer(name: "WorkingHours")
         
         if inMemory {
@@ -68,10 +66,10 @@ struct PersistenceController {
         }
     }
     
-    func fetchRequest(filter: NSPredicate?, sortBy: [NSSortDescriptor]?) -> [WorkingDay] {
+    func fetchRequest(/*filter: NSPredicate?,*/ sortBy: [NSSortDescriptor]?) -> [WorkingDay] {
         var workingDaysList: [WorkingDay] = []
         let request = NSFetchRequest<WorkingDay>(entityName: "WorkingDay")
-        request.predicate = filter
+//        request.predicate = filter
         request.sortDescriptors = sortBy
         do {
             workingDaysList = try container.viewContext.fetch(request)

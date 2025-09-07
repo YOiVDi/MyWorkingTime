@@ -9,7 +9,7 @@ import Foundation
 import UserNotificationsUI
 import SwiftUI
 
-class NotificationManager {
+class NotificationCenter {
     
     /// Adding notification to NotificationCenter
     func addNotification(timeInterval: Double, title: String, subtitle: String, identifier: String) {

@@ -7,6 +7,7 @@
 
 import UserNotifications
 import SwiftUI
+import CoreData
 
 extension PauseTimerView {
     class PauseTimerViewModel: ObservableObject {
@@ -34,9 +35,8 @@ extension PauseTimerView {
         private(set) var finishPause: Date? 
         
         
-//        private let persistenceController = PersistenceController.shared
-        private let notificationManager = NotificationManager()
-        private let pauseManager = PauseManager()
+        private let persistenceController = PersistenceController.shared
+        private let notification = NotificationCenter()
         private let scenePhaseHandler = ScenePhaseHandler()
         
         /// Timer property
@@ -107,8 +107,9 @@ extension PauseTimerView {
         func stopTimer() {
             isStopped = true
             isStarted = false
+            finishPause = .now
             timer?.invalidate()
-            notificationManager.deleteNotification(identifier: ["timer"])
+            notification.deleteNotification(identifier: ["timer"])
         }
         
         /// Reset the timer to its initial state
@@ -122,7 +123,7 @@ extension PauseTimerView {
             elapsedTime = elapsedTimeFrom
             timer = nil
             overElapsedTime = 0
-            notificationManager.deleteNotification(identifier: ["timer"])
+            notification.deleteNotification(identifier: ["timer"])
             timerNotificationSet = false
         }
         
@@ -156,6 +157,7 @@ extension PauseTimerView {
                     pauseTimeCalculate: pauseTimeCalculate,
                     setActiveDate: { self.dateInActiveMode = $0 }
                 )
+                print("ScenePhase: Active")
             case .background:
                 scenePhaseHandler.handleBackgroundScenePhase(
                     timerRunning: isTimerRunning,
@@ -164,6 +166,7 @@ extension PauseTimerView {
                     setStopped: { self.isStopped = $0 },
                     setStarted: { self.isStarted = $0 }
                 )
+                print("ScenePhase: Background")
             default:
                 break
             }
@@ -218,7 +221,7 @@ extension PauseTimerView {
         
         // Check if today exist as a day in our list 
         private func doesTodayExist() -> WorkingDay? {
-            let workingDaysList = PersistenceController.shared.fetchRequest(filter: nil, sortBy: nil)
+            let workingDaysList = PersistenceController.shared.fetchRequest(sortBy: nil)
             let date = Date()
             let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: date)
             
@@ -234,12 +237,21 @@ extension PauseTimerView {
         
        // Set finish pause time
         private func finishPauseTime() {
-            finishPause = pauseManager.finishPauseTime(beginPause: beginPause, elapsedTimeFrom: elapsedTimeFrom, overElapsedTime: overElapsedTime, workingDay: doesTodayExist())
+            if let workingDay = doesTodayExist() {
+                guard let beginPause = beginPause, let finishPause = finishPause else { return }
+                let dayPause = Pause(context: persistenceController.container.viewContext)
+                dayPause.identifier = String(Date().formatted(date: .omitted, time: .standard))
+                dayPause.startPause = beginPause
+                dayPause.finishPause = finishPause
+                workingDay.addToPauses(dayPause)
+                persistenceController.save()
+            }
         }
+        
         private func addNotification() {
             guard !timerNotificationSet && elapsedTimeFrom >= 120 else { return }
             if elapsedTime != 0 {
-                notificationManager.addNotification(timeInterval: elapsedTimeFrom - 60, title: String(localized: "⏱️ One minute left until your break ends❗️"), subtitle: String(localized: "If you don't stop the timer, overtime will begin."), identifier: "timer")
+                notification.addNotification(timeInterval: elapsedTimeFrom - 60, title: String(localized: "⏱️ One minute left until your break ends❗️"), subtitle: String(localized: "If you don't stop the timer, overtime will begin."), identifier: "timer")
                 print("add Notification")
                 timerNotificationSet = true
             }

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum CustomAlerts: Error, LocalizedError , Equatable{
+enum CustomAlerts: Error, LocalizedError , Equatable {
     case emptyCompanyName
     case notCorrectTime
     case saved

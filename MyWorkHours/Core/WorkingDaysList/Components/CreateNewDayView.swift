@@ -12,24 +12,35 @@ struct CreateNewDayView: View {
     @ObservedObject var viewModel: WorkingDaysView.ViewModel
     var body: some View {
         NavigationView {
-            VStack {
-                Form {
-                    Section {
-                        Text("Company name: \(viewModel.userSettings?.companyName ?? "")")
-                        
+                VStack {
+                    HStack {
+                        Text("Company name: ")
+                            .fontWeight(.semibold)
+                        Text("\(viewModel.userSettings?.companyName ?? "")")
+                        Spacer()
+                    }
+                    
+                    HStack {
+                        Text("Choose a day: ")
+                            .fontWeight(.semibold)
                         DatePicker("Choose a day: ", selection: $viewModel.date, displayedComponents: .date)
-                        
-                        
+                            .labelsHidden()
+                        Spacer()
+                    }
+                    
+                    HStack {
+                        Text("Working hour's: ")
+                            .fontWeight(.semibold)
                         Picker("Working hour's", selection: $viewModel.workingHours) {
                             ForEach(0..<9) {
                                 Text("\($0)")
                             }
                         }
-                    } footer: {
-                        Text("When you create a new day with a specific date, you can add check-ins, check-outs, and pauses after the day is created. Simply click on the day you created in the upper right corner via the edit button, and you will be able to edit that day. From there, you can update your check-in and check-out times, as well as add pauses.")
+                        .pickerStyle(.menu)
+                        Spacer()
                     }
-                }
-                HStack {
+                    Text("When you create a new day with a specific date, you can add check-ins, check-outs, and pauses after the day is created. Simply click on the day you created in the upper right corner via the edit button, and you will be able to edit that day. From there, you can update your check-in and check-out times, as well as add pauses.")
+                        .foregroundStyle(.secondary)
                     Spacer()
                     Button("Create day") {
                         viewModel.creatingDayOfUserChoice(dismiss)
@@ -38,7 +49,7 @@ struct CreateNewDayView: View {
                     .shadow(color: .black, radius: 3, x: -1, y: 1)
                     Spacer()
                 }
-            }
+            .padding(.horizontal, 20)
             .navigationTitle("New working day")
             .onAppear {viewModel.checkUserDefaults()}
         }

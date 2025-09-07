@@ -27,6 +27,7 @@ struct OnboardSettingsView: View {
             }
             .padding(.bottom, 30)
         }
+        .navigationViewStyle(.stack)
     }
 }
 

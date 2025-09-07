@@ -21,7 +21,7 @@ struct DetailView: View {
                     companySection
                     
                     // WorkingHours Section
-                    workingHoursSection
+                    workHoursSection
                 
                     // Check-In Section
                     checkIn
@@ -39,6 +39,7 @@ struct DetailView: View {
             .listRowSpacing(10)
             .scrollContentBackground(.hidden)
             .scrollBounceBehavior(.basedOnSize)
+//            .id(viewModel.selectedPause)
         }
         .onAppear(perform: {
             viewModel.calculatedWorkingTime()
@@ -47,7 +48,7 @@ struct DetailView: View {
         
         // MARK: Edited Sheet
         .sheet(isPresented: $viewModel.onChange) {
-            EditSheet(viewModel: viewModel)
+            EditSheetView(viewModel: viewModel)
         }
         .toolbar {
             ToolbarItem {
@@ -61,9 +62,6 @@ struct DetailView: View {
             }
         }
         .navigationTitle("\(viewModel.model.wrappedDate.formatted(.dateTime.day().month()))")
-        .onDisappear(perform: {
-            dismiss()
-        })
     }
     
     // MARK: - Private compute properties
@@ -75,7 +73,7 @@ struct DetailView: View {
         }
     }
     
-    private var workingHoursSection: some View {
+    private var workHoursSection: some View {
         Section("Day Working Hour's") {
             Text("\(viewModel.model.wrappedWorkingHours)")
                 .font(.body)
@@ -138,14 +136,15 @@ struct DetailView: View {
         }
     }
     
-    init(model: WorkingDay, persistenceController: PersistenceController) {
-        _viewModel = StateObject(wrappedValue: ViewModel(model: model, persistenceController: PersistenceController.shared))
+    init(model: WorkingDay, modelPause: [Pause], persistenceController: PersistenceController) {
+//        _viewModel = StateObject(wrappedValue: ViewModel(model: model, persistenceController: PersistenceController.shared))
+        _viewModel = StateObject(wrappedValue: ViewModel(model: model, modelPauses: modelPause, persistenceController: PersistenceController.shared))
     }
 }
 
 #Preview {
     NavigationView {
         let persistenceController = PersistenceController.shared
-        DetailView(model: PersistenceController.preview, persistenceController: persistenceController)
+        DetailView(model: PersistenceController.preview, modelPause: PersistenceController.preview.arrPause, persistenceController: persistenceController)
     }
 }

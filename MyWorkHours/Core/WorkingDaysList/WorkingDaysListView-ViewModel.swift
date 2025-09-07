@@ -5,9 +5,11 @@
 //  Created by Yordan Dimitrov on 24.01.24.
 //
 
+import Combine
 import CoreData
 import CloudKit
 import SwiftUI
+
 
 
 extension WorkingDaysView {
@@ -37,7 +39,6 @@ extension WorkingDaysView {
         
         
         private(set) var userSettings: UserSettings?
-        private let fetchedResultsControllerManager: FetchedResultsControllerManager
         
          // MARK: - Container
         let persistenceController: PersistenceController
@@ -48,13 +49,8 @@ extension WorkingDaysView {
         // MARK: - Initialization
         init(persistenceController: PersistenceController) {
             self.persistenceController = persistenceController
-            fetchedResultsControllerManager = FetchedResultsControllerManager(persistenceController: persistenceController)
-            workingDaysList = fetchedResultsControllerManager.items
+            fetchCoreDate()
             fetchUserSettings()
-            fetchedResultsControllerManager.$items
-                .receive(on: RunLoop.main)
-                .assign(to: &$workingDaysList)
-            //            registerCloudKitSubscription()
         }
         
         // MARK: - Public Methods
@@ -71,6 +67,7 @@ extension WorkingDaysView {
                 return
             }
             persistenceController.addItem(userSettings: userSettings, notADayWithTodayDate: notADayWithTodayDate, date: date, workingHours: workingHours, isWeekend: isWeekend)
+            fetchCoreDate()
         }
         
         /// Create a day from a user-selected date
@@ -79,12 +76,14 @@ extension WorkingDaysView {
             addWorkingDay()
             dismiss()
             notADayWithTodayDate = false
+            fetchCoreDate()
         }
         
         /// Deletes a selected working day.
         func swipeDelete(day: WorkingDay) {
             withAnimation {
                 persistenceController.deleteDay(day)
+                fetchCoreDate()
             }
             
         }
@@ -125,7 +124,7 @@ extension WorkingDaysView {
                 }
                 today.checkIn = Date() // set check-in to time right now
 //                fetchedResultsControllerManager.save() // Save the updated check-in time
-                withAnimation(.easeInOut(duration: 1)){
+                withAnimation(.easeInOut(duration: 1)) {
                     showCheckInOutCard.toggle()
                 }
                 persistenceController.save()
@@ -149,7 +148,7 @@ extension WorkingDaysView {
             func checkUserDefaults() {
                 fetchUserSettings()
                 self.companyName = userSettings?.companyName
-                self.workingHours = userSettings?.workingHours ?? 0
+                self.workingHours = userSettings?.workingHours ?? 5
                 print("set initial")
             }
             
@@ -203,6 +202,7 @@ extension WorkingDaysView {
             /// Deletes multiple selection of working days.
             private func deleteSelectedWorkingDays(_ selection: Set<WorkingDay>) {
                 persistenceController.deleteSelectedWorkingDays(selection, items: workingDaysList)
+                fetchCoreDate()
             }
             
             /// Alert cancel button
@@ -239,7 +239,12 @@ extension WorkingDaysView {
                 }
                 alert = nil
             }
-            
+        
+        /// Fetch CoreData into array
+        private func fetchCoreDate() {
+            workingDaysList = persistenceController.fetchRequest(sortBy: [NSSortDescriptor(key: "date", ascending: true)])
+        }
+        
             //        private func registerCloudKitSubscription() {
             //            let predicate = NSPredicate(value: true)
             //            let subscription = CKQuerySubscription(

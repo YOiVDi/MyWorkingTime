@@ -8,13 +8,12 @@
 import CoreData
 import SwiftUI
 
-struct WorkingDaysTabView: View {
+struct WorkDaysTabView: View {
     
     let persistenceController: PersistenceController
     
     var body: some View {
         TabView {
-            Group {
                 WorkingDaysView(persistenceController: persistenceController)
                     .tabItem {
                         Label("List", systemImage: "list.bullet.circle")
@@ -23,14 +22,10 @@ struct WorkingDaysTabView: View {
                     .tabItem {
                         Label("Pause Timer", systemImage: "clock")
                     }
-                NavigationView {
                     SettingsView()
-                }
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }
-            }
-            .toolbar(.visible, for: .tabBar)
         }
         .navigationViewStyle(.stack)
     }
@@ -42,6 +37,6 @@ struct WorkingDaysTabView: View {
 
 #Preview {
     let persistenceController = PersistenceController.shared
-    return WorkingDaysTabView(persistenceController: persistenceController)
+    return WorkDaysTabView(persistenceController: persistenceController)
         .environmentObject(SettingsView.SettingsViewModel())
 }
