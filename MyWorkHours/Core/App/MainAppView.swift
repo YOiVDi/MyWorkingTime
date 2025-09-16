@@ -9,19 +9,19 @@ import CoreData
 import SwiftUI
 
 struct MainAppView: View {
-    @StateObject var viewModel = OnBoardItems()
+    @StateObject var onboardViewModel = OnBoardItems()
     let persistenceController: PersistenceController
     var body: some View {
         Group {
-            if !viewModel.finishOnboarding {
-                OnBoardTabView(viewModel: viewModel)
+            if !onboardViewModel.finishOnboarding {
+                OnBoardTabView(viewModel: onboardViewModel)
                     .transition(.move(edge: .bottom))
             } else {
                 WorkDaysTabView(persistenceController: persistenceController)
                     .transition(.move(edge: .bottom))
             }
         }
-        .animation(.easeIn(duration: 0.5), value: viewModel.finishOnboarding)
+        .animation(.easeIn(duration: 0.5), value: onboardViewModel.finishOnboarding)
     }
     
     init(persistenceController: PersistenceController) {

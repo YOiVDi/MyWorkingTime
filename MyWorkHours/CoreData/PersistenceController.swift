@@ -26,6 +26,7 @@ struct PersistenceController {
         workingDay.workOnWeekend = false
         for _ in 0..<3 {
             let pause = Pause(context: controller.viewContext)
+            pause.identifier = UUID().uuidString
             pause.startPause = Date(timeIntervalSinceNow: 1200)
             pause.finishPause = Date(timeIntervalSinceNow: 1800)
             pause.totalPause = 10
@@ -66,6 +67,8 @@ struct PersistenceController {
         }
     }
     
+    
+    // MARK: - WorkDay Methods
     func fetchRequest(/*filter: NSPredicate?,*/ sortBy: [NSSortDescriptor]?) -> [WorkingDay] {
         var workingDaysList: [WorkingDay] = []
         let request = NSFetchRequest<WorkingDay>(entityName: "WorkingDay")
@@ -116,6 +119,12 @@ struct PersistenceController {
         newWorkingDay.workingHours = Int16(notADayWithTodayDate ? workingHours : isWeekend())
 
         save()
+    }
+    
+    // MARK: - Pause Methods
+    
+    func deletePause(_ selectedPause: Pause) {
+        container.viewContext.delete(selectedPause)
     }
 
 }

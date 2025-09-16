@@ -19,6 +19,5 @@ struct OnboardItem: Identifiable {
 }
 
 extension OnboardItem: Hashable {
-    func hash(into hasher: inout Hasher) {
-    }
+    func hash(into hasher: inout Hasher) {}
 }

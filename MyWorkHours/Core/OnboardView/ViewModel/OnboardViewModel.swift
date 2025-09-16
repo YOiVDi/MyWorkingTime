@@ -38,4 +38,13 @@ import SwiftUI
                 .init(image: Image(systemName: "gear"), title: "Work On Weekends", content: "Need to work on weekends? No problem. You can choose different working hours for the weekend. Whether you need to adjust the schedule for Saturday, Sunday, or both days, we've got you covered."),
             ]
         }
+        
+        func requestNotificationPermission() async throws {
+            let center = UNUserNotificationCenter.current()
+            do {
+                try await center.requestAuthorization(options: [.alert, .badge, .sound])
+            } catch {
+                print("Requsting notification permission failed: \(error.localizedDescription)")
+            }
+        }
     }

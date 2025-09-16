@@ -21,12 +21,8 @@ struct SettingsView: View {
                 TextField("Company name", text: $viewModel.companyName)
                     .autocorrectionDisabled()
                     .trimmedString($viewModel.companyName)
-                //
-                Picker("Work hour's", selection: $viewModel.workHours) {
-                    ForEach(0..<13) {
-                        Text("\($0)h")
-                    }
-                }
+                DatePicker("Start Shift", selection: $viewModel.startShift, displayedComponents: .hourAndMinute)
+                DatePicker("End Shift", selection: $viewModel.endShift, displayedComponents: .hourAndMinute)
             }
             
             Section("Weekend's") {
@@ -35,19 +31,13 @@ struct SettingsView: View {
                 if viewModel.workOnWeekends {
                     Toggle("Saturday", isOn: $viewModel.workOnSaturday)
                     if viewModel.workOnSaturday {
-                        Picker("Work hour's", selection: $viewModel.saturdayHours) {
-                            ForEach(0..<13) {
-                                Text("\($0)h")
-                            }
-                        }
+                        DatePicker("Start Shift", selection: $viewModel.startInSaturday, displayedComponents: .hourAndMinute)
+                        DatePicker("End Shift", selection: $viewModel.endInSaturday, displayedComponents: .hourAndMinute)
                     }
                     Toggle("Sunday", isOn: $viewModel.workOnSunday)
                     if viewModel.workOnSunday {
-                        Picker("Work hour's", selection: $viewModel.sundayHours) {
-                            ForEach(0..<13) {
-                                Text("\($0)h")
-                            }
-                        }
+                        DatePicker("Start Shift", selection: $viewModel.startInSunday, displayedComponents: .hourAndMinute)
+                        DatePicker("End Shift", selection: $viewModel.endInSunday, displayedComponents: .hourAndMinute)
                     }
                 }
             }

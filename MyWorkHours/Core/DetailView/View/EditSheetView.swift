@@ -14,64 +14,81 @@ struct EditSheetView: View {
         NavigationView {
             VStack {
                 List {
-                    Section("Working Day Detail's") {
-                        HStack {
-                            Text("WorkingHour's: ")
-                            Spacer()
-                            Picker("WorkingHour's", selection: $viewModel.newWorkingTime) {
-                                ForEach(0..<9) {
-                                    Text("\($0)")
-                                }
-                            }
-                            .labelsHidden()
-                        }
+                    Section("Check-In and Check-Out Details") {
                         
                         DatePicker("Check-In: ", selection: $viewModel.checkIn)
                         
                         DatePicker("Check-Out: ", selection: $viewModel.checkOut)
                         
                     }
-                    if viewModel.modelPauses.isEmpty { // if array is empty
-                        ContentUnavailableView("You have no pauses.", systemImage: "doc.fill", description: Text("To add pause click on \(Image(systemName: "plus.circle.fill")) button."))
-                    } else { // Showing if array is not empty
-                        Section("\(viewModel.modelPauses.count <= 1 ? "Pause" : "Pauses")") {
-                            ForEach(viewModel.modelPauses, id: \.self) { pause in
-                                HStack {
-                                    Image(systemName: pause.id == viewModel.selectedPause?.id ? "checkmark.circle.fill" : "circle")
-                                        .foregroundStyle(.blue)
-                                    Text("Start: \(pause.wrappedStartPause.formatted(date: .omitted, time: .shortened))")
-                                    Text("Finish: \(pause.wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
-                                }
-                                .onTapGesture {
-                                    viewModel.selectPause(pause)
-                                }
-                                .swipeActions  {
-                                    Button {
-                                        viewModel.selectedPause = pause
-                                        viewModel.deletePause()
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                            .tint(.red)
-                                    }
-                                }
-                                // Edit pause time
-                                if viewModel.selectedPause == pause {
-                                    VStack {
-                                        DatePicker("New Start", selection: $viewModel.pauseStartEdit)
-                                        DatePicker("New Finish", selection: $viewModel.pauseFinishEdit)
+                    Group {
+                        if viewModel.addNewPause {
+                            Section("Add new pause") {
+                                DatePicker("Pause Begin", selection: $viewModel.pauseBegin)
+                                DatePicker("Pause End", selection: $viewModel.pauseEnd)
+                                VStack {
+                                    Text(viewModel.pauseDescription).foregroundColor(.red.opacity(0.7))
+                                        .multilineTextAlignment(.center)
+                                    HStack {
+                                        Spacer()
+                                        Button("Add pause") {
+                                            viewModel.addPause(for: viewModel.model)
+                                            viewModel.addNewPause.toggle()
+                                        }
+                                        .disabled(!viewModel.pauseDescription.isEmpty)
+                                        .buttonStyle(.borderedProminent)
+                                        Spacer()
                                     }
                                 }
                             }
+                            .transition(.move(edge: .top).combined(with: .opacity))
+                        } else if viewModel.modelPauses.isEmpty { // if array is empty
+                            ContentUnavailableView("You have no pauses.", systemImage: "doc.fill", description: Text("To add pause click on \(Image(systemName: "plus.circle.fill")) button."))
+                                .transition(.opacity)
+                        } else { // Showing if array is not empty
+                            Section("\(viewModel.modelPauses.count <= 1 ? "Pause" : "Pauses")") {
+                                ForEach(viewModel.modelPauses, id: \.identifier) { pause in
+                                    HStack {
+                                        Image(systemName: pause.id == viewModel.selectedPause?.id ? "checkmark.circle.fill" : "circle")
+                                            .foregroundStyle(.blue)
+                                        Text("Start: \(pause.wrappedStartPause.formatted(date: .omitted, time: .shortened))")
+                                        Text("Finish: \(pause.wrappedFinishPause.formatted(date: .omitted, time: .shortened))")
+                                    }
+                                    .onTapGesture {
+                                        withAnimation {
+                                            viewModel.selectPause(pause)
+                                        }
+                                    }
+                                    .swipeActions  {
+                                        Button {
+                                            withAnimation {
+                                                viewModel.selectedPause = pause
+                                                viewModel.deletePause()
+                                            }
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                                .tint(.red)
+                                        }
+                                    }
+                                }
+                            }
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
                         }
                     }
+                    .padding(.vertical)
+                    
                 }
-                .listStyle(.plain)
+                .animation(.easeInOut(duration: 5), value: viewModel.addNewPause)
+                .animation(.easeInOut(duration: 5), value: viewModel.modelPauses.count)
+                .padding()
                 // Button to save all changes
                 HStack {
                     Spacer()
                     Button("Update") {
-                        viewModel.update()
-                        dismiss()
+                        withAnimation {
+                            viewModel.update()
+                            dismiss()
+                        }
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .shadow(color: .black, radius: 3, x: -1, y: 1)
@@ -80,12 +97,11 @@ struct EditSheetView: View {
             }
             .animation(.easeInOut, value: viewModel.selectedPause)
             .onAppear {
-                viewModel.newWorkingTime = Int(viewModel.model.workingHours)
-                print("pauseStartEdit: \(viewModel.pauseStartEdit), pauseFinishEdit: \(viewModel.pauseFinishEdit)")
+                viewModel.dateOfWorkDay()
+                print("pauseStartEdit: \(viewModel.pauseBegin), pauseFinishEdit: \(viewModel.pauseEnd)")
             }
             .onDisappear {
                 viewModel.selectedPause = nil
-                viewModel.modelPauses = viewModel.model.arrPause
                 print("Disappear")
             }
             .toolbar {
@@ -101,7 +117,9 @@ struct EditSheetView: View {
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    viewModel.buttons()
+                    withAnimation(.easeInOut) {
+                        viewModel.buttons()
+                    }
                         .disabled(viewModel.disableAddPause)
                 }
             }
@@ -112,6 +130,6 @@ struct EditSheetView: View {
 }
 
 #Preview {
-    let persistenceController = PersistenceController.shared
-    return EditSheetView(viewModel: DetailView.ViewModel(model: WorkingDay(), modelPauses: [Pause](), persistenceController: persistenceController))
+    let preview = PersistenceController.preview
+    EditSheetView(viewModel: DetailView.ViewModel(model: preview, persistenceController: PersistenceController.shared))
 }

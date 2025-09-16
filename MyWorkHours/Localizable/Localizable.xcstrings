@@ -24,33 +24,12 @@
         }
       }
     },
-    "%lldh" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lldh"
-          }
-        }
-      }
-    },
-    "⏱️ One minute left until you finish the break❗️" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⏱️Eine Minute bis zum Ende der Pause❗️"
-          }
-        }
-      }
-    },
     "⏱️ One minute left until your break ends❗️" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eine Minute bis zum Ende deiner Pause❗️"
+            "value" : "⏱️Eine Minute bis zum Ende der Pause❗️"
           }
         }
       }
@@ -71,6 +50,25 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hinzufügen"
+          }
+        }
+      }
+    },
+    "Add new pause" : {
+
+    },
+    "Add pause" : {
+
+    },
+    "Add Pause" : {
+
+    },
+    "Allow Notifications" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benachrichtigungen zulassen"
           }
         }
       }
@@ -114,6 +112,9 @@
           }
         }
       }
+    },
+    "Check-In and Check-Out Details" : {
+
     },
     "Check-In: " : {
 
@@ -181,17 +182,6 @@
         }
       }
     },
-    "Click" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Klicken"
-          }
-        }
-      }
-    },
     "Company" : {
       "localizations" : {
         "de" : {
@@ -213,15 +203,11 @@
       }
     },
     "Company name: " : {
-
-    },
-    "Company name: %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Name der Firma: %@"
+            "value" : "Name der Firma: "
           }
         }
       }
@@ -294,6 +280,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bearbeiten %@"
+          }
+        }
+      }
+    },
+    "End Shift" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schicht beenden"
           }
         }
       }
@@ -384,17 +380,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wenn du den Timer nicht stoppst, beginnt die Überzeit."
-          }
-        }
-      }
-    },
-    "If you don't stop the timer, time will start to run in overtime" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wenn du den Timer nicht stoppst, läuft die Zeit in die Überstunden."
           }
         }
       }
@@ -512,6 +497,12 @@
         }
       }
     },
+    "Pause Begin" : {
+
+    },
+    "Pause Finish" : {
+
+    },
     "Pause Timer" : {
       "localizations" : {
         "de" : {
@@ -628,6 +619,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start"
+          }
+        }
+      }
+    },
+    "Start Shift" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schicht beginnen"
           }
         }
       }
@@ -812,16 +813,6 @@
         }
       }
     },
-    "Work hour's" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arbeitsstunden"
-          }
-        }
-      }
-    },
     "Work Information" : {
       "localizations" : {
         "de" : {
@@ -863,31 +854,25 @@
       }
     },
     "Working Day Detail's" : {
-
-    },
-    "Working hour's" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arbeitsstunden"
-          }
-        }
-      }
-    },
-    "Working Hour's" : {
       "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Arbeitsstunden"
+            "value" : "Arbeitstagdetails"
           }
         }
       }
     },
     "Working hour's: " : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeitsstunden"
+          }
+        }
+      }
     },
     "Working Hours" : {
       "localizations" : {
@@ -900,12 +885,17 @@
       }
     },
     "WorkingHour's" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbeitsstunden"
+          }
+        }
+      }
     },
     "WorkingHour's: " : {
-
-    },
-    "WorkingHours's" : {
       "extractionState" : "stale",
       "localizations" : {
         "de" : {

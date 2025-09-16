@@ -39,7 +39,6 @@ struct DetailView: View {
             .listRowSpacing(10)
             .scrollContentBackground(.hidden)
             .scrollBounceBehavior(.basedOnSize)
-//            .id(viewModel.selectedPause)
         }
         .onAppear(perform: {
             viewModel.calculatedWorkingTime()
@@ -54,7 +53,7 @@ struct DetailView: View {
             ToolbarItem {
                 Button {
                     withAnimation {
-                        viewModel.editButton()
+                        viewModel.onChange.toggle()
                     }
                 } label: {
                     Text("Edit")
@@ -75,7 +74,7 @@ struct DetailView: View {
     
     private var workHoursSection: some View {
         Section("Day Working Hour's") {
-            Text("\(viewModel.model.wrappedWorkingHours)")
+            Text(viewModel.model.workingHours >= 9 ? viewModel.calculateWorkTimeFromMinutes() : "\(viewModel.model.workingHours)")
                 .font(.body)
                 .fontWeight(.semibold)
         }
@@ -110,16 +109,16 @@ struct DetailView: View {
     }
     
     private var pauseSection: some View {
-        Section("\(viewModel.model.arrPause.count <= 1 ? "Pause" : "Pauses")") {
+        Section("\(viewModel.modelPauses.count <= 1 ? "Pause" : "Pauses")") {
             Group {
-                ForEach(viewModel.model.arrPause, id: \.self) { pause in
+                ForEach(viewModel.modelPauses, id: \.self) { pause in
                     HStack {
                         Text("Start: \(pause.wrappedStartPause.formatted(date: .omitted, time: .standard))")
                         Text("Finish: \(pause.wrappedFinishPause.formatted(date: .omitted, time: .standard))")
                     }
                 }
                 
-                if viewModel.model.arrPause.count == 0 {
+                if viewModel.modelPauses.count == 0 {
                     Text("You can edit the day and manually add the breaks.")
                 }
             }
@@ -137,8 +136,7 @@ struct DetailView: View {
     }
     
     init(model: WorkingDay, modelPause: [Pause], persistenceController: PersistenceController) {
-//        _viewModel = StateObject(wrappedValue: ViewModel(model: model, persistenceController: PersistenceController.shared))
-        _viewModel = StateObject(wrappedValue: ViewModel(model: model, modelPauses: modelPause, persistenceController: PersistenceController.shared))
+        _viewModel = StateObject(wrappedValue: ViewModel(model: model, persistenceController: PersistenceController.shared))
     }
 }
 

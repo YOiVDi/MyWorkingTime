@@ -28,15 +28,11 @@ struct CreateNewDayView: View {
                         Spacer()
                     }
                     
-                    HStack {
+                    VStack {
                         Text("Working hour's: ")
                             .fontWeight(.semibold)
-                        Picker("Working hour's", selection: $viewModel.workingHours) {
-                            ForEach(0..<9) {
-                                Text("\($0)")
-                            }
-                        }
-                        .pickerStyle(.menu)
+                        DatePicker("Start Shift", selection: $viewModel.startShift, displayedComponents: .hourAndMinute)
+                        DatePicker("End Shift", selection: $viewModel.endShift, displayedComponents: .hourAndMinute)
                         Spacer()
                     }
                     Text("When you create a new day with a specific date, you can add check-ins, check-outs, and pauses after the day is created. Simply click on the day you created in the upper right corner via the edit button, and you will be able to edit that day. From there, you can update your check-in and check-out times, as well as add pauses.")

@@ -5,37 +5,46 @@
 //  Created by Yordan Dimitrov on 09.05.24.
 //
 
-import Combine
-import SwiftUI
 import CoreData
+import SwiftUI
 
 extension DetailView {
     class ViewModel: ObservableObject {
         // MARK: - Public properties
         @Published var selectedPause: Pause?
         @Published var model: WorkingDay
-        @Published var modelPauses: [Pause]
         @Published var onChange: Bool = false
+        @Published var addNewPause: Bool = false
         
-        @Published var newWorkingTime: Int
-        @Published var pauseStartEdit: Date {
-            didSet {
-                isChanged()
-                editSelectedPause()
-            }
-        }
-        @Published var pauseFinishEdit: Date
+        @Published var pauseBegin: Date
+        @Published var pauseEnd: Date
         
         @Published var checkIn: Date
         @Published var checkOut: Date
+
         
+        var pauseDescription: String {
+            if pauseBegin <= checkIn {
+                return "Pause cannot be added. The pause start time must be after check-in."
+            }
+            if pauseBegin >= checkOut {
+                return "Pause cannot be added. The pause start time must be before check-out."
+            }
+            if pauseBegin >= pauseEnd {
+                return "Pause cannot be added. The pause start time must be earlier than the pause end time."
+            }
+            if pauseEnd >= checkOut {
+                return "Pause cannot be added. The pause end time must be before check-out."
+            }
+            return "" // no errors
+        }
         
         // MARK: - Private properties
-        private let defaultTime = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: Date()) ?? Date()
-        private let persistenceController: PersistenceController
+        private var defaultTime = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: Date()) ?? Date()
         private var time = "Check-In and Check-Out data missing."
-        /// Combine cancellables
-        private var cancellables = Set<AnyCancellable>()
+        
+        private let persistenceController: PersistenceController
+        private let workTimeAsInt = WorkTimeAsInt()
         
         // MARK: - Computed properties
         
@@ -44,26 +53,26 @@ extension DetailView {
             return selectedPause == nil &&  model.arrPause.count == 4
         }
         
+        /// expose pause for certain WorkDay
+        var modelPauses: [Pause] { model.arrPause }
+        
         /// show complete worked time for a day.
         var workedTime: String {
             model.workedTime != 0 ? convertTimeToSeconds(model.wrappedWorkedTime) : time
         }
         
         
+        
         // MARK: - Initialization
-        init(model: WorkingDay, modelPauses: [Pause], persistenceController: PersistenceController) {
+        init(model: WorkingDay, persistenceController: PersistenceController) {
             /// init persistenceController
             self.persistenceController = persistenceController
             /// init properties
             self.model = model
-            self.modelPauses = modelPauses
-            self.newWorkingTime = model.wrappedWorkingHours
-            self.pauseStartEdit = defaultTime
-            self.pauseFinishEdit = defaultTime
-            self.checkIn = model.checkIn ?? defaultTime
-            self.checkOut = model.checkOut ?? defaultTime
-            testFuncPrint() // test purpose
-            //                self.debouncing()
+            self.pauseBegin = defaultTime
+            self.pauseEnd = defaultTime
+            self.checkIn = model.wrappedCheckIn ?? defaultTime
+            self.checkOut = model.wrappedCheckOut ?? defaultTime
         }
         
         
@@ -81,7 +90,9 @@ extension DetailView {
                     }
                 } else {
                     Button {
-                        self.addPause(for: self.model)
+                        if self.addNewPause == false {
+                        }
+                        self.addNewPause.toggle()
                     } label: {
                         Label("Add", systemImage: "plus.circle.fill")
                     }
@@ -89,23 +100,19 @@ extension DetailView {
             }
         }
         
-        /// Edit button
-        func editButton() {
-            
-            // Set on change to true
-            self.onChange = true
-        }
-        
         /// Deletes the given pause from the working day and saves the context.
         func deletePause() {
             guard let selectedPause else { return }
             
             // Delete selected pause from Core Data context
-            persistenceController.container.viewContext.delete(selectedPause)
+            persistenceController.deletePause(selectedPause)
             
             // Set selectedpause to nil
             self.selectedPause = nil
             
+            // Recalculate the working time (assuming this function exists and performs some calculation)
+            calculatedWorkingTime()
+        
             // Save the changes to the persistence controller
             persistenceController.save()
         }
@@ -114,7 +121,6 @@ extension DetailView {
         /// Updates the working day and optionally the pause with the new values.
         func update() {
             // Update the model's working hours, check-in, and check-out times
-            model.workingHours = Int16(newWorkingTime)
             model.checkIn = self.checkIn == defaultTime ? nil : self.checkIn
             model.checkOut = self.checkOut == defaultTime ? nil : self.checkOut
             
@@ -124,47 +130,25 @@ extension DetailView {
             // Recalculate the working time (assuming this function exists and performs some calculation)
             calculatedWorkingTime()
             
+            objectWillChange.send()
+            
             // Save the changes to the persistence controller
             persistenceController.save()
-        }
-        
-        /// Debouncing data, so after typing or changing data will be saved once after 2 seconds
-        private func debouncing() {
-            Publishers.CombineLatest3(
-                $newWorkingTime,
-                $pauseStartEdit,
-                $pauseFinishEdit
-            )
-            .debounce(for: .seconds(2), scheduler: DispatchQueue.main)
-            .sink { [weak self] _, _, _ in
-                self?.update()
-            }
-            .store(in: &cancellables)
-            
-            Publishers.CombineLatest(
-                $checkIn,
-                $checkOut
-            )
-            .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
-            .sink { [weak self] _, _ in
-                self?.update()
-            }
-            .store(in: &cancellables)
         }
         
         /// Adds a new pause to the working day.
         func addPause(for day: WorkingDay) {
             
-            // Initialize pauseStartEdit to the current date and time
-            let addStartPause = Date.now
+            let addStartPause = pauseBegin
             // Initialize pauseStartEdit to the current date and time + 15 min
-            let addFinishPause = Date(timeInterval: 900, since: addStartPause)
+//            let addFinishPause = Date(timeInterval: 900, since: addStartPause)
+            let addFinishPause = pauseEnd
             
             // Create a new Pause entity in the Core Data context
             let newPause = Pause(context: persistenceController.container.viewContext)
             
-            // Assign a unique identifier to the newPause based on the current time, formatted as a string
-            newPause.identifier = String(Date().formatted(date: .omitted, time: .standard))
+            // Assign a unique identifier to the newPause
+            newPause.identifier = UUID().uuidString
             
             // Set the start time of the pause period for the newPause entity
             newPause.startPause = addStartPause
@@ -174,10 +158,7 @@ extension DetailView {
             
             // Add a pause to a  day
             day.addToPauses(newPause)
-            
-            // Select currently created pause
-            //            selectedPause = newPause
-            
+
             objectWillChange.send()
             
             // Save the changes to the persistence controller
@@ -190,9 +171,11 @@ extension DetailView {
                 selectedPause = nil
                 print("selectPausePrint: here")
             } else {
+                print("selectedPause: \(pauseBegin) \(pauseEnd)")
+                print("selectedPause: \(pause.wrappedStartPause) \(pause.wrappedFinishPause)")
                 selectedPause = pause
-                pauseStartEdit = pause.wrappedStartPause
-                pauseFinishEdit = pause.wrappedFinishPause
+                pauseBegin = pause.wrappedStartPause
+                pauseEnd = pause.wrappedFinishPause
             }
         }
         
@@ -200,7 +183,6 @@ extension DetailView {
         /// Calculate time between check-in and check-out.
         /// - Returns: return calculated time.
         func calculatedWorkingTime() {
-            //            var time = "Check-In and Check-Out data missing."
             if let checkIn = model.checkIn, let checkOut = model.checkOut {
                 // Calculate the time interval in seconds
                 var timeInterval = checkOut.timeIntervalSince(checkIn)
@@ -217,7 +199,7 @@ extension DetailView {
                 let totalSeconds = Int(round(timeInterval)) - pauseInterval
                 
                 // If model worked time doesn't equal to totalSeconds, then re-calculate.
-                if model.wrappedWorkedTime != totalSeconds{
+                if model.wrappedWorkedTime != totalSeconds {
                     model.workedTime = Int64(totalSeconds)
                     persistenceController.save()
                 }
@@ -225,6 +207,24 @@ extension DetailView {
                 // Calculate and format the time as a string.
                 self.time = convertTimeToSeconds(totalSeconds)
             }
+        }
+        
+        /// Convert Int16 from coredate into hours, minutes.
+        func calculateWorkTimeFromMinutes() -> String {
+            let hours = model.workingHours / 60
+            let minutes = model.workingHours % 60
+            return String(format: "%02d:%02d", hours, minutes)
+        }
+        
+        /// Set a date of new pause  fields to match date of day
+        func dateOfWorkDay() {
+            let modelDate = model.wrappedDate
+            var components = Calendar.current.dateComponents([.day, .month, .year ,.hour , .minute], from: modelDate)
+            components.hour = 0
+            components.minute = 0
+            pauseBegin = Calendar.current.date(from: components) ?? Date()
+            pauseEnd = Calendar.current.date(from: components) ?? Date()
+            print("components: \(components)")
         }
         
         
@@ -264,47 +264,6 @@ extension DetailView {
             
             // Return the total duration of all pauses in seconds
             return pauseInterval
-        }
-        
-        private func testDeleteAddPause(identifier: String, startPause: Date, finishPause: Date) {
-            // Create a new Pause entity in the Core Data context
-            let newPause = Pause(context: persistenceController.container.viewContext)
-            
-            // Assign a unique identifier to the newPause based on the current time, formatted as a string
-            newPause.identifier = String(Date().formatted(date: .omitted, time: .standard))
-            
-            // Set the start time of the pause period for the newPause entity
-            newPause.startPause = startPause
-            
-            // Set the finish time of the pause period for the newPause entity
-            newPause.finishPause = finishPause
-            
-            // Add a pause to a  day
-            model.addToPauses(newPause)
-        }
-        private func isChanged() {
-            if selectedPause?.wrappedStartPause != pauseStartEdit || selectedPause?.wrappedFinishPause != pauseFinishEdit {
-                selectedPause?.startPause = pauseStartEdit
-                selectedPause?.finishPause = pauseFinishEdit
-                persistenceController.save()
-                testFuncPrint() // test purpose
-            }
-        }
-        
-        private func editSelectedPause() {
-            if selectedPause != nil && ((selectedPause?.wrappedStartPause) != pauseStartEdit) || ((selectedPause?.wrappedFinishPause) != pauseFinishEdit) {
-                modelPauses = model.arrPause
-            }
-        }
-        
-        private func testFuncPrint() {
-            
-            for pause in model.arrPause {
-                print("ModelPauses // Start: \(pause.wrappedStartPause), Finish: \(pause.wrappedFinishPause)")
-            }
-            for pause in modelPauses {
-                print("ArrayPauses: // Start: \(pause.wrappedStartPause), Finish: \(pause.wrappedFinishPause)")
-            }
         }
         
     }

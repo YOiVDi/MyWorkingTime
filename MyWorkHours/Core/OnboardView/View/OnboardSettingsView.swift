@@ -15,6 +15,13 @@ struct OnboardSettingsView: View {
             SettingsView()
             VStack {
                 Spacer()
+                Button("Allow Notifications") {
+                    Task {
+                        try await viewModel.requestNotificationPermission()
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                Spacer()
                 Button {
                     viewModel.isOnboarding()
                 } label: {
@@ -23,7 +30,8 @@ struct OnboardSettingsView: View {
                         .font(.title3.bold())
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
-                .disabled(settings.companyName.count < 3 || settings.workHours == 0)
+//                .disabled(settings.companyName.count < 3 || settings.workHours == 0)
+                .disabled(settings.companyName.count < 3)
             }
             .padding(.bottom, 30)
         }

@@ -209,7 +209,6 @@ extension PauseTimerView {
              } else {
                  if elapsedTime != 0 { 
                      // If elapseTime is not equal to 0, subtract elapsedTime from calcSeconds
-                     // Reminder add to overElapsedTime
                      overElapsedTime = Double(calcSeconds) - elapsedTime
                      elapsedTime = 0
                  } else {
