@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardItemView: View {
-    @ObservedObject var viewModel: OnBoardItems
+    @ObservedObject var viewModel: OnboardViewModel
     @State var showButton = false
     let item: OnboardItem
     var body: some View {
@@ -69,5 +69,5 @@ struct OnboardItemView: View {
 }
 
 #Preview {
-    OnboardItemView(viewModel: OnBoardItems(), item: .dummyItem)
+    OnboardItemView(viewModel: OnboardViewModel(), item: .dummyItem)
 }

@@ -21,6 +21,4 @@ struct UserSettings: Codable {
 //    var sundayHours: Int = 0
     var startInSunday: Date = Date()
     var endInSunday: Date = Date()
-    var holidays: Bool =  false
-    var holidaysHours: Int = 0
 }

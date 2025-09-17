@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnBoardTabView: View {
-    @ObservedObject var viewModel: OnBoardItems
+    @ObservedObject var viewModel: OnboardViewModel
     
     var body: some View {
         TabView(selection: $viewModel.tabBarSelection) {
@@ -25,5 +25,5 @@ struct OnBoardTabView: View {
 }
 
 #Preview {
-    OnBoardTabView(viewModel: OnBoardItems())
+    OnBoardTabView(viewModel: OnboardViewModel())
 }

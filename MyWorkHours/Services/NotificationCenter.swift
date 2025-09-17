@@ -11,27 +11,32 @@ import SwiftUI
 
 class NotificationCenter {
     
-    /// Adding notification to NotificationCenter
+    private let center = UNUserNotificationCenter.current()
+    
+    /// Schedules a local notification after a given time interval.
+    /// - Parameters:
+    ///   - timeInterval: Delay in seconds before the notification is delivered.
+    ///   - title: The main title of the notification.
+    ///   - subtitle: The subtitle of the notification.
+    ///   - identifier: Unique identifier for this notification request.
     func addNotification(timeInterval: Double, title: String, subtitle: String, identifier: String) {
-        let center = UNUserNotificationCenter.current()
-        
         let addRequest = {
             let content = UNMutableNotificationContent()
-            content.title = title            
+            content.title = title
             content.subtitle = subtitle
             content.sound = UNNotificationSound.default
             
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
             
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-            center.add(request)
+            self.center.add(request)
         }
         
-        center.getNotificationSettings { settings in
+        self.center.getNotificationSettings { settings in
             if settings.authorizationStatus == .authorized {
                 addRequest()
             } else {
-                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                self.center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                     if success {
                         addRequest()
                     } else if let error = error {
@@ -42,16 +47,56 @@ class NotificationCenter {
         }
     }
     
-    /// Delete notification
+    /// Deletes pending notifications with the given identifiers.
+    /// - Parameter identifier: An array of notification identifiers to remove.
     func deleteNotification(identifier: [String]) {
-        let center = UNUserNotificationCenter.current()
-        center.removePendingNotificationRequests(withIdentifiers: identifier)
+        self.center.removePendingNotificationRequests(withIdentifiers: identifier)
     }
     
-//    func checkNotificationExists(identifier: String, completion: @escaping (Bool) -> Void) {
-//        UNUserNotificationCenter.current().getDeliveredNotifications { requests in
-//            let exists = requests.contains(where: {$0.request.identifier == identifier})
-//            completion(exists)
-//        }
-//    }
+    
+    /// Requests notification permission from the user.
+    /// - If the current status is `.notDetermined`, the system prompt will be shown.
+    /// - For all other cases, the user is redirected to the app's Settings page
+    ///   so they can review or change their notification preferences.
+    ///
+    /// - Note: This approach ensures users always have a way to change their decision
+    ///   even after initially granting or denying permissions.
+    func requestNotificationPermission() async {
+        let settings = await self.center.notificationSettings()
+        
+        switch settings.authorizationStatus {
+        case .notDetermined:
+            do {
+                try await self.center.requestAuthorization(options: [.alert, .badge, .sound])
+            } catch {
+                print("Requsting notification permission failed: \(error.localizedDescription)")
+            }
+        default:
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                DispatchQueue.main.async {
+                    UIApplication.shared.open(url)
+                }
+            }
+        }
+    }
+    
+    
+    /// Checks the current notification authorization status.
+    /// - Returns: A string label describing the status (for use as a button title).
+    func checkAuthorizationStatus() async -> String {
+        var status: String = ""
+        let settings = await self.center.notificationSettings()
+        
+        switch settings.authorizationStatus {
+        case .authorized:
+            status = "Turn Off"
+        case .denied:
+            status = "Turn On"
+        default:
+            status = "Turn On"
+        }
+        print("Status : \(status)")
+        return status
+    }
+    
 }

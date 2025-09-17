@@ -64,6 +64,7 @@
 
     },
     "Allow Notifications" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -476,6 +477,9 @@
         }
       }
     },
+    "Notifications" : {
+
+    },
     "OK" : {
       "localizations" : {
         "de" : {
@@ -500,7 +504,7 @@
     "Pause Begin" : {
 
     },
-    "Pause Finish" : {
+    "Pause End" : {
 
     },
     "Pause Timer" : {

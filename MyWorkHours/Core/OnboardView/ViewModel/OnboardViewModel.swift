@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-    @MainActor class OnBoardItems: ObservableObject {
+    @MainActor class OnboardViewModel: ObservableObject {
         
         @Published private(set) var onboardItems: [OnboardItem] = []
         @Published private(set) var finishOnboarding = UserDefaults.standard.bool(forKey: "isOnboarding")
@@ -37,14 +37,5 @@ import SwiftUI
                 .init(image: Image(systemName: "timer"), title: "Pause Timer", content: "Set your timer durations and enjoy your pauses. Just before your pause ends, you'll receive a notification. If you accidentally extend your pause by talking or getting distracted, no worries—the application will track and report this extra time."),
                 .init(image: Image(systemName: "gear"), title: "Work On Weekends", content: "Need to work on weekends? No problem. You can choose different working hours for the weekend. Whether you need to adjust the schedule for Saturday, Sunday, or both days, we've got you covered."),
             ]
-        }
-        
-        func requestNotificationPermission() async throws {
-            let center = UNUserNotificationCenter.current()
-            do {
-                try await center.requestAuthorization(options: [.alert, .badge, .sound])
-            } catch {
-                print("Requsting notification permission failed: \(error.localizedDescription)")
-            }
         }
     }

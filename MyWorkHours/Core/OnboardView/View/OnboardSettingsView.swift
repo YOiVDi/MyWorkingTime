@@ -8,38 +8,19 @@
 import SwiftUI
 
 struct OnboardSettingsView: View {
-    @ObservedObject var viewModel: OnBoardItems
+    @ObservedObject var viewModel: OnboardViewModel
     @EnvironmentObject var settings: SettingsView.SettingsViewModel
     var body: some View {
-        ZStack {
-            SettingsView()
             VStack {
-                Spacer()
-                Button("Allow Notifications") {
-                    Task {
-                        try await viewModel.requestNotificationPermission()
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-                Spacer()
-                Button {
+                SettingsView(showFinishButton: true) {
                     viewModel.isOnboarding()
-                } label: {
-                    Text("Finish")
-                        .frame(width: 120)
-                        .font(.title3.bold())
                 }
-                .buttonStyle(BorderedProminentButtonStyle())
-//                .disabled(settings.companyName.count < 3 || settings.workHours == 0)
-                .disabled(settings.companyName.count < 3)
             }
-            .padding(.bottom, 30)
-        }
-        .navigationViewStyle(.stack)
     }
+    
 }
 
 #Preview {
-    OnboardSettingsView(viewModel: OnBoardItems())
+    OnboardSettingsView(viewModel: OnboardViewModel())
         .environmentObject(SettingsView.SettingsViewModel())
 }

@@ -9,7 +9,7 @@ import CoreData
 import SwiftUI
 
 struct MainAppView: View {
-    @StateObject var onboardViewModel = OnBoardItems()
+    @StateObject var onboardViewModel = OnboardViewModel()
     let persistenceController: PersistenceController
     var body: some View {
         Group {
