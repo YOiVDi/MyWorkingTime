@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EditSheetView: View {
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: DetailView.ViewModel
     var body: some View {
@@ -41,7 +42,6 @@ struct EditSheetView: View {
                                     }
                                 }
                             }
-                            .transition(.move(edge: .top).combined(with: .opacity))
                         } else if viewModel.modelPauses.isEmpty { // if array is empty
                             ContentUnavailableView("You have no pauses.", systemImage: "doc.fill", description: Text("To add pause click on \(Image(systemName: "plus.circle.fill")) button."))
                                 .transition(.opacity)
@@ -81,6 +81,8 @@ struct EditSheetView: View {
                 .animation(.easeInOut(duration: 5), value: viewModel.addNewPause)
                 .animation(.easeInOut(duration: 5), value: viewModel.modelPauses.count)
                 .padding()
+                .scrollContentBackground(.hidden)
+                .background(colorScheme == .dark ? Color(UIColor.black) : Color(UIColor.white))
                 // Button to save all changes
                 HStack {
                     Spacer()
@@ -95,6 +97,7 @@ struct EditSheetView: View {
                     Spacer()
                 }
             }
+            .background(colorScheme == .dark ? Color(UIColor.black) : Color(UIColor.white))
             .animation(.easeInOut, value: viewModel.selectedPause)
             .onAppear {
                 viewModel.dateOfWorkDay()
@@ -118,7 +121,9 @@ struct EditSheetView: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     withAnimation(.easeInOut) {
-                        viewModel.buttons()
+                        withAnimation {
+                            viewModel.buttons()
+                        }
                     }
                         .disabled(viewModel.disableAddPause)
                 }

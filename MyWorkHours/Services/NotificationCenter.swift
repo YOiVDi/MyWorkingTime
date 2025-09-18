@@ -72,7 +72,7 @@ class NotificationCenter {
                 print("Requsting notification permission failed: \(error.localizedDescription)")
             }
         default:
-            if let url = URL(string: UIApplication.openSettingsURLString) {
+            if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
                 DispatchQueue.main.async {
                     UIApplication.shared.open(url)
                 }
