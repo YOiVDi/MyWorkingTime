@@ -55,21 +55,31 @@
       }
     },
     "Add new pause" : {
-
-    },
-    "Add pause" : {
-
-    },
-    "Add Pause" : {
-
-    },
-    "Allow Notifications" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Benachrichtigungen zulassen"
+            "value" : "Neue Pause hinzufügen"
+          }
+        }
+      }
+    },
+    "Add pause" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause hinzufügen"
+          }
+        }
+      }
+    },
+    "Add Pause" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause hinzufügen"
           }
         }
       }
@@ -118,7 +128,14 @@
 
     },
     "Check-In: " : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check-in"
+          }
+        }
+      }
     },
     "Check-In: %@" : {
       "localizations" : {
@@ -151,7 +168,14 @@
       }
     },
     "Check-Out: " : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check-Out"
+          }
+        }
+      }
     },
     "Check-Out: %@" : {
       "localizations" : {
@@ -478,7 +502,14 @@
       }
     },
     "Notifications" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benachrichtigungen"
+          }
+        }
+      }
     },
     "OK" : {
       "localizations" : {
@@ -502,7 +533,14 @@
       }
     },
     "Pause Begin" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausenbeginn"
+          }
+        }
+      }
     },
     "Pause End" : {
 
@@ -857,17 +895,6 @@
         }
       }
     },
-    "Working Day Detail's" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arbeitstagdetails"
-          }
-        }
-      }
-    },
     "Working hour's: " : {
       "localizations" : {
         "de" : {
@@ -879,28 +906,6 @@
       }
     },
     "Working Hours" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arbeitsstunden"
-          }
-        }
-      }
-    },
-    "WorkingHour's" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arbeitsstunden"
-          }
-        }
-      }
-    },
-    "WorkingHour's: " : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
