@@ -56,7 +56,7 @@ struct SettingsView: View {
                             viewModel.requestNotificationPermission()
                         } label: {
                             Text(viewModel.btnTitle)
-                                .foregroundStyle(viewModel.btnTitle == "Turn Off" ? .red : .blue)
+                                .foregroundStyle(viewModel.btnTitle == "Turn off" ? .red : .blue)
                         }
                         Spacer()
                     }

@@ -16,17 +16,38 @@ struct EditSheetView: View {
             VStack {
                 List {
                     Section("Check-In and Check-Out Details") {
+                        HStack {
+                            Text("Check-In: ")
+                                .frame(width: 120, alignment: .leading)
+                            Spacer()
+                            DatePicker("Check-In: ", selection: $viewModel.checkIn)
+                                .labelsHidden()
+                        }.frame(maxWidth: .infinity)
                         
-                        DatePicker("Check-In: ", selection: $viewModel.checkIn)
-                        
-                        DatePicker("Check-Out: ", selection: $viewModel.checkOut)
+                        HStack {
+                            Text("Check-Out: ")
+                                .frame(width: 120, alignment: .leading)
+                            DatePicker("Check-Out: ", selection: $viewModel.checkOut)
+                                .labelsHidden()
+                        }
                         
                     }
                     Group {
                         if viewModel.addNewPause {
                             Section("Add new pause") {
-                                DatePicker("Pause Begin", selection: $viewModel.pauseBegin)
-                                DatePicker("Pause End", selection: $viewModel.pauseEnd)
+                                HStack {
+                                    Text("Pause Begin: ")
+                                        .frame(width: 120, alignment: .leading)
+                                    DatePicker("Pause Begin: ", selection: $viewModel.pauseBegin)
+                                        .labelsHidden()
+                                }
+                                
+                                HStack {
+                                    Text("Pause End: ")
+                                        .frame(width: 120, alignment: .leading)
+                                    DatePicker("Pause End: ", selection: $viewModel.pauseEnd)
+                                        .labelsHidden()
+                                }
                                 VStack {
                                     Text(viewModel.pauseDescription).foregroundColor(.red.opacity(0.7))
                                         .multilineTextAlignment(.center)

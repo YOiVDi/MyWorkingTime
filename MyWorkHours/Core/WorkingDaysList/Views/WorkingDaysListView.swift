@@ -62,6 +62,8 @@ struct WorkingDaysListView: View {
                             }
                         }
                     }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.black.opacity(0))
                 }
                 .scrollContentBackground(.hidden)
                 .listRowSpacing(10)

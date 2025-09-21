@@ -10,7 +10,7 @@ import CoreData
 import CloudKit
 import SwiftUI
 
-enum SortByWorkDay: String, CaseIterable {
+enum SortByWorkDay: LocalizedStringKey, CaseIterable {
     case newestFirst = "Newest First"
     case oldestFirst = "Oldest First"
 }

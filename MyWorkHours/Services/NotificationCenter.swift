@@ -83,17 +83,17 @@ class NotificationCenter {
     
     /// Checks the current notification authorization status.
     /// - Returns: A string label describing the status (for use as a button title).
-    func checkAuthorizationStatus() async -> String {
-        var status: String = ""
+    func checkAuthorizationStatus() async -> LocalizedStringKey {
+        var status: LocalizedStringKey = ""
         let settings = await self.center.notificationSettings()
         
         switch settings.authorizationStatus {
         case .authorized:
-            status = "Turn Off"
+            status = LocalizedStringKey("Turn off")
         case .denied:
-            status = "Turn On"
+            status = LocalizedStringKey("Turn on") 
         default:
-            status = "Turn On"
+            status = LocalizedStringKey("Turn on") 
         }
         print("Status : \(status)")
         return status

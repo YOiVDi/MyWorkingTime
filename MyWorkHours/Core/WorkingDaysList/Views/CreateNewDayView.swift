@@ -46,6 +46,18 @@ struct CreateNewDayView: View {
             .padding(.horizontal, 20)
             .navigationTitle("New working day")
             .onAppear {viewModel.checkUserDefaults()}
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.backward")
+                            Text("Back")
+                        }
+                    }
+                }
+            }
         }
     }
 }

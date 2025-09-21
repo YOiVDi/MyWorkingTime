@@ -11,7 +11,7 @@ import Combine
 extension SettingsView {
     @MainActor class SettingsViewModel: ObservableObject {
         @Published var alert: CustomAlerts? = nil
-        @Published var btnTitle: String = ""
+        @Published var btnTitle: LocalizedStringKey = ""
         
         /// Settings properties
         @Published var companyName: String = ""
