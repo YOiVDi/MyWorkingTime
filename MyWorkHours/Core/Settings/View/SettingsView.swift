@@ -15,7 +15,7 @@ struct SettingsView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     var showFinishButton: Bool? = false
     var finishAction: (() -> Void)? = nil
-    private var notificationMessage: String = """
+    private var notificationMessage: LocalizedStringResource = """
         Enable notifications to make the most of the timer.
         We’ll remind you one minute before your timer ends, even if the app is closed. This way, you won’t miss important breaks, tasks, or deadlines.
         """

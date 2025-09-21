@@ -10,6 +10,10 @@ import CoreData
 import CloudKit
 import SwiftUI
 
+enum SortByWorkDay: String, CaseIterable {
+    case newestFirst = "Newest First"
+    case oldestFirst = "Oldest First"
+}
 
 
 extension WorkingDaysView {
@@ -23,23 +27,35 @@ extension WorkingDaysView {
         @Published var confirmationIsShowing = false
         @Published var createNewDaySheet = false
         @Published var showCheckInOutCard = false
+        @Published var sortBy: SortByWorkDay = .newestFirst
+        
+        var section: [SectionModel] {
+            switch sortBy {
+            case .newestFirst:
+                return sectionArray.sorted { $0.date > $1.date }
+
+            case .oldestFirst:
+                return sectionArray.sorted { $0.date < $1.date }
+            }
+        }
         
         /// Making custom day
-        @Published var date = Date()
-        @Published var workingHours: Int = 0
-        @Published var startShift = Date()
-        @Published var endShift = Date()
-        
+//        @Published var date = Date()
+//        @Published var workingHours: Int = 0
+//        @Published var startShift = Date()
+//        @Published var endShift = Date()
+        var userDefinedWorkDay: UserDefinedWorkDay = UserDefinedWorkDay()
         
         
         // MARK: - Private Properties
         @Published private(set) var workingDaysList: [WorkingDay] = []
         @Published private(set) var todayCheckInCheckOut: WorkingDay?
         @Published private(set) var notADayWithTodayDate = false
-        
-        
+
+        // Hold user defaults
         private(set) var userSettings: UserSettings?
         private let workTimeAsInt = WorkTimeAsInt()
+        private var sectionArray: [SectionModel] = []
         
         // MARK: - PersistenceController
         let persistenceController: PersistenceController
@@ -52,6 +68,7 @@ extension WorkingDaysView {
             self.persistenceController = persistenceController
             fetchWorkDays()
             fetchUserSettings()
+            sectionWorkDays()
         }
         
         // MARK: - Public Methods
@@ -66,14 +83,14 @@ extension WorkingDaysView {
                 alert = .userDefaultsIsEmpty
                 return
             }
-            persistenceController.addItem(userSettings: userSettings, notADayWithTodayDate: notADayWithTodayDate, date: date, workingHours: workingHours, isWeekend: isWeekend)
+            persistenceController.addItem(userSettings: userSettings, notADayWithTodayDate: notADayWithTodayDate, date: userDefinedWorkDay.date, workingHours: userDefinedWorkDay.workingHours, isWeekend: isWeekend)
             fetchWorkDays()
         }
         
         /// Create a day from a user-selected date
         func creatingDayOfUserChoice(_ dismiss: DismissAction) {
             notADayWithTodayDate = true
-            workingHours = workTimeAsInt.returnWorkTimeAsInt(startShift: startShift, endShift: endShift)
+            userDefinedWorkDay.workingHours = workTimeAsInt.returnWorkTimeAsInt(startShift: userDefinedWorkDay.startShift, endShift: userDefinedWorkDay.endShift)
             addWorkingDay()
             dismiss()
             notADayWithTodayDate = false
@@ -110,22 +127,28 @@ extension WorkingDaysView {
         func doesTodayExist() {
             let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
             
-            todayCheckInCheckOut = workingDaysList.first(where: { workingDay in
-                let workingDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workingDay.wrappedDate)
-                return workingDayComponents == targetComponents
-            })
+            todayCheckInCheckOut = workingDaysList.first { workDay in
+                let workDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workDay.wrappedDate)
+                return workDayComponents == targetComponents
+            }
         }
         
         /// Handle check-in action
         func handleCheckIn() {
             doesTodayExist()
-            guard let today = todayCheckInCheckOut else {
-                // Handle Error Here
-                return
-            }
-            today.checkIn = Date() // set check-in to time right now
-            withAnimation(.easeInOut(duration: 1)) {
-                showCheckInOutCard.toggle()
+            if doesDayExist() == false {
+                addWorkingDay()
+                todayCheckInCheckOut = workingDaysList.last
+                todayCheckInCheckOut?.checkIn = Date()
+            } else {
+                guard let today = todayCheckInCheckOut else {
+                    // Handle Error Here
+                    return
+                }
+                today.checkIn = Date() // set check-in to time right now
+//                withAnimation(.easeInOut(duration: 1)) {
+//                    showCheckInOutCard.toggle()
+//                }
             }
             persistenceController.save()
         }
@@ -138,7 +161,6 @@ extension WorkingDaysView {
                 return
             }
             today.checkOut = Date() // set check-out to time right now
-            //                fetchedResultsControllerManager.save() // Save the updated check-out time
             withAnimation(.easeInOut(duration: 1)){
                 showCheckInOutCard.toggle()
             }
@@ -153,12 +175,10 @@ extension WorkingDaysView {
         
         /// Checks if a working day already exists for the specified date.
         private func doesDayExist() -> Bool {
-            let targetDate = notADayWithTodayDate ? date : Date()
-            
             let calendar = Calendar.current
             
             let itemExist = workingDaysList.contains { day in
-                return calendar.isDate(day.wrappedDate, inSameDayAs: targetDate)
+                return calendar.isDate(day.wrappedDate, inSameDayAs: userDefinedWorkDay.date)
             }
             return itemExist
         }
@@ -231,7 +251,7 @@ extension WorkingDaysView {
             fetchWorkDays()
         }
         
-        /// Alert cancel button
+        /// Alert delete action button
         private func handleDeleteAction(_ editMode:  Binding<EditMode>?) {
             switch alert {
             case .deleteAll:
@@ -250,7 +270,7 @@ extension WorkingDaysView {
             alert = nil
         }
         
-        ///  Alert cancel button
+        ///  Alert cancel  action button
         private func handleCancelAction(_ editMode:  Binding<EditMode>?) {
             switch alert {
             case .deleteAll:
@@ -266,9 +286,34 @@ extension WorkingDaysView {
             alert = nil
         }
         
-        /// Fetch CoreData into array
+        /// Fetch workdays from CoreData.
         private func fetchWorkDays() {
             workingDaysList = persistenceController.fetchRequest(sortBy: [NSSortDescriptor(key: "date", ascending: true)])
+            sectionWorkDays()
+        }
+        
+        // Groups workingDaysList by month into sections.
+        // - Key: first day of the month (Date)
+        // - Value: array of WorkingDay items for that month
+        // The result is transformed into SectionModel objects with:
+        //   name  = month name (e.g. "September")
+        //   items = sorted WorkingDay list (newest first)
+        //   date  = month key (Date)
+        private func sectionWorkDays() {
+            var grouped: [Date : [WorkingDay]] = [:]
+            let dateFormatter = DateFormatter()
+            let calendar = Calendar.current
+            dateFormatter.dateFormat = "MMMM"
+            for item in workingDaysList {
+                let components = calendar.dateComponents([.year ,.month], from: item.wrappedDate)
+                let monthName = calendar.date(from: components)
+                grouped[monthName ?? .now, default: []].append(item)
+            }
+            let section: [SectionModel] = grouped.map { (key, value) in
+                SectionModel(name: dateFormatter.string(from: key), items: value.sorted { $0.wrappedDate > $1.wrappedDate }, date: key)
+            }
+            sectionArray = section
         }
     }
 }
+
