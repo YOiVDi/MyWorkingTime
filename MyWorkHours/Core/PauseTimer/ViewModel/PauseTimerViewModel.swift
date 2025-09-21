@@ -182,7 +182,7 @@ extension PauseTimerView {
          }
         
         func predifenedTimerSelected() {
-            switch predefineTimer {
+            switch predefinedTimer {
             case .zero: hours = 0; minutes = 0; seconds = 0
             case .fiveMinutes: hours = 0; minutes = 5; seconds = 0
             case .tenMinutes: hours = 0; minutes = 10; seconds = 0
