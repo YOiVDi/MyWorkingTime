@@ -229,19 +229,19 @@
 			path = DetailView;
 			sourceTree = "<group>";
 		};
-		8509CF792BF2111B00C7ACB0 /* PauseTimer-Components */ = {
+		8509CF792BF2111B00C7ACB0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				8509CF772BF2111B00C7ACB0 /* Buttons.swift */,
 				8509CF782BF2111B00C7ACB0 /* TimerView.swift */,
 			);
-			path = "PauseTimer-Components";
+			path = Views;
 			sourceTree = "<group>";
 		};
 		8509CF7C2BF2111B00C7ACB0 /* PauseTimer */ = {
 			isa = PBXGroup;
 			children = (
-				8509CF792BF2111B00C7ACB0 /* PauseTimer-Components */,
+				8509CF792BF2111B00C7ACB0 /* Views */,
 				857FA3A52E6D45FA000AC2AA /* View */,
 				857FA3A62E6D4600000AC2AA /* ViewModel */,
 			);

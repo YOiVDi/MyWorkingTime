@@ -87,6 +87,19 @@ struct TimerView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: 400)
+        VStack {
+            Picker("", selection: $viewModel.predefinedTimer) {
+                ForEach(PredefinedTimer.allCases, id: \.self) { timer in
+                    Text("\(timer.rawValue)")
+                        .tag(timer)
+                }
+                
+            }
+            .pickerStyle(.segmented)
+            .onChange(of: viewModel.predefinedTimer) { oldValue, newValue in
+                viewModel.predifenedTimerSelected()
+            }
+        }
     }
 }
 

@@ -9,6 +9,16 @@ import UserNotifications
 import SwiftUI
 import CoreData
 
+enum PredefinedTimer: Int, CaseIterable {
+    case zero = 0
+    case fiveMinutes = 5
+    case tenMinutes = 10
+    case fifteenMinutes = 15
+    case twentyMinutes = 20
+    case twentyFiveMinutes = 25
+    case thirtyMinutes = 30
+}
+
 extension PauseTimerView {
     class PauseTimerViewModel: ObservableObject {
         // MARK: - Public propeties
@@ -16,8 +26,7 @@ extension PauseTimerView {
         @Published var minutes = 0
         @Published var seconds = 0
         @Published var alert: CustomAlerts? = nil
-        
-        let pauseTimes: [Int] = [5, 10, 15, 20, 25, 30] // at moment not in use
+        @Published var predefinedTimer: PredefinedTimer = .zero
         
         // MARK: - Private Properties
         @Published private(set) var elapsedTimeFrom: Double = 0
@@ -171,6 +180,19 @@ extension PauseTimerView {
                 break
             }
          }
+        
+        func predifenedTimerSelected() {
+            switch predefineTimer {
+            case .zero: hours = 0; minutes = 0; seconds = 0
+            case .fiveMinutes: hours = 0; minutes = 5; seconds = 0
+            case .tenMinutes: hours = 0; minutes = 10; seconds = 0
+            case .fifteenMinutes: hours = 0; minutes = 15; seconds = 0
+            case .twentyMinutes: hours = 0; minutes = 20; seconds = 0
+            case .twentyFiveMinutes: hours = 0; minutes = 25; seconds = 0
+            case .thirtyMinutes: hours = 0; minutes = 30; seconds = 0
+            }
+            setTimer()
+        }
         
         
         // MARK: - Private Methods
