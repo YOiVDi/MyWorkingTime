@@ -40,7 +40,7 @@ extension DetailView {
         }
         
         // MARK: - Private properties
-        private var defaultTime = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: Date()) ?? Date()
+        private var defaultTime: Date
         private var time = "Check-In and Check-Out data missing."
         
         private let persistenceController: PersistenceController
@@ -69,6 +69,7 @@ extension DetailView {
             self.persistenceController = persistenceController
             /// init properties
             self.model = model
+            defaultTime = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: model.wrappedDate) ?? Date()
             self.pauseBegin = defaultTime
             self.pauseEnd = defaultTime
             self.checkIn = model.wrappedCheckIn ?? defaultTime
@@ -224,6 +225,10 @@ extension DetailView {
             components.minute = 0
             pauseBegin = Calendar.current.date(from: components) ?? Date()
             pauseEnd = Calendar.current.date(from: components) ?? Date()
+            guard checkIn == defaultTime else { return }
+            checkIn = Calendar.current.date(from: components) ?? Date()
+            guard checkOut ==  defaultTime else { return }
+            checkOut = Calendar.current.date(from: components) ?? Date()
             print("components: \(components)")
         }
         
