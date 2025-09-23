@@ -96,6 +96,7 @@ struct TimerView: View {
                 
             }
             .pickerStyle(.segmented)
+            .disabled(viewModel.isStarted)
             .onChange(of: viewModel.predefinedTimer) { oldValue, newValue in
                 viewModel.predifenedTimerSelected()
             }

@@ -670,7 +670,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyWorkHours/MyWorkHours.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"MyWorkHours/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -685,7 +685,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = me.yoid.MyWorkHours;
 				PRODUCT_NAME = MyWorkHours;
@@ -704,7 +704,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyWorkHours/MyWorkHours.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"MyWorkHours/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -719,7 +719,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = me.yoid.MyWorkHours;
 				PRODUCT_NAME = MyWorkHours;

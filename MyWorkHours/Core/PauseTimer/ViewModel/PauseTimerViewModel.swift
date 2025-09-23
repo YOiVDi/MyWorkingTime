@@ -114,11 +114,15 @@ extension PauseTimerView {
         
         ///  Invalidate timer
         func stopTimer() {
+            var processCompletedCount = UserDefaults.standard.integer(forKey: "processCompletedCount")
             isStopped = true
             isStarted = false
             finishPause = .now
             timer?.invalidate()
             notification.deleteNotification(identifier: ["timer"])
+            processCompletedCount += 1
+            UserDefaults.standard.set(processCompletedCount, forKey: "processCompletedCount")
+            print("CountUsage: \(processCompletedCount)")
         }
         
         /// Reset the timer to its initial state

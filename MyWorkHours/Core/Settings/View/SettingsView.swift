@@ -84,7 +84,6 @@ struct SettingsView: View {
             }
             .scrollContentBackground(.hidden)
             .background(colorScheme == .dark ? Color(UIColor.black) : Color(UIColor.white))
-            .scrollDisabled(true)
             .navigationTitle("Settings")
         }
         .onChange(of: scenePhase) {
