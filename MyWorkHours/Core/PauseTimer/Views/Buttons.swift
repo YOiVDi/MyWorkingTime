@@ -106,5 +106,5 @@ struct Buttons: View {
 }
 
 #Preview {
-    Buttons(viewModel: PauseTimerView.PauseTimerViewModel())
+    Buttons(viewModel: PauseTimerView.PauseTimerViewModel(timerManager: TimerManager(persistenceController: PersistenceController.shared)))
 }

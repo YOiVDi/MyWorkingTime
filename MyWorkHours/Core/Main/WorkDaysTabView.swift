@@ -12,6 +12,7 @@ import StoreKit
 struct WorkDaysTabView: View {
     
     let persistenceController: PersistenceController
+    @StateObject var timerManager: TimerManager
     
     var body: some View {
         TabView {
@@ -19,7 +20,7 @@ struct WorkDaysTabView: View {
                     .tabItem {
                         Label("List", systemImage: "list.bullet.circle")
                     }
-                PauseTimerView()
+            PauseTimerView(timerManager: timerManager, persistenceController: persistenceController)
                     .tabItem {
                         Label("Pause Timer", systemImage: "clock")
                     }
@@ -33,6 +34,7 @@ struct WorkDaysTabView: View {
     
     init(persistenceController: PersistenceController) {
         self.persistenceController = persistenceController
+        _timerManager = StateObject(wrappedValue: TimerManager(persistenceController: persistenceController))
     }
 }
 

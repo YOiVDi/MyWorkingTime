@@ -20,7 +20,7 @@ struct PauseTimerView: View {
     @State private var currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
     
     @Environment(\.verticalSizeClass) var verticalSizeClass
-    @StateObject var viewModel = PauseTimerViewModel()
+    @StateObject var viewModel: PauseTimerViewModel
     
     var body: some View {
         NavigationView {
@@ -66,8 +66,12 @@ struct PauseTimerView: View {
             requestReview()
         }
     }
+    
+    init(timerManager: TimerManager, persistenceController: PersistenceController) {
+        _viewModel = StateObject(wrappedValue: PauseTimerViewModel(timerManager: timerManager, persistenceController: persistenceController))
+    }
 }
 
 #Preview {
-    PauseTimerView()
+    PauseTimerView(timerManager: TimerManager(persistenceController: PersistenceController.shared), persistenceController: PersistenceController.shared)
 }

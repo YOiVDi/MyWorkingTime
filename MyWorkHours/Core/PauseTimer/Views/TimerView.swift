@@ -101,9 +101,10 @@ struct TimerView: View {
                 viewModel.predifenedTimerSelected()
             }
         }
+        .frame(width: 350)
     }
 }
 
 #Preview {
-    TimerView(viewModel: PauseTimerView.PauseTimerViewModel())
+    TimerView(viewModel: PauseTimerView.PauseTimerViewModel(timerManager: TimerManager(persistenceController: PersistenceController.shared)))
 }

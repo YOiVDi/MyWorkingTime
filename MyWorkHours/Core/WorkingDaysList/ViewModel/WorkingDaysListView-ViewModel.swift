@@ -83,7 +83,7 @@ extension WorkingDaysView {
                 alert = .userDefaultsIsEmpty
                 return
             }
-            persistenceController.addItem(userSettings: userSettings, notADayWithTodayDate: notADayWithTodayDate, date: userDefinedWorkDay.date, workingHours: userDefinedWorkDay.workingHours, isWeekend: isWeekend)
+            persistenceController.addWorkDay(userSettings: userSettings, notADayWithTodayDate: notADayWithTodayDate, date: userDefinedWorkDay.date, workingHours: userDefinedWorkDay.workingHours, isWeekend: isWeekend)
             fetchWorkDays()
         }
         

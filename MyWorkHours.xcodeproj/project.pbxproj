@@ -102,6 +102,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8513C3932CF64A56007E69EF /* MyWorkHoursTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MyWorkHoursTests; sourceTree = "<group>"; };
+		853F7C9C2E8659B10072AA10 /* Managers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Managers; sourceTree = "<group>"; };
 		857FA3A32E6D45E0000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
 		857FA3A52E6D45FA000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
 		857FA3A72E6D4621000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
@@ -162,6 +163,7 @@
 			children = (
 				85E62E562C25E32F00BB7543 /* MyWorkHours.entitlements */,
 				8509CF542BF210EE00C7ACB0 /* MyWorkHoursApp.swift */,
+				853F7C9C2E8659B10072AA10 /* Managers */,
 				8509CF972BF2116000C7ACB0 /* CoreData */,
 				85FB5BE92C31A328008504C0 /* Localizable */,
 				8522E76D2C1594F500FFB75D /* Services */,
@@ -383,6 +385,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				853F7C9C2E8659B10072AA10 /* Managers */,
 				857FA3A32E6D45E0000AC2AA /* View */,
 				857FA3A52E6D45FA000AC2AA /* View */,
 				857FA3A72E6D4621000AC2AA /* View */,
