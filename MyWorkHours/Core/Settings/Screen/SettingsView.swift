@@ -24,30 +24,11 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section ("Work Information") {
-                    TextField("Company name", text: $viewModel.companyName)
-                        .autocorrectionDisabled()
-                        .trimmedString($viewModel.companyName)
-                    DatePicker("Start Shift", selection: $viewModel.startShift, displayedComponents: .hourAndMinute)
-                    DatePicker("End Shift", selection: $viewModel.endShift, displayedComponents: .hourAndMinute)
-                }
+                // MARK: - First Work
+                WorkdaySettingsView(companyName: $viewModel.firstWorkSettings.companyName, startShift: $viewModel.firstWorkSettings.startShift, endShift: $viewModel.firstWorkSettings.endShift, workOnWeekend: $viewModel.firstWorkSettings.workOnWeekend, saturday: $viewModel.firstWorkSettings.saturday, startInSaturday: $viewModel.firstWorkSettings.startInSaturday, endInSaturday: $viewModel.firstWorkSettings.endInSaturday, sunday: $viewModel.firstWorkSettings.sunday, startInSunday: $viewModel.firstWorkSettings.startInSunday, endInSunday: $viewModel.firstWorkSettings.endInSunday)
                 
-                Section("Weekend's") {
-                    Toggle("Work on weekends", isOn: $viewModel.workOnWeekends)
-                    
-                    if viewModel.workOnWeekends {
-                        Toggle("Saturday", isOn: $viewModel.workOnSaturday)
-                        if viewModel.workOnSaturday {
-                            DatePicker("Start Shift", selection: $viewModel.startInSaturday, displayedComponents: .hourAndMinute)
-                            DatePicker("End Shift", selection: $viewModel.endInSaturday, displayedComponents: .hourAndMinute)
-                        }
-                        Toggle("Sunday", isOn: $viewModel.workOnSunday)
-                        if viewModel.workOnSunday {
-                            DatePicker("Start Shift", selection: $viewModel.startInSunday, displayedComponents: .hourAndMinute)
-                            DatePicker("End Shift", selection: $viewModel.endInSunday, displayedComponents: .hourAndMinute)
-                        }
-                    }
-                }
+                // MARK: - Second Work
+                
                 
                 Section {
                     HStack {
@@ -66,6 +47,7 @@ struct SettingsView: View {
                     Text(notificationMessage)
                         .multilineTextAlignment(.center)
                 }
+                
                 if showFinishButton == true {
                     HStack {
                         Spacer()
@@ -77,7 +59,7 @@ struct SettingsView: View {
                                 .font(.title3.bold())
                         }
                         //                            .buttonStyle(BorderedProminentButtonStyle())
-                        .disabled(viewModel.companyName.count < 3)
+                        .disabled(viewModel.firstWorkSettings.companyName.count < 3)
                         Spacer()
                     }
                 }
@@ -98,6 +80,7 @@ struct SettingsView: View {
 }
 
 #Preview {
+    let services = ServiceContainer()
     SettingsView()
-        .environmentObject(SettingsView.SettingsViewModel())
+        .environmentObject(SettingsView.SettingsViewModel(services))
 }

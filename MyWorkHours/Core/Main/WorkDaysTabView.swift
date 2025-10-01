@@ -40,6 +40,7 @@ struct WorkDaysTabView: View {
 
 #Preview {
     let persistenceController = PersistenceController.shared
-    return WorkDaysTabView(persistenceController: persistenceController)
-        .environmentObject(SettingsView.SettingsViewModel())
+    let services = ServiceContainer()
+    WorkDaysTabView(persistenceController: persistenceController)
+        .environmentObject(SettingsView.SettingsViewModel(services))
 }

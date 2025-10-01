@@ -29,7 +29,7 @@ class TimerManager: ObservableObject {
     private(set) var finishPause: Date?
     
     private var timerNotificationSet = false
-    private let notification = NotificationCenter()
+    private let notification = NotificationCenterServices()
     private let persistenceController: PersistenceController
     
     

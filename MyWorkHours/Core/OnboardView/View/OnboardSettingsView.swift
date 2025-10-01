@@ -21,6 +21,7 @@ struct OnboardSettingsView: View {
 }
 
 #Preview {
+    let services = ServiceContainer()
     OnboardSettingsView(viewModel: OnboardViewModel())
-        .environmentObject(SettingsView.SettingsViewModel())
+        .environmentObject(SettingsView.SettingsViewModel(services))
 }

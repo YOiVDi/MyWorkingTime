@@ -30,6 +30,9 @@ struct WorkingDaysView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .navigationViewStyle(.stack)
+        .onAppear {
+            viewModel.checkUserDefaults()
+        }
     }
     
     init(persistenceController: PersistenceController) {

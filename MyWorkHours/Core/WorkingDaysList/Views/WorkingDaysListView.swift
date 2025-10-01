@@ -17,28 +17,6 @@ struct WorkingDaysListView: View {
         VStack {
             ZStack {
                 List(selection: $viewModel.selections) {
-//                    ForEach(viewModel.sortByWorkDays, id: \.self) { workingDay in
-//                        NavigationLink(destination: DetailView(model: workingDay, modelPause: workingDay.arrPause, persistenceController: viewModel.persistenceController)) {
-//                            VStack(alignment: .leading) {
-//                                HStack(spacing: 10) {
-//                                    DateIconView(model: workingDay)
-//                                    Text(workingDay.wrappedCompanyname)
-//                                        .font(.title3).bold()
-//                                }
-//                            }
-//                            .swipeActions(allowsFullSwipe: false) {
-//                                Button {
-//                                    viewModel.singleSelect = workingDay
-//                                    viewModel.alert = .swipeDelete
-//                                } label: {
-//                                    Label("Delete", systemImage: "trash")
-//                                        .tint(.red)
-//                                }
-//                            }
-//                        }
-//                        .listRowSeparator(.hidden)
-//                        .listRowBackground(Color.black.opacity(0))
-//                    }
                     ForEach(viewModel.section, id: \.self) { section in
                         Section("\(section.name)") {
                             ForEach(section.items, id: \.self) { workingDay in
@@ -58,7 +36,8 @@ struct WorkingDaysListView: View {
                                             Label("Delete", systemImage: "trash")
                                                 .tint(.red)
                                         }
-                                    }}
+                                    }
+                                }
                             }
                         }
                     }

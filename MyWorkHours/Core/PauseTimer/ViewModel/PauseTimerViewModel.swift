@@ -46,7 +46,7 @@ extension PauseTimerView {
         init(timerManager: TimerManager, persistenceController: PersistenceController = .shared) {
             self.persistenceController = persistenceController
             self.timerManager = timerManager
-            subScribeToPublishers()
+            subscribeToTimerManager()
         }
         
         // MARK: - UI Computed Properties
@@ -144,7 +144,7 @@ extension PauseTimerView {
             timerManager.resumeTimer()
         }
         
-        func subScribeToPublishers() {
+        func subscribeToTimerManager() {
             // mirror manager's @Published values
             timerManager.$elapsedTime
                 .assign(to: &$elapsedTime)

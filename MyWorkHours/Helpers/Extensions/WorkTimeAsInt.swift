@@ -7,9 +7,7 @@
 
 import Foundation
 
-struct WorkTimeAsInt {
-    
-    
+extension Date {
     /// Convert Date into Int
     /// - Parameters:
     ///   - startShift: take date which represent start shift

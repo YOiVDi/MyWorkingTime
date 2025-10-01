@@ -44,7 +44,6 @@ extension DetailView {
         private var time = "Check-In and Check-Out data missing."
         
         private let persistenceController: PersistenceController
-        private let workTimeAsInt = WorkTimeAsInt()
         
         // MARK: - Computed properties
         

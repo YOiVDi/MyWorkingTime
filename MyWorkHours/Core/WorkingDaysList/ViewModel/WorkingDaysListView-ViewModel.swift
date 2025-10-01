@@ -39,11 +39,7 @@ extension WorkingDaysView {
             }
         }
         
-        /// Making custom day
-//        @Published var date = Date()
-//        @Published var workingHours: Int = 0
-//        @Published var startShift = Date()
-//        @Published var endShift = Date()
+        /// A struct which is helpe to define a custom work day
         var userDefinedWorkDay: UserDefinedWorkDay = UserDefinedWorkDay()
         
         
@@ -54,7 +50,6 @@ extension WorkingDaysView {
 
         // Hold user defaults
         private(set) var userSettings: UserSettings?
-        private let workTimeAsInt = WorkTimeAsInt()
         private var sectionArray: [SectionModel] = []
         
         // MARK: - PersistenceController
@@ -90,7 +85,7 @@ extension WorkingDaysView {
         /// Create a day from a user-selected date
         func creatingDayOfUserChoice(_ dismiss: DismissAction) {
             notADayWithTodayDate = true
-            userDefinedWorkDay.workingHours = workTimeAsInt.returnWorkTimeAsInt(startShift: userDefinedWorkDay.startShift, endShift: userDefinedWorkDay.endShift)
+            userDefinedWorkDay.workingHours = Date().returnWorkTimeAsInt(startShift: userDefinedWorkDay.startShift, endShift: userDefinedWorkDay.endShift)
             addWorkingDay()
             dismiss()
             notADayWithTodayDate = false
@@ -168,7 +163,9 @@ extension WorkingDaysView {
         }
         
         func checkUserDefaults() {
+            print("Before Fetch: \(String(describing: userSettings?.companyName))")
             fetchUserSettings()
+            print("After Fetch: \(String(describing: userSettings?.companyName))")
         }
         
         // MARK: - Private Methods

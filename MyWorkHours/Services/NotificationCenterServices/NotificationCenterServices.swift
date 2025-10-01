@@ -9,7 +9,7 @@ import Foundation
 import UserNotificationsUI
 import SwiftUI
 
-class NotificationCenter {
+class NotificationCenterServices {
     
     private let center = UNUserNotificationCenter.current()
     

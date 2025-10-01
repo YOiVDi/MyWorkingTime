@@ -12,11 +12,7 @@
 		8509CF592BF210F000C7ACB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8509CF582BF210F000C7ACB0 /* Assets.xcassets */; };
 		8509CF5C2BF210F000C7ACB0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8509CF5B2BF210F000C7ACB0 /* Preview Assets.xcassets */; };
 		8509CF642BF2110300C7ACB0 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF622BF2110300C7ACB0 /* UserSettings.swift */; };
-		8509CF6E2BF2111100C7ACB0 /* CustomAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF652BF2111100C7ACB0 /* CustomAlerts.swift */; };
-		8509CF6F2BF2111100C7ACB0 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF672BF2111100C7ACB0 /* Binding.swift */; };
-		8509CF702BF2111100C7ACB0 /* DocumentDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF682BF2111100C7ACB0 /* DocumentDirectory.swift */; };
-		8509CF712BF2111100C7ACB0 /* RoundedButtonLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF692BF2111100C7ACB0 /* RoundedButtonLabel.swift */; };
-		8509CF722BF2111100C7ACB0 /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF6B2BF2111100C7ACB0 /* UserDefaultsKey.swift */; };
+		8509CF722BF2111100C7ACB0 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF6B2BF2111100C7ACB0 /* UserDefaultsStore.swift */; };
 		8509CF8C2BF2111B00C7ACB0 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF772BF2111B00C7ACB0 /* Buttons.swift */; };
 		8509CF8D2BF2111B00C7ACB0 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF782BF2111B00C7ACB0 /* TimerView.swift */; };
 		8509CF8F2BF2111B00C7ACB0 /* PauseTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF7B2BF2111B00C7ACB0 /* PauseTimerViewModel.swift */; };
@@ -26,13 +22,13 @@
 		8509CF942BF2111B00C7ACB0 /* WorkingDaysListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF832BF2111B00C7ACB0 /* WorkingDaysListView.swift */; };
 		8509CF992BF2118100C7ACB0 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF982BF2118100C7ACB0 /* PersistenceController.swift */; };
 		8509CF9C2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF9A2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld */; };
-		8522E7662C1177CA00FFB75D /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8522E7652C1177CA00FFB75D /* NotificationCenter.swift */; };
+		8522E7662C1177CA00FFB75D /* NotificationCenterServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8522E7652C1177CA00FFB75D /* NotificationCenterServices.swift */; };
 		8522E76A2C1183C800FFB75D /* ScenePhaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8522E7692C1183C800FFB75D /* ScenePhaseHandler.swift */; };
-		8522E76C2C130E2000FFB75D /* TrimmedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8522E76B2C130E2000FFB75D /* TrimmedString.swift */; };
 		852C8F612C19972100B511F9 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C8F602C19972100B511F9 /* MainAppView.swift */; };
 		852C8F632C1AD61C00B511F9 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 852C8F622C1AD61C00B511F9 /* Localizable.xcstrings */; };
+		853F7C9F2E8A4A110072AA10 /* WorkdaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F7C9E2E8A4A110072AA10 /* WorkdaySettingsView.swift */; };
+		853F7CA12E8C3B6F0072AA10 /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F7CA02E8C3B6F0072AA10 /* ServiceContainer.swift */; };
 		854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854520C72BF9F77D00437F5A /* CreateNewDayView.swift */; };
-		8547C3ED2E71F71900E20E98 /* WorkTimeAsInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8547C3EC2E71F71900E20E98 /* WorkTimeAsInt.swift */; };
 		854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */; };
 		8553703C2C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855370382C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift */; };
 		8553703E2C0CA03100BDCD12 /* Pause+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553703A2C0CA03100BDCD12 /* Pause+CoreDataClass.swift */; };
@@ -61,11 +57,7 @@
 		8509CF582BF210F000C7ACB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8509CF5B2BF210F000C7ACB0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8509CF622BF2110300C7ACB0 /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
-		8509CF652BF2111100C7ACB0 /* CustomAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlerts.swift; sourceTree = "<group>"; };
-		8509CF672BF2111100C7ACB0 /* Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
-		8509CF682BF2111100C7ACB0 /* DocumentDirectory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentDirectory.swift; sourceTree = "<group>"; };
-		8509CF692BF2111100C7ACB0 /* RoundedButtonLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButtonLabel.swift; sourceTree = "<group>"; };
-		8509CF6B2BF2111100C7ACB0 /* UserDefaultsKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
+		8509CF6B2BF2111100C7ACB0 /* UserDefaultsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsStore.swift; sourceTree = "<group>"; };
 		8509CF772BF2111B00C7ACB0 /* Buttons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		8509CF782BF2111B00C7ACB0 /* TimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		8509CF7B2BF2111B00C7ACB0 /* PauseTimerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseTimerViewModel.swift; sourceTree = "<group>"; };
@@ -76,14 +68,14 @@
 		8509CF982BF2118100C7ACB0 /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		8509CF9B2BF2118C00C7ACB0 /* WorkingDay.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WorkingDay.xcdatamodel; sourceTree = "<group>"; };
 		8513C3922CF64A56007E69EF /* MyWorkHoursTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyWorkHoursTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8522E7652C1177CA00FFB75D /* NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenter.swift; sourceTree = "<group>"; };
+		8522E7652C1177CA00FFB75D /* NotificationCenterServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterServices.swift; sourceTree = "<group>"; };
 		8522E7692C1183C800FFB75D /* ScenePhaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenePhaseHandler.swift; sourceTree = "<group>"; };
-		8522E76B2C130E2000FFB75D /* TrimmedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimmedString.swift; sourceTree = "<group>"; };
 		852C8F602C19972100B511F9 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
 		852C8F622C1AD61C00B511F9 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		853F7C9E2E8A4A110072AA10 /* WorkdaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdaySettingsView.swift; sourceTree = "<group>"; };
+		853F7CA02E8C3B6F0072AA10 /* ServiceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
 		854454282BFE894900E90750 /* WorkingDay v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v2.xcdatamodel"; sourceTree = "<group>"; };
 		854520C72BF9F77D00437F5A /* CreateNewDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewDayView.swift; sourceTree = "<group>"; };
-		8547C3EC2E71F71900E20E98 /* WorkTimeAsInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTimeAsInt.swift; sourceTree = "<group>"; };
 		854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInOutCardView.swift; sourceTree = "<group>"; };
 		8553702F2C0C9E5500BDCD12 /* WorkingDay v4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v4.xcdatamodel"; sourceTree = "<group>"; };
 		855370382C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "WorkingDay+CoreDataClass.swift"; path = "../WorkingDay+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -103,7 +95,8 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8513C3932CF64A56007E69EF /* MyWorkHoursTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MyWorkHoursTests; sourceTree = "<group>"; };
 		853F7C9C2E8659B10072AA10 /* Managers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Managers; sourceTree = "<group>"; };
-		857FA3A32E6D45E0000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
+		853F7CA32E8D9DDC0072AA10 /* Helpers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Helpers; sourceTree = "<group>"; };
+		857FA3A32E6D45E0000AC2AA /* Screen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Screen; sourceTree = "<group>"; };
 		857FA3A52E6D45FA000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
 		857FA3A72E6D4621000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
 		857FA3A82E6D4661000AC2AA /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
@@ -161,8 +154,9 @@
 		8509CF532BF210EE00C7ACB0 /* MyWorkHours */ = {
 			isa = PBXGroup;
 			children = (
+				853F7CA32E8D9DDC0072AA10 /* Helpers */,
 				85E62E562C25E32F00BB7543 /* MyWorkHours.entitlements */,
-				8509CF542BF210EE00C7ACB0 /* MyWorkHoursApp.swift */,
+				852C8F5F2C19970400B511F9 /* App */,
 				853F7C9C2E8659B10072AA10 /* Managers */,
 				8509CF972BF2116000C7ACB0 /* CoreData */,
 				85FB5BE92C31A328008504C0 /* Localizable */,
@@ -172,7 +166,6 @@
 				85FB5BEA2C31A346008504C0 /* LaunchScreen */,
 				8509CF582BF210F000C7ACB0 /* Assets.xcassets */,
 				8509CF5A2BF210F000C7ACB0 /* Preview Content */,
-				8585F6D02E7F68570034D4FA /* SectionModel.swift */,
 			);
 			path = MyWorkHours;
 			sourceTree = "<group>";
@@ -191,6 +184,7 @@
 				8509CF622BF2110300C7ACB0 /* UserSettings.swift */,
 				850286B32C16DCAE004D3EA5 /* OnboardItem.swift */,
 				8585F6D22E8056D00034D4FA /* UserDefinedWorkDay.swift */,
+				8585F6D02E7F68570034D4FA /* SectionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -198,28 +192,16 @@
 		8509CF662BF2111100C7ACB0 /* Alerts */ = {
 			isa = PBXGroup;
 			children = (
-				8509CF652BF2111100C7ACB0 /* CustomAlerts.swift */,
 			);
 			path = Alerts;
 			sourceTree = "<group>";
 		};
-		8509CF6A2BF2111100C7ACB0 /* Extensions */ = {
+		8509CF6C2BF2111100C7ACB0 /* UserDefaultsStore */ = {
 			isa = PBXGroup;
 			children = (
-				8509CF672BF2111100C7ACB0 /* Binding.swift */,
-				8509CF682BF2111100C7ACB0 /* DocumentDirectory.swift */,
-				8509CF692BF2111100C7ACB0 /* RoundedButtonLabel.swift */,
-				8522E76B2C130E2000FFB75D /* TrimmedString.swift */,
+				8509CF6B2BF2111100C7ACB0 /* UserDefaultsStore.swift */,
 			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		8509CF6C2BF2111100C7ACB0 /* UserDefaults */ = {
-			isa = PBXGroup;
-			children = (
-				8509CF6B2BF2111100C7ACB0 /* UserDefaultsKey.swift */,
-			);
-			path = UserDefaults;
+			path = UserDefaultsStore;
 			sourceTree = "<group>";
 		};
 		8509CF762BF2111B00C7ACB0 /* DetailView */ = {
@@ -253,7 +235,8 @@
 		8509CF7F2BF2111B00C7ACB0 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				857FA3A32E6D45E0000AC2AA /* View */,
+				853F7C9D2E8A49E30072AA10 /* Views */,
+				857FA3A32E6D45E0000AC2AA /* Screen */,
 				857FA3A42E6D45E6000AC2AA /* ViewModel */,
 			);
 			path = Settings;
@@ -292,7 +275,6 @@
 		8509CF882BF2111B00C7ACB0 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				852C8F5F2C19970400B511F9 /* App */,
 				850286B02C16DC16004D3EA5 /* OnboardView */,
 				8509CF762BF2111B00C7ACB0 /* DetailView */,
 				8509CF7C2BF2111B00C7ACB0 /* PauseTimer */,
@@ -319,12 +301,11 @@
 		8522E76D2C1594F500FFB75D /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				8522E7692C1183C800FFB75D /* ScenePhaseHandler.swift */,
-				8522E7652C1177CA00FFB75D /* NotificationCenter.swift */,
-				8547C3EC2E71F71900E20E98 /* WorkTimeAsInt.swift */,
-				8509CF6C2BF2111100C7ACB0 /* UserDefaults */,
-				8509CF6A2BF2111100C7ACB0 /* Extensions */,
+				853F7CA42E8D9DEB0072AA10 /* ScenePhaseHandler */,
+				853F7CA52E8D9E160072AA10 /* NotificationCenterServices */,
+				8509CF6C2BF2111100C7ACB0 /* UserDefaultsStore */,
 				8509CF662BF2111100C7ACB0 /* Alerts */,
+				853F7CA02E8C3B6F0072AA10 /* ServiceContainer.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -333,8 +314,33 @@
 			isa = PBXGroup;
 			children = (
 				852C8F602C19972100B511F9 /* MainAppView.swift */,
+				8509CF542BF210EE00C7ACB0 /* MyWorkHoursApp.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		853F7C9D2E8A49E30072AA10 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				853F7C9E2E8A4A110072AA10 /* WorkdaySettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		853F7CA42E8D9DEB0072AA10 /* ScenePhaseHandler */ = {
+			isa = PBXGroup;
+			children = (
+				8522E7692C1183C800FFB75D /* ScenePhaseHandler.swift */,
+			);
+			path = ScenePhaseHandler;
+			sourceTree = "<group>";
+		};
+		853F7CA52E8D9E160072AA10 /* NotificationCenterServices */ = {
+			isa = PBXGroup;
+			children = (
+				8522E7652C1177CA00FFB75D /* NotificationCenterServices.swift */,
+			);
+			path = NotificationCenterServices;
 			sourceTree = "<group>";
 		};
 		857FA3A42E6D45E6000AC2AA /* ViewModel */ = {
@@ -386,7 +392,8 @@
 			);
 			fileSystemSynchronizedGroups = (
 				853F7C9C2E8659B10072AA10 /* Managers */,
-				857FA3A32E6D45E0000AC2AA /* View */,
+				853F7CA32E8D9DDC0072AA10 /* Helpers */,
+				857FA3A32E6D45E0000AC2AA /* Screen */,
 				857FA3A52E6D45FA000AC2AA /* View */,
 				857FA3A72E6D4621000AC2AA /* View */,
 				857FA3A82E6D4661000AC2AA /* ViewModel */,
@@ -488,33 +495,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8522E76C2C130E2000FFB75D /* TrimmedString.swift in Sources */,
 				852C8F612C19972100B511F9 /* MainAppView.swift in Sources */,
 				854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */,
-				8509CF722BF2111100C7ACB0 /* UserDefaultsKey.swift in Sources */,
+				853F7C9F2E8A4A110072AA10 /* WorkdaySettingsView.swift in Sources */,
+				8509CF722BF2111100C7ACB0 /* UserDefaultsStore.swift in Sources */,
+				853F7CA12E8C3B6F0072AA10 /* ServiceContainer.swift in Sources */,
 				854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */,
 				8585F6D12E7F68570034D4FA /* SectionModel.swift in Sources */,
-				8509CF712BF2111100C7ACB0 /* RoundedButtonLabel.swift in Sources */,
 				8509CF8C2BF2111B00C7ACB0 /* Buttons.swift in Sources */,
 				8509CF942BF2111B00C7ACB0 /* WorkingDaysListView.swift in Sources */,
 				8509CF642BF2110300C7ACB0 /* UserSettings.swift in Sources */,
 				850286B42C16DCAE004D3EA5 /* OnboardItem.swift in Sources */,
-				8509CF702BF2111100C7ACB0 /* DocumentDirectory.swift in Sources */,
-				8522E7662C1177CA00FFB75D /* NotificationCenter.swift in Sources */,
+				8522E7662C1177CA00FFB75D /* NotificationCenterServices.swift in Sources */,
 				8509CF8D2BF2111B00C7ACB0 /* TimerView.swift in Sources */,
 				8522E76A2C1183C800FFB75D /* ScenePhaseHandler.swift in Sources */,
 				8509CF552BF210EE00C7ACB0 /* MyWorkHoursApp.swift in Sources */,
 				8585F6D32E8056D00034D4FA /* UserDefinedWorkDay.swift in Sources */,
 				8509CF932BF2111B00C7ACB0 /* DateIcon.swift in Sources */,
 				8509CF9C2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld in Sources */,
-				8509CF6E2BF2111100C7ACB0 /* CustomAlerts.swift in Sources */,
 				85FB5BEC2C3286AB008504C0 /* UnavailableView.swift in Sources */,
 				8509CF992BF2118100C7ACB0 /* PersistenceController.swift in Sources */,
 				8509CF922BF2111B00C7ACB0 /* WorkDaysTabView.swift in Sources */,
 				8553703C2C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift in Sources */,
-				8547C3ED2E71F71900E20E98 /* WorkTimeAsInt.swift in Sources */,
 				8553703E2C0CA03100BDCD12 /* Pause+CoreDataClass.swift in Sources */,
-				8509CF6F2BF2111100C7ACB0 /* Binding.swift in Sources */,
 				8509CF8F2BF2111B00C7ACB0 /* PauseTimerViewModel.swift in Sources */,
 				855370502C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift in Sources */,
 				855370512C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift in Sources */,
