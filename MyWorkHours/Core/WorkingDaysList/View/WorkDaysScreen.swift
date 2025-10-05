@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-struct WorkingDaysView: View {
+struct WorkDaysScreen: View {
     
     // MARK: Properties
     @StateObject var viewModel: ViewModel
@@ -21,7 +21,7 @@ struct WorkingDaysView: View {
                     UnavailableView(viewModel: viewModel)
                 } else {
                     // MARK: - ListView
-                    WorkingDaysListView(viewModel: viewModel)
+                    WorkDaysListView(viewModel: viewModel)
                 }
             }
             .animation(.easeInOut, value: viewModel.workingDaysList.isEmpty)
@@ -35,12 +35,13 @@ struct WorkingDaysView: View {
         }
     }
     
-    init(persistenceController: PersistenceController) {
-        _viewModel = StateObject(wrappedValue: ViewModel(persistenceController: persistenceController))
+    init(persistenceController: PersistenceController, userStatusManager: UserStatusManager) {
+        _viewModel = StateObject(wrappedValue: ViewModel(persistenceController: persistenceController, userStatusManager: userStatusManager))
     }
 }
 
 #Preview {
     let persistenceController = PersistenceController.shared
-    return WorkingDaysView(persistenceController: persistenceController)
+    let userStatusManager = UserStatusManager()
+    WorkDaysScreen(persistenceController: persistenceController, userStatusManager: userStatusManager)
 }

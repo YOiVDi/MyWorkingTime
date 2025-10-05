@@ -19,11 +19,18 @@ extension SettingsView {
         @Published var btnTitle: LocalizedStringKey = ""
         @Published var firstWorkSettings: UserSettings = UserSettings()
         @Published var secondWorkSettings: UserSettings = UserSettings()
+        @Published var showPremiumView: Bool = false
+        
+        var userStatus: UserStatus {
+            userStatusManager.userStatus
+        }
         
         /// Private properties
         private var cancellables = Set<AnyCancellable>()
         private let notificationServices: NotificationCenterServices
         private let userDefaultsStore: UserDefaultsStore
+        let userStatusManager: UserStatusManager
+
         
         
         /// Pause properties array
@@ -32,9 +39,10 @@ extension SettingsView {
         
         // MARK: - Initialization
         
-        init(_ servicesContainer: ServiceContainerProtocol) {
+        init(_ servicesContainer: ServicesContainer, _ userStatusManager: UserStatusManager) {
             self.userDefaultsStore = servicesContainer.userDefaultsService
-            self.notificationServices = servicesContainer.notificationCenterServices
+            self.notificationServices = servicesContainer.notificationCenterService
+            self.userStatusManager = userStatusManager
             setRetrievedData()
             debouncing()
             checkAuthorizationStatus()
@@ -62,6 +70,7 @@ extension SettingsView {
         private func saveUserSettings() {
             do {
                 try userDefaultsStore.set(firstWorkSettings, forKey: UserDefaultsKeys.firstWorkSettings.rawValue)
+                try userDefaultsStore.set(secondWorkSettings, forKey: UserDefaultsKeys.secondWorkSettings.rawValue)
             } catch {
                 print("Cannot encode your settings: \(error.localizedDescription).")
             }
@@ -71,8 +80,10 @@ extension SettingsView {
         private func setRetrievedData() {
             let defaultData = UserSettings()
             do {
-                let savedSettings =  try userDefaultsStore.get(UserSettings.self, forKey: UserDefaultsKeys.firstWorkSettings.rawValue, defaultData)
-                firstWorkSettings = savedSettings
+//                let savedSettings =  try userDefaultsStore.get(UserSettings.self, forKey: UserDefaultsKeys.firstWorkSettings.rawValue, defaultData)
+//                firstWorkSettings = savedSettings
+                firstWorkSettings = try userDefaultsStore.get(UserSettings.self, forKey: UserDefaultsKeys.firstWorkSettings.rawValue, defaultData)
+                secondWorkSettings = try userDefaultsStore.get(UserSettings.self, forKey: UserDefaultsKeys.secondWorkSettings.rawValue, defaultData)
             } catch {
                 print("UserSettings cannot be retrieve: \(error.localizedDescription).")
             }
@@ -80,11 +91,12 @@ extension SettingsView {
         
         /// Debouncing data, so after typing or changing data will be saved once after 2 seconds
         private func debouncing() {
-            $firstWorkSettings
+            Publishers.CombineLatest($firstWorkSettings, $secondWorkSettings)
                 .debounce(for: .seconds(0.2), scheduler: DispatchQueue.main)
                 .sink { [weak self] _ in
                     self?.saveUserSettings()
-                    print("User Company: \(self?.firstWorkSettings.companyName ?? "")")
+                    print("User First Company: \(self?.firstWorkSettings.companyName ?? "")")
+                    print("User Second Company: \(self?.secondWorkSettings.companyName ?? "")")
                 }
                 .store(in: &cancellables)
         }

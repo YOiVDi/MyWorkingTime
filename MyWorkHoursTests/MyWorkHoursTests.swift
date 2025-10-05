@@ -10,14 +10,14 @@ import XCTest
 
 final class MyWorkHoursTests: XCTestCase {
     
-    var sut: WorkingDaysView.ViewModel!
+    var sut: WorkDaysScreen.ViewModel!
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         try super.setUpWithError()
         
         Task { @MainActor in
-            self.sut = WorkingDaysView.ViewModel(persistenceController: PersistenceController.shared)
+            self.sut = WorkDaysScreen.ViewModel(persistenceController: PersistenceController.shared)
         }
     }
 

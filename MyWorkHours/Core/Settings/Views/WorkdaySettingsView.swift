@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WorkdaySettingsView: View {
+    var section: String
     @Binding var companyName: String
     @Binding var startShift: Date
     @Binding var endShift: Date
@@ -20,7 +21,7 @@ struct WorkdaySettingsView: View {
     @Binding var endInSunday: Date
     
     var body: some View {
-            Section ("Work Information") {
+            Section ("Work Information for \(section)") {
                 TextField("Company name", text: $companyName)
                     .autocorrectionDisabled()
                     .trimmedString($companyName)
@@ -48,5 +49,5 @@ struct WorkdaySettingsView: View {
 }
 
 #Preview {
-    WorkdaySettingsView(companyName: .constant("Company Name"), startShift: .constant(Date()), endShift: .constant(Date()), workOnWeekend: .constant(false), saturday: .constant(false), startInSaturday: .constant(Date()), endInSaturday: .constant(Date()), sunday: .constant(false), startInSunday: .constant(Date()), endInSunday: .constant(Date()))
+    WorkdaySettingsView(section: "Main Section", companyName: .constant("Company Name"), startShift: .constant(Date()), endShift: .constant(Date()), workOnWeekend: .constant(false), saturday: .constant(false), startInSaturday: .constant(Date()), endInSaturday: .constant(Date()), sunday: .constant(false), startInSunday: .constant(Date()), endInSunday: .constant(Date()))
 }

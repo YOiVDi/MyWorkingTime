@@ -7,46 +7,18 @@
 
 import SwiftUI
 
-struct WorkingDaysListView: View {
+struct WorkDaysListView: View {
     
-    @ObservedObject var viewModel: WorkingDaysView.ViewModel
+    @ObservedObject var viewModel: WorkDaysScreen.ViewModel
     @Environment(\.editMode) var editMode
     
     var body: some View {
         // MARK: - List
         VStack {
             ZStack {
-                List(selection: $viewModel.selections) {
-                    ForEach(viewModel.section, id: \.self) { section in
-                        Section("\(section.name)") {
-                            ForEach(section.items, id: \.self) { workingDay in
-                                NavigationLink(destination: DetailView(model: workingDay, modelPause: workingDay.arrPause, persistenceController: viewModel.persistenceController)) {
-                                    VStack(alignment: .leading) {
-                                        HStack(spacing: 10) {
-                                            DateIconView(model: workingDay)
-                                            Text(workingDay.wrappedCompanyname)
-                                                .font(.title3).bold()
-                                        }
-                                    }
-                                    .swipeActions(allowsFullSwipe: false) {
-                                        Button {
-                                            viewModel.singleSelect = workingDay
-                                            viewModel.alert = .swipeDelete
-                                        } label: {
-                                            Label("Delete", systemImage: "trash")
-                                                .tint(.red)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.black.opacity(0))
-                }
-                .scrollContentBackground(.hidden)
-                .listRowSpacing(10)
-                .animation(.easeInOut, value: viewModel.sortBy)
+                // MARK: - List
+                ListView(viewModel: viewModel)
+                
                 // MARK: - Card View
                 if viewModel.showCheckInOutCard {
                     CheckInOutCardView(viewModel: viewModel)
@@ -148,7 +120,7 @@ struct WorkingDaysListView: View {
 #Preview {
     NavigationView {
         let persistenceController = PersistenceController.shared
-        WorkingDaysListView(viewModel: WorkingDaysView.ViewModel(persistenceController: persistenceController))
+        let userStatusManager = UserStatusManager()
+        WorkDaysListView(viewModel: WorkDaysScreen.ViewModel(persistenceController: persistenceController, userStatusManager: userStatusManager))
     }
 }
-

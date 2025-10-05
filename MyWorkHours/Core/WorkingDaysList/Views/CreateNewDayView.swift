@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreateNewDayView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: WorkingDaysView.ViewModel
+    @ObservedObject var viewModel: WorkDaysScreen.ViewModel
     var body: some View {
         NavigationView {
                 VStack {
@@ -64,5 +64,6 @@ struct CreateNewDayView: View {
 
 #Preview {
     let persistenceController = PersistenceController.shared
-    return CreateNewDayView(viewModel: WorkingDaysView.ViewModel(persistenceController: persistenceController))
+    let userStatusManager = UserStatusManager()
+    CreateNewDayView(viewModel: WorkDaysScreen.ViewModel(persistenceController: persistenceController, userStatusManager: userStatusManager))
 }

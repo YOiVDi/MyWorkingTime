@@ -11,19 +11,24 @@ import SwiftUI
 @main
 struct MyWorkHoursApp: App {
     @StateObject var settings: SettingsView.SettingsViewModel
-    private let servicesContainer: ServiceContainerProtocol
+    @StateObject var userStatusManager: UserStatusManager
+    @StateObject private var purchaseViewModel: PurchaseViewModel
+    private let servicesContainer: ServicesContainer
     
     var body: some Scene {
         WindowGroup {
-            MainAppView(persistenceController: servicesContainer.persistenceController)
+            MainAppView(servicesContainer, userStatusManager)
                 .environmentObject(settings)
                 .environment(\.managedObjectContext, servicesContainer.persistenceController.container.viewContext)
         }
     }
     
     init() {
-        let services = ServiceContainer()
+        let services = ServicesContainer()
         self.servicesContainer = services
-        _settings = StateObject(wrappedValue: SettingsView.SettingsViewModel(services))
+        let userStatusManager = UserStatusManager()
+        self._userStatusManager = StateObject(wrappedValue: userStatusManager)
+        self._purchaseViewModel = StateObject(wrappedValue: PurchaseViewModel(userStatusManager: userStatusManager))
+        _settings = StateObject(wrappedValue: SettingsView.SettingsViewModel(services, userStatusManager))
     }
 }

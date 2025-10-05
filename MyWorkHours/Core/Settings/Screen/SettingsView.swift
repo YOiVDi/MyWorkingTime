@@ -24,11 +24,32 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
+                
                 // MARK: - First Work
-                WorkdaySettingsView(companyName: $viewModel.firstWorkSettings.companyName, startShift: $viewModel.firstWorkSettings.startShift, endShift: $viewModel.firstWorkSettings.endShift, workOnWeekend: $viewModel.firstWorkSettings.workOnWeekend, saturday: $viewModel.firstWorkSettings.saturday, startInSaturday: $viewModel.firstWorkSettings.startInSaturday, endInSaturday: $viewModel.firstWorkSettings.endInSaturday, sunday: $viewModel.firstWorkSettings.sunday, startInSunday: $viewModel.firstWorkSettings.startInSunday, endInSunday: $viewModel.firstWorkSettings.endInSunday)
+                WorkdaySettingsView(section: "Main Work", companyName: $viewModel.firstWorkSettings.companyName, startShift: $viewModel.firstWorkSettings.startShift, endShift: $viewModel.firstWorkSettings.endShift, workOnWeekend: $viewModel.firstWorkSettings.workOnWeekend, saturday: $viewModel.firstWorkSettings.saturday, startInSaturday: $viewModel.firstWorkSettings.startInSaturday, endInSaturday: $viewModel.firstWorkSettings.endInSaturday, sunday: $viewModel.firstWorkSettings.sunday, startInSunday: $viewModel.firstWorkSettings.startInSunday, endInSunday: $viewModel.firstWorkSettings.endInSunday)
                 
-                // MARK: - Second Work
+                    
+                    // MARK: - Second Work Toggle
+                VStack {
+                    HStack {
+                        Text("Premium feature")
+                        Image(systemName: "crown")
+                            .foregroundStyle(viewModel.userStatus == .subscribed ? .blue.opacity(0.7) : .secondary)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .font(.system(size: 20)).bold()
+                .listRowBackground(Color.clear)
                 
+                    Toggle("Second Work", isOn: $viewModel.firstWorkSettings.secondWork)
+                    .disabled(viewModel.userStatus == .basic)
+                    
+                    // MARK: - Second Work
+                if viewModel.userStatus == .subscribed {
+                    if viewModel.firstWorkSettings.secondWork != false {
+                        WorkdaySettingsView(section: "Second Work", companyName: $viewModel.secondWorkSettings.companyName, startShift: $viewModel.secondWorkSettings.startShift, endShift: $viewModel.secondWorkSettings.endShift, workOnWeekend: $viewModel.secondWorkSettings.workOnWeekend, saturday: $viewModel.secondWorkSettings.saturday, startInSaturday: $viewModel.secondWorkSettings.startInSaturday, endInSaturday: $viewModel.secondWorkSettings.endInSaturday, sunday: $viewModel.secondWorkSettings.sunday, startInSunday: $viewModel.secondWorkSettings.startInSunday, endInSunday: $viewModel.secondWorkSettings.endInSunday)
+                    }
+                }
                 
                 Section {
                     HStack {
@@ -66,6 +87,30 @@ struct SettingsView: View {
             }
             .scrollContentBackground(.hidden)
             .background(colorScheme == .dark ? Color(UIColor.black) : Color(UIColor.white))
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        viewModel.showPremiumView = true
+                    } label: {
+                        Label("Premium", systemImage: "crown")
+                    }
+                }
+            }
+            .sheet(isPresented: $viewModel.showPremiumView) {
+                ZStack(alignment: .topTrailing) {
+                    PurchaseView(userStatusManager: viewModel.userStatusManager)
+                    VStack {
+                        Button {
+                            viewModel.showPremiumView = false
+                        } label: {
+                            Image(systemName: "xmark.circle")
+                                .font(.system(size: 30))
+                                .foregroundStyle(.white)
+                        }
+                    }
+                    .padding()
+                }
+            }
             .navigationTitle("Settings")
         }
         .onChange(of: scenePhase) {
@@ -80,7 +125,8 @@ struct SettingsView: View {
 }
 
 #Preview {
-    let services = ServiceContainer()
+    let services = ServicesContainer()
+    let userStatusManager = UserStatusManager()
     SettingsView()
-        .environmentObject(SettingsView.SettingsViewModel(services))
+        .environmentObject(SettingsView.SettingsViewModel(services, userStatusManager))
 }

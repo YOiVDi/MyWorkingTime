@@ -11,16 +11,17 @@ import StoreKit
 
 struct WorkDaysTabView: View {
     
-    let persistenceController: PersistenceController
+    let servicesContainer: ServicesContainer
+    @ObservedObject var userStatusManager: UserStatusManager
     @StateObject var timerManager: TimerManager
     
     var body: some View {
         TabView {
-                WorkingDaysView(persistenceController: persistenceController)
+            WorkDaysScreen(persistenceController: servicesContainer.persistenceController, userStatusManager: userStatusManager)
                     .tabItem {
                         Label("List", systemImage: "list.bullet.circle")
                     }
-            PauseTimerView(timerManager: timerManager, persistenceController: persistenceController)
+            PauseTimerView(timerManager: timerManager, persistenceController: servicesContainer.persistenceController)
                     .tabItem {
                         Label("Pause Timer", systemImage: "clock")
                     }
@@ -32,15 +33,16 @@ struct WorkDaysTabView: View {
         .navigationViewStyle(.stack)
     }
     
-    init(persistenceController: PersistenceController) {
-        self.persistenceController = persistenceController
-        _timerManager = StateObject(wrappedValue: TimerManager(persistenceController: persistenceController))
+    init(_ servicesContainer: ServicesContainer, userStatusManager: UserStatusManager) {
+        self.servicesContainer = servicesContainer
+        self._userStatusManager = ObservedObject(wrappedValue: userStatusManager)
+        _timerManager = StateObject(wrappedValue: TimerManager(persistenceController: servicesContainer.persistenceController))
     }
 }
 
 #Preview {
-    let persistenceController = PersistenceController.shared
-    let services = ServiceContainer()
-    WorkDaysTabView(persistenceController: persistenceController)
-        .environmentObject(SettingsView.SettingsViewModel(services))
+    let servicesContainer = ServicesContainer()
+    let userStatusManager = UserStatusManager()
+    WorkDaysTabView(servicesContainer, userStatusManager: userStatusManager)
+        .environmentObject(SettingsView.SettingsViewModel(servicesContainer, userStatusManager))
 }

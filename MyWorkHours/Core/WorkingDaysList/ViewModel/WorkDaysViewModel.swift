@@ -16,8 +16,12 @@ enum SortByWorkDay: LocalizedStringKey, CaseIterable {
 }
 
 
-extension WorkingDaysView {
+extension WorkDaysScreen {
     @MainActor class ViewModel: ObservableObject {
+        // MARK: - Published Private(set) Properties
+        @Published private(set) var workingDaysList: [WorkingDay] = []
+        @Published private(set) var todayCheckInCheckOut: WorkingDay?
+        @Published private(set) var notADayWithTodayDate = false
         
         // MARK: - Public Properties
         @Published var selections = Set<WorkingDay>()
@@ -29,6 +33,8 @@ extension WorkingDaysView {
         @Published var showCheckInOutCard = false
         @Published var sortBy: SortByWorkDay = .newestFirst
         
+        
+        // If user status is premium
         var section: [SectionModel] {
             switch sortBy {
             case .newestFirst:
@@ -39,14 +45,20 @@ extension WorkingDaysView {
             }
         }
         
+        // If user status is basic
+        var workDays: [WorkingDay] {
+            switch sortBy {
+            case .newestFirst:
+                return workingDaysList.sorted { $0.wrappedDate > $1.wrappedDate }
+
+            case .oldestFirst:
+                return workingDaysList.sorted { $0.wrappedDate < $1.wrappedDate }
+            }
+        }
+        
         /// A struct which is helpe to define a custom work day
         var userDefinedWorkDay: UserDefinedWorkDay = UserDefinedWorkDay()
         
-        
-        // MARK: - Private Properties
-        @Published private(set) var workingDaysList: [WorkingDay] = []
-        @Published private(set) var todayCheckInCheckOut: WorkingDay?
-        @Published private(set) var notADayWithTodayDate = false
 
         // Hold user defaults
         private(set) var userSettings: UserSettings?
@@ -54,13 +66,16 @@ extension WorkingDaysView {
         
         // MARK: - PersistenceController
         let persistenceController: PersistenceController
+        let userStatusManager: UserStatusManager
+        
         
         // MARK: - Computed Properties
         
         
         // MARK: - Initialization
-        init(persistenceController: PersistenceController) {
+        init(persistenceController: PersistenceController, userStatusManager: UserStatusManager) {
             self.persistenceController = persistenceController
+            self.userStatusManager = userStatusManager
             fetchWorkDays()
             fetchUserSettings()
             sectionWorkDays()

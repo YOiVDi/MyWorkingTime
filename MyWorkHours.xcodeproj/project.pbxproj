@@ -19,15 +19,16 @@
 		8509CF912BF2111B00C7ACB0 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF7E2BF2111B00C7ACB0 /* SettingsViewModel.swift */; };
 		8509CF922BF2111B00C7ACB0 /* WorkDaysTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF802BF2111B00C7ACB0 /* WorkDaysTabView.swift */; };
 		8509CF932BF2111B00C7ACB0 /* DateIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF822BF2111B00C7ACB0 /* DateIcon.swift */; };
-		8509CF942BF2111B00C7ACB0 /* WorkingDaysListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF832BF2111B00C7ACB0 /* WorkingDaysListView.swift */; };
+		8509CF942BF2111B00C7ACB0 /* WorkDaysListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF832BF2111B00C7ACB0 /* WorkDaysListView.swift */; };
 		8509CF992BF2118100C7ACB0 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF982BF2118100C7ACB0 /* PersistenceController.swift */; };
 		8509CF9C2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8509CF9A2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld */; };
+		850A81952E92C87B00B00849 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A81942E92C87B00B00849 /* ListView.swift */; };
 		8522E7662C1177CA00FFB75D /* NotificationCenterServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8522E7652C1177CA00FFB75D /* NotificationCenterServices.swift */; };
 		8522E76A2C1183C800FFB75D /* ScenePhaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8522E7692C1183C800FFB75D /* ScenePhaseHandler.swift */; };
 		852C8F612C19972100B511F9 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C8F602C19972100B511F9 /* MainAppView.swift */; };
 		852C8F632C1AD61C00B511F9 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 852C8F622C1AD61C00B511F9 /* Localizable.xcstrings */; };
 		853F7C9F2E8A4A110072AA10 /* WorkdaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F7C9E2E8A4A110072AA10 /* WorkdaySettingsView.swift */; };
-		853F7CA12E8C3B6F0072AA10 /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F7CA02E8C3B6F0072AA10 /* ServiceContainer.swift */; };
+		853F7CA12E8C3B6F0072AA10 /* ServicesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F7CA02E8C3B6F0072AA10 /* ServicesContainer.swift */; };
 		854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854520C72BF9F77D00437F5A /* CreateNewDayView.swift */; };
 		854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */; };
 		8553703C2C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855370382C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift */; };
@@ -64,16 +65,17 @@
 		8509CF7E2BF2111B00C7ACB0 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		8509CF802BF2111B00C7ACB0 /* WorkDaysTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkDaysTabView.swift; sourceTree = "<group>"; };
 		8509CF822BF2111B00C7ACB0 /* DateIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateIcon.swift; sourceTree = "<group>"; };
-		8509CF832BF2111B00C7ACB0 /* WorkingDaysListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkingDaysListView.swift; sourceTree = "<group>"; };
+		8509CF832BF2111B00C7ACB0 /* WorkDaysListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkDaysListView.swift; sourceTree = "<group>"; };
 		8509CF982BF2118100C7ACB0 /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		8509CF9B2BF2118C00C7ACB0 /* WorkingDay.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WorkingDay.xcdatamodel; sourceTree = "<group>"; };
+		850A81942E92C87B00B00849 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		8513C3922CF64A56007E69EF /* MyWorkHoursTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyWorkHoursTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8522E7652C1177CA00FFB75D /* NotificationCenterServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterServices.swift; sourceTree = "<group>"; };
 		8522E7692C1183C800FFB75D /* ScenePhaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenePhaseHandler.swift; sourceTree = "<group>"; };
 		852C8F602C19972100B511F9 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
 		852C8F622C1AD61C00B511F9 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		853F7C9E2E8A4A110072AA10 /* WorkdaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdaySettingsView.swift; sourceTree = "<group>"; };
-		853F7CA02E8C3B6F0072AA10 /* ServiceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
+		853F7CA02E8C3B6F0072AA10 /* ServicesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesContainer.swift; sourceTree = "<group>"; };
 		854454282BFE894900E90750 /* WorkingDay v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v2.xcdatamodel"; sourceTree = "<group>"; };
 		854520C72BF9F77D00437F5A /* CreateNewDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewDayView.swift; sourceTree = "<group>"; };
 		854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInOutCardView.swift; sourceTree = "<group>"; };
@@ -96,13 +98,14 @@
 		8513C3932CF64A56007E69EF /* MyWorkHoursTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MyWorkHoursTests; sourceTree = "<group>"; };
 		853F7C9C2E8659B10072AA10 /* Managers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Managers; sourceTree = "<group>"; };
 		853F7CA32E8D9DDC0072AA10 /* Helpers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Helpers; sourceTree = "<group>"; };
+		853F7CAD2E903A790072AA10 /* StoreKit */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = StoreKit; sourceTree = "<group>"; };
 		857FA3A32E6D45E0000AC2AA /* Screen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Screen; sourceTree = "<group>"; };
 		857FA3A52E6D45FA000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
 		857FA3A72E6D4621000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
 		857FA3A82E6D4661000AC2AA /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
 		857FA3A92E6D467D000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
 		857FA3AA2E6D4686000AC2AA /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
-		858EBCFF2E6D7E1D00AFDB6A /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
+		858EBCFF2E6D7E1D00AFDB6A /* Screen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); name = Screen; path = View; sourceTree = "<group>"; };
 		858EBD002E6D7E2700AFDB6A /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -154,16 +157,17 @@
 		8509CF532BF210EE00C7ACB0 /* MyWorkHours */ = {
 			isa = PBXGroup;
 			children = (
-				853F7CA32E8D9DDC0072AA10 /* Helpers */,
 				85E62E562C25E32F00BB7543 /* MyWorkHours.entitlements */,
-				852C8F5F2C19970400B511F9 /* App */,
-				853F7C9C2E8659B10072AA10 /* Managers */,
-				8509CF972BF2116000C7ACB0 /* CoreData */,
-				85FB5BE92C31A328008504C0 /* Localizable */,
-				8522E76D2C1594F500FFB75D /* Services */,
-				8509CF632BF2110300C7ACB0 /* Model */,
-				8509CF882BF2111B00C7ACB0 /* Core */,
 				85FB5BEA2C31A346008504C0 /* LaunchScreen */,
+				852C8F5F2C19970400B511F9 /* App */,
+				8509CF882BF2111B00C7ACB0 /* Core */,
+				8509CF972BF2116000C7ACB0 /* CoreData */,
+				853F7CA32E8D9DDC0072AA10 /* Helpers */,
+				853F7C9C2E8659B10072AA10 /* Managers */,
+				8522E76D2C1594F500FFB75D /* Services */,
+				853F7CAD2E903A790072AA10 /* StoreKit */,
+				85FB5BE92C31A328008504C0 /* Localizable */,
+				8509CF632BF2110300C7ACB0 /* Model */,
 				8509CF582BF210F000C7ACB0 /* Assets.xcassets */,
 				8509CF5A2BF210F000C7ACB0 /* Preview Content */,
 			);
@@ -187,13 +191,6 @@
 				8585F6D02E7F68570034D4FA /* SectionModel.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		8509CF662BF2111100C7ACB0 /* Alerts */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Alerts;
 			sourceTree = "<group>";
 		};
 		8509CF6C2BF2111100C7ACB0 /* UserDefaultsStore */ = {
@@ -255,9 +252,10 @@
 			children = (
 				854520C72BF9F77D00437F5A /* CreateNewDayView.swift */,
 				8509CF822BF2111B00C7ACB0 /* DateIcon.swift */,
-				8509CF832BF2111B00C7ACB0 /* WorkingDaysListView.swift */,
+				8509CF832BF2111B00C7ACB0 /* WorkDaysListView.swift */,
 				854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */,
 				85FB5BEB2C3286AB008504C0 /* UnavailableView.swift */,
+				850A81942E92C87B00B00849 /* ListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -267,7 +265,7 @@
 			children = (
 				8509CF842BF2111B00C7ACB0 /* Views */,
 				858EBD002E6D7E2700AFDB6A /* ViewModel */,
-				858EBCFF2E6D7E1D00AFDB6A /* View */,
+				858EBCFF2E6D7E1D00AFDB6A /* Screen */,
 			);
 			path = WorkingDaysList;
 			sourceTree = "<group>";
@@ -304,8 +302,7 @@
 				853F7CA42E8D9DEB0072AA10 /* ScenePhaseHandler */,
 				853F7CA52E8D9E160072AA10 /* NotificationCenterServices */,
 				8509CF6C2BF2111100C7ACB0 /* UserDefaultsStore */,
-				8509CF662BF2111100C7ACB0 /* Alerts */,
-				853F7CA02E8C3B6F0072AA10 /* ServiceContainer.swift */,
+				853F7CA02E8C3B6F0072AA10 /* ServicesContainer.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -393,13 +390,14 @@
 			fileSystemSynchronizedGroups = (
 				853F7C9C2E8659B10072AA10 /* Managers */,
 				853F7CA32E8D9DDC0072AA10 /* Helpers */,
+				853F7CAD2E903A790072AA10 /* StoreKit */,
 				857FA3A32E6D45E0000AC2AA /* Screen */,
 				857FA3A52E6D45FA000AC2AA /* View */,
 				857FA3A72E6D4621000AC2AA /* View */,
 				857FA3A82E6D4661000AC2AA /* ViewModel */,
 				857FA3A92E6D467D000AC2AA /* View */,
 				857FA3AA2E6D4686000AC2AA /* ViewModel */,
-				858EBCFF2E6D7E1D00AFDB6A /* View */,
+				858EBCFF2E6D7E1D00AFDB6A /* Screen */,
 				858EBD002E6D7E2700AFDB6A /* ViewModel */,
 			);
 			name = MyWorkHours;
@@ -499,12 +497,13 @@
 				854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */,
 				853F7C9F2E8A4A110072AA10 /* WorkdaySettingsView.swift in Sources */,
 				8509CF722BF2111100C7ACB0 /* UserDefaultsStore.swift in Sources */,
-				853F7CA12E8C3B6F0072AA10 /* ServiceContainer.swift in Sources */,
+				853F7CA12E8C3B6F0072AA10 /* ServicesContainer.swift in Sources */,
 				854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */,
 				8585F6D12E7F68570034D4FA /* SectionModel.swift in Sources */,
 				8509CF8C2BF2111B00C7ACB0 /* Buttons.swift in Sources */,
-				8509CF942BF2111B00C7ACB0 /* WorkingDaysListView.swift in Sources */,
+				8509CF942BF2111B00C7ACB0 /* WorkDaysListView.swift in Sources */,
 				8509CF642BF2110300C7ACB0 /* UserSettings.swift in Sources */,
+				850A81952E92C87B00B00849 /* ListView.swift in Sources */,
 				850286B42C16DCAE004D3EA5 /* OnboardItem.swift in Sources */,
 				8522E7662C1177CA00FFB75D /* NotificationCenterServices.swift in Sources */,
 				8509CF8D2BF2111B00C7ACB0 /* TimerView.swift in Sources */,

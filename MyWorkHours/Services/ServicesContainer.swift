@@ -1,5 +1,5 @@
 //
-//  ServiceContainer.swift
+//  ServicesContainer.swift
 //  MyWorkHours
 //
 //  Created by Yordan Dimitrov on 30.09.25.
@@ -7,14 +7,15 @@
 
 import Foundation
 
-protocol ServiceContainerProtocol {
+// do something in future
+protocol ServicesContainerProtocol {
     var userDefaultsService: UserDefaultsStore { get }
     var persistenceController: PersistenceController { get }
-    var notificationCenterServices: NotificationCenterServices { get }
+    var notificationCenterService: NotificationCenterServices { get }
 }
 
-final class ServiceContainer: ServiceContainerProtocol {
-    let notificationCenterServices = NotificationCenterServices()
+final class ServicesContainer: ServicesContainerProtocol {
+    let notificationCenterService = NotificationCenterServices()
     let userDefaultsService = UserDefaultsStore()
     let persistenceController = PersistenceController.shared
 }

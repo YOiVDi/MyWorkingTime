@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct UnavailableView: View {
-    @ObservedObject var viewModel: WorkingDaysView.ViewModel
+    @ObservedObject var viewModel: WorkDaysScreen.ViewModel
     private(set) var emptyViewMessage: LocalizedStringKey = "Your working list is empty. To add a working day, use the button below."
     
     

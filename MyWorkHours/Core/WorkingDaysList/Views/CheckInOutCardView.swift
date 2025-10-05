@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CheckInOutCardView: View {
     @Environment(\.colorScheme) var colorScheme
-    @ObservedObject var viewModel: WorkingDaysView.ViewModel
+    @ObservedObject var viewModel: WorkDaysScreen.ViewModel
     
     var body: some View {
         VStack {
@@ -75,5 +75,6 @@ struct CheckInOutCardView: View {
 
 #Preview {
     let persistenceController = PersistenceController.shared
-    return CheckInOutCardView(viewModel: WorkingDaysView.ViewModel(persistenceController: persistenceController))
+    let userStatusManager = UserStatusManager()
+    CheckInOutCardView(viewModel: WorkDaysScreen.ViewModel(persistenceController: persistenceController, userStatusManager: userStatusManager))
 }

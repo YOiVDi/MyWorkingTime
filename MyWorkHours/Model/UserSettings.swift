@@ -8,6 +8,7 @@
 import Foundation
 
 struct UserSettings: Codable {
+    var secondWork: Bool = false
     var companyName: String = ""
     var startShift: Date = Date()
     var endShift: Date = Date()
