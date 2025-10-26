@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DetailView: View {
+struct DetailScreen: View {
     
     // MARK: Properties
     @Environment(\.dismiss) var dismiss
@@ -41,7 +41,7 @@ struct DetailView: View {
             .scrollBounceBehavior(.basedOnSize)
         }
         .onAppear(perform: {
-            viewModel.calculatedWorkingTime()
+            viewModel.calculatedWorkedTime()
         })
         
         
@@ -143,6 +143,6 @@ struct DetailView: View {
 #Preview {
     NavigationView {
         let persistenceController = PersistenceController.shared
-        DetailView(model: PersistenceController.preview, modelPause: PersistenceController.preview.arrPause, persistenceController: persistenceController)
+        DetailScreen(model: PersistenceController.preview, modelPause: PersistenceController.preview.arrPause, persistenceController: persistenceController)
     }
 }

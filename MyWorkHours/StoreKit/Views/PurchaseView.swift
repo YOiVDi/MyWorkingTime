@@ -14,7 +14,15 @@ struct PurchaseView: View {
     
     var body: some View {
         ZStack {
-                LinearGradient(colors: [.blue, .red.opacity(0.8)], startPoint: .top, endPoint: .center)
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(red: 0.05, green: 0.05, blue: 0.15),   // deep navy
+                    Color(red: 0.18, green: 0.00, blue: 0.35)    // rich purple
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
                 VStack(spacing: 10) {
                     // MARK: - Title
                     VStack {
@@ -22,7 +30,7 @@ struct PurchaseView: View {
                             .font(.system(size: 50)).bold()
                             .foregroundStyle(.white)
                         Group {
-                            Text("Access to Premium Features")
+                            Text("Go Premium to Unlock More Power")
                         }
                         .font(.largeTitle).bold()
                         .foregroundStyle(.white)
@@ -31,9 +39,10 @@ struct PurchaseView: View {
                     
                     // MARK: - Information
                     VStack(spacing: 5) {
-                        FeatureView(message: "Add a second work/task.")
-                        FeatureView(message: "Organize days by month and year via section.")
-                        FeatureView(message: "Download a specific day as a PDF file.")
+                        FeatureView(message: "Add a second job or shift.")
+                        FeatureView(message: "View days automatically grouped by month.")
+                        FeatureView(message: "See visual indicators when work hours are above or below your target.")
+//                        FeatureView(message: "Download a specific day as a PDF file.")
                     }
                     .padding(.horizontal)
                     .padding(.top, 50)
@@ -41,7 +50,9 @@ struct PurchaseView: View {
                     VStack(spacing: 10) {
                         ForEach(viewModel.products) { product in
                                 Button {
-                                    viewModel.buy(product)
+                                    withAnimation(.none) {
+                                        viewModel.buy(product)
+                                    }
                                 } label: {
                                     HStack {
                                         Text("\(product.displayPrice) - \(product.displayName)")
@@ -53,7 +64,7 @@ struct PurchaseView: View {
                                     .padding(.horizontal)
                             }
                             if product.displayName == "Yearly" {
-                                Text("By Subscribing for 1 year you will get two months free.")
+                                Text("Get 2 months free with a yearly plan!")
                                     .font(.system(size: 20))
                                     .multilineTextAlignment(.center)
                                     .foregroundStyle(.secondary)
@@ -63,15 +74,9 @@ struct PurchaseView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .ignoresSafeArea()
     }
-    
-    init(userStatusManager: UserStatusManager) {
-        _viewModel = ObservedObject(wrappedValue: PurchaseViewModel(userStatusManager: userStatusManager))
-    }
-
 }
 
 #Preview {
-    PurchaseView(userStatusManager: UserStatusManager())
+    PurchaseView(viewModel: PurchaseViewModel(userStatusManager: UserStatusManager()))
 }

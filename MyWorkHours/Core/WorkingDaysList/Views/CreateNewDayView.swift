@@ -12,40 +12,47 @@ struct CreateNewDayView: View {
     @ObservedObject var viewModel: WorkDaysScreen.ViewModel
     var body: some View {
         NavigationView {
-                VStack {
-                    HStack {
-                        Text("Company name: ")
-                            .fontWeight(.semibold)
-                        Text("\(viewModel.userSettings?.companyName ?? "")")
-                        Spacer()
+            VStack {
+                Picker("Work Choice", selection: $viewModel.workChoice) {
+                    ForEach(UserDefaultsKeys.allCases, id: \.self) { key in
+                        Text(key == .firstWorkSettings ? (viewModel.userSettings?.companyName ?? "") : (viewModel.secondUserSettings?.companyName ?? ""))
+                            .onTapGesture {
+                                viewModel.workChoice = key
+                            }
                     }
-                    
-                    HStack {
-                        Text("Choose a day: ")
-                            .fontWeight(.semibold)
-                        DatePicker("Choose a day: ", selection: $viewModel.userDefinedWorkDay.date, displayedComponents: .date)
-                            .labelsHidden()
-                        Spacer()
-                    }
-                    
-                    VStack {
-                        Text("Working hour's: ")
-                        DatePicker("Start Shift", selection: $viewModel.userDefinedWorkDay.startShift, displayedComponents: .hourAndMinute)
-                        DatePicker("End Shift", selection: $viewModel.userDefinedWorkDay.endShift, displayedComponents: .hourAndMinute)
-                    }
-                    .fontWeight(.semibold)
-                    Text("When you create a new day with a specific date, you can add check-ins, check-outs, and pauses after the day is created. Simply click on the day you created in the upper right corner via the edit button, and you will be able to edit that day. From there, you can update your check-in and check-out times, as well as add pauses.")
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                    Button("Create day") {
-                        viewModel.creatingDayOfUserChoice(dismiss)
-                    }
-                    .buttonStyle(BorderedProminentButtonStyle())
-                    .shadow(color: .black, radius: 3, x: -1, y: 1)
                 }
+                .pickerStyle(.segmented)
+                .disabled(viewModel.disableWorkChoice())
+
+                HStack {
+                    Text("Company name: ")
+                        .fontWeight(.semibold)
+                    Text(viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.companyName ?? "") : (viewModel.secondUserSettings?.companyName ?? ""))
+                    Spacer()
+                }
+                
+                VStack {
+                    DatePicker("Choose a day: ", selection: $viewModel.userDefinedWorkDay.date, displayedComponents: .date)
+                }
+                .fontWeight(.semibold)
+                
+                VStack {
+                    Text("Working hour's: ")
+                    DatePicker("Start Shift", selection: $viewModel.userDefinedWorkDay.startShift, displayedComponents: .hourAndMinute)
+                    DatePicker("End Shift", selection: $viewModel.userDefinedWorkDay.endShift, displayedComponents: .hourAndMinute)
+                }
+                .fontWeight(.semibold)
+                Text("When you create a new day with a specific date, you can add check-ins, check-outs, and pauses after the day is created. Simply click on the day you created in the upper right corner via the edit button, and you will be able to edit that day. From there, you can update your check-in and check-out times, as well as add pauses.")
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Button("Create day") {
+                    viewModel.creatingDayOfUserChoice(dismiss)
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+                .shadow(color: .black, radius: 3, x: -1, y: 1)
+            }
             .padding(.horizontal, 20)
             .navigationTitle("New working day")
-            .onAppear {viewModel.checkUserDefaults()}
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -57,6 +64,15 @@ struct CreateNewDayView: View {
                         }
                     }
                 }
+            }
+            .onAppear {
+                viewModel.userDefinedWorkDay.startShift = viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.startShift ?? Date()) : viewModel.secondUserSettings?.startShift ?? Date()
+                viewModel.userDefinedWorkDay.endShift = viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.endShift ?? Date()) : viewModel.secondUserSettings?.endShift ?? Date()
+                viewModel.workChoice = .firstWorkSettings
+            }
+            .onChange(of: viewModel.workChoice) { _, _ in
+                viewModel.userDefinedWorkDay.startShift = viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.startShift ?? Date()) : viewModel.secondUserSettings?.startShift ?? Date()
+                viewModel.userDefinedWorkDay.endShift = viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.endShift ?? Date()) : viewModel.secondUserSettings?.endShift ?? Date()
             }
         }
     }

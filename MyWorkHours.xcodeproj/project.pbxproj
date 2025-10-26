@@ -31,10 +31,10 @@
 		853F7CA12E8C3B6F0072AA10 /* ServicesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F7CA02E8C3B6F0072AA10 /* ServicesContainer.swift */; };
 		854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854520C72BF9F77D00437F5A /* CreateNewDayView.swift */; };
 		854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */; };
-		8553703C2C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855370382C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift */; };
-		8553703E2C0CA03100BDCD12 /* Pause+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553703A2C0CA03100BDCD12 /* Pause+CoreDataClass.swift */; };
 		855370502C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553704E2C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift */; };
 		855370512C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553704F2C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift */; };
+		85763B112E9EC94200FF5FB6 /* Pause+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763B102E9EC94200FF5FB6 /* Pause+CoreDataClass.swift */; };
+		85763B132E9EC96100FF5FB6 /* WorkingDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763B122E9EC96100FF5FB6 /* WorkingDay+CoreDataClass.swift */; };
 		857CD5E42C2AB48900095005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 857CD5E32C2AB48900095005 /* LaunchScreen.storyboard */; };
 		8585F6D12E7F68570034D4FA /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8585F6D02E7F68570034D4FA /* SectionModel.swift */; };
 		8585F6D32E8056D00034D4FA /* UserDefinedWorkDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8585F6D22E8056D00034D4FA /* UserDefinedWorkDay.swift */; };
@@ -80,13 +80,13 @@
 		854520C72BF9F77D00437F5A /* CreateNewDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewDayView.swift; sourceTree = "<group>"; };
 		854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInOutCardView.swift; sourceTree = "<group>"; };
 		8553702F2C0C9E5500BDCD12 /* WorkingDay v4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v4.xcdatamodel"; sourceTree = "<group>"; };
-		855370382C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "WorkingDay+CoreDataClass.swift"; path = "../WorkingDay+CoreDataClass.swift"; sourceTree = "<group>"; };
-		8553703A2C0CA03100BDCD12 /* Pause+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Pause+CoreDataClass.swift"; path = "../Pause+CoreDataClass.swift"; sourceTree = "<group>"; };
 		855370402C0CB18700BDCD12 /* WorkingDay v5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v5.xcdatamodel"; sourceTree = "<group>"; };
 		855370452C0DA78E00BDCD12 /* WorkingDay v6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v6.xcdatamodel"; sourceTree = "<group>"; };
 		8553704E2C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pause+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8553704F2C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		856960742C031F6C00686655 /* WorkingDay v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v3.xcdatamodel"; sourceTree = "<group>"; };
+		85763B102E9EC94200FF5FB6 /* Pause+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pause+CoreDataClass.swift"; sourceTree = "<group>"; };
+		85763B122E9EC96100FF5FB6 /* WorkingDay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataClass.swift"; sourceTree = "<group>"; };
 		857CD5E32C2AB48900095005 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8585F6D02E7F68570034D4FA /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
 		8585F6D22E8056D00034D4FA /* UserDefinedWorkDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefinedWorkDay.swift; sourceTree = "<group>"; };
@@ -99,8 +99,9 @@
 		853F7C9C2E8659B10072AA10 /* Managers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Managers; sourceTree = "<group>"; };
 		853F7CA32E8D9DDC0072AA10 /* Helpers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Helpers; sourceTree = "<group>"; };
 		853F7CAD2E903A790072AA10 /* StoreKit */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = StoreKit; sourceTree = "<group>"; };
+		85763AD52E9EC7B600FF5FB6 /* Screen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Screen; sourceTree = "<group>"; };
 		857FA3A32E6D45E0000AC2AA /* Screen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Screen; sourceTree = "<group>"; };
-		857FA3A52E6D45FA000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
+		857FA3A52E6D45FA000AC2AA /* Screen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Screen; sourceTree = "<group>"; };
 		857FA3A72E6D4621000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
 		857FA3A82E6D4661000AC2AA /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
 		857FA3A92E6D467D000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
@@ -204,6 +205,7 @@
 		8509CF762BF2111B00C7ACB0 /* DetailView */ = {
 			isa = PBXGroup;
 			children = (
+				85763AD52E9EC7B600FF5FB6 /* Screen */,
 				857FA3A72E6D4621000AC2AA /* View */,
 				857FA3A82E6D4661000AC2AA /* ViewModel */,
 			);
@@ -223,7 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				8509CF792BF2111B00C7ACB0 /* Views */,
-				857FA3A52E6D45FA000AC2AA /* View */,
+				857FA3A52E6D45FA000AC2AA /* Screen */,
 				857FA3A62E6D4600000AC2AA /* ViewModel */,
 			);
 			path = PauseTimer;
@@ -287,9 +289,9 @@
 			isa = PBXGroup;
 			children = (
 				8553704F2C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift */,
-				855370382C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift */,
+				85763B122E9EC96100FF5FB6 /* WorkingDay+CoreDataClass.swift */,
 				8553704E2C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift */,
-				8553703A2C0CA03100BDCD12 /* Pause+CoreDataClass.swift */,
+				85763B102E9EC94200FF5FB6 /* Pause+CoreDataClass.swift */,
 				8509CF982BF2118100C7ACB0 /* PersistenceController.swift */,
 				8509CF9A2BF2118C00C7ACB0 /* WorkingHours.xcdatamodeld */,
 			);
@@ -391,8 +393,9 @@
 				853F7C9C2E8659B10072AA10 /* Managers */,
 				853F7CA32E8D9DDC0072AA10 /* Helpers */,
 				853F7CAD2E903A790072AA10 /* StoreKit */,
+				85763AD52E9EC7B600FF5FB6 /* Screen */,
 				857FA3A32E6D45E0000AC2AA /* Screen */,
-				857FA3A52E6D45FA000AC2AA /* View */,
+				857FA3A52E6D45FA000AC2AA /* Screen */,
 				857FA3A72E6D4621000AC2AA /* View */,
 				857FA3A82E6D4661000AC2AA /* ViewModel */,
 				857FA3A92E6D467D000AC2AA /* View */,
@@ -495,11 +498,13 @@
 			files = (
 				852C8F612C19972100B511F9 /* MainAppView.swift in Sources */,
 				854520C82BF9F77D00437F5A /* CreateNewDayView.swift in Sources */,
+				85763B132E9EC96100FF5FB6 /* WorkingDay+CoreDataClass.swift in Sources */,
 				853F7C9F2E8A4A110072AA10 /* WorkdaySettingsView.swift in Sources */,
 				8509CF722BF2111100C7ACB0 /* UserDefaultsStore.swift in Sources */,
 				853F7CA12E8C3B6F0072AA10 /* ServicesContainer.swift in Sources */,
 				854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */,
 				8585F6D12E7F68570034D4FA /* SectionModel.swift in Sources */,
+				85763B112E9EC94200FF5FB6 /* Pause+CoreDataClass.swift in Sources */,
 				8509CF8C2BF2111B00C7ACB0 /* Buttons.swift in Sources */,
 				8509CF942BF2111B00C7ACB0 /* WorkDaysListView.swift in Sources */,
 				8509CF642BF2110300C7ACB0 /* UserSettings.swift in Sources */,
@@ -515,8 +520,6 @@
 				85FB5BEC2C3286AB008504C0 /* UnavailableView.swift in Sources */,
 				8509CF992BF2118100C7ACB0 /* PersistenceController.swift in Sources */,
 				8509CF922BF2111B00C7ACB0 /* WorkDaysTabView.swift in Sources */,
-				8553703C2C0CA03100BDCD12 /* WorkingDay+CoreDataClass.swift in Sources */,
-				8553703E2C0CA03100BDCD12 /* Pause+CoreDataClass.swift in Sources */,
 				8509CF8F2BF2111B00C7ACB0 /* PauseTimerViewModel.swift in Sources */,
 				855370502C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift in Sources */,
 				855370512C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift in Sources */,

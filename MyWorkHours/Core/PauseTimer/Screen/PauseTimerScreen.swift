@@ -9,7 +9,7 @@ import SwiftUI
 import UserNotifications
 
 
-struct PauseTimerView: View {
+struct PauseTimerScreen: View {
     
     @Environment(\.requestReview) private var requestReview
     @AppStorage("isReviewRequested") var isReviewRequested: Bool = false
@@ -73,5 +73,5 @@ struct PauseTimerView: View {
 }
 
 #Preview {
-    PauseTimerView(timerManager: TimerManager(persistenceController: PersistenceController.shared), persistenceController: PersistenceController.shared)
+    PauseTimerScreen(timerManager: TimerManager(persistenceController: PersistenceController.shared), persistenceController: PersistenceController.shared)
 }

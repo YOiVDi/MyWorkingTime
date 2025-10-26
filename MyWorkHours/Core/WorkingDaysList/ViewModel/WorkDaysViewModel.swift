@@ -15,7 +15,6 @@ enum SortByWorkDay: LocalizedStringKey, CaseIterable {
     case oldestFirst = "Oldest First"
 }
 
-
 extension WorkDaysScreen {
     @MainActor class ViewModel: ObservableObject {
         // MARK: - Published Private(set) Properties
@@ -28,11 +27,10 @@ extension WorkDaysScreen {
         @Published var pendingSelections = Set<WorkingDay>()
         @Published var singleSelect: WorkingDay? = nil
         @Published var alert: CustomAlerts? = nil
-        @Published var confirmationIsShowing = false
         @Published var createNewDaySheet = false
         @Published var showCheckInOutCard = false
+        @Published var workChoice: UserDefaultsKeys = .firstWorkSettings
         @Published var sortBy: SortByWorkDay = .newestFirst
-        
         
         // If user status is premium
         var section: [SectionModel] {
@@ -62,6 +60,7 @@ extension WorkDaysScreen {
 
         // Hold user defaults
         private(set) var userSettings: UserSettings?
+        private(set) var secondUserSettings: UserSettings?
         private var sectionArray: [SectionModel] = []
         
         // MARK: - PersistenceController
@@ -85,7 +84,7 @@ extension WorkDaysScreen {
         
         /// add a new working day
         func addWorkingDay() {
-            guard !doesDayExist() else {
+            guard !doesDayAsRequirmentsExist() else {
                 alert = .dayExist
                 return
             }
@@ -93,7 +92,13 @@ extension WorkDaysScreen {
                 alert = .userDefaultsIsEmpty
                 return
             }
-            persistenceController.addWorkDay(userSettings: userSettings, notADayWithTodayDate: notADayWithTodayDate, date: userDefinedWorkDay.date, workingHours: userDefinedWorkDay.workingHours, isWeekend: isWeekend)
+            
+            guard let secondUserSettings else {
+                alert = .userDefaultsIsEmpty
+                return
+            }
+            
+            persistenceController.addWorkDay(userSettings: workChoice == .firstWorkSettings ? userSettings : secondUserSettings, notADayWithTodayDate: notADayWithTodayDate, date: userDefinedWorkDay.date, workingHours: userDefinedWorkDay.workingHours, isWeekend: isWeekend)
             fetchWorkDays()
         }
         
@@ -131,45 +136,74 @@ extension WorkDaysScreen {
                 }
             }
         }
+//        
+//        
+//        /// Check if today's date exists, if it does, assign to today's variable
+//        func doesTodayExist() {
+//            let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+//            
+//            todayCheckInCheckOut = workingDaysList.first { workDay in
+//                let workDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workDay.wrappedDate)
+//                return workDayComponents == targetComponents
+//            }
+//        }
+//        
+         private func isExistDaysWithTodayDate() -> [WorkingDay] {
+             let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: userDefinedWorkDay.date)
+             print("Target Date: \(targetComponents)")
+            var workDays: [WorkingDay] = []
+            for day in workingDaysList {
+                let workDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: day.wrappedDate)
+                if targetComponents == workDayComponents {
+                    workDays.append(day)
+                }
+            }
+            return workDays
+        }
+        
+        private func doesDayAsRequirmentsExist() -> Bool {
+            isExistDaysWithTodayDate().contains { day in
+                (day.companyName == userSettings?.companyName && workChoice == .firstWorkSettings) ||
+                (day.companyName == secondUserSettings?.companyName && workChoice == .secondWorkSettings)
+            }
+        }
+        
+        func disableWorkChoice() -> Bool {
+            fetchUserSettings()
+            if userStatusManager.userStatus == .basic || userSettings?.secondWork == false {
+                return true
+            } else {
+                return false
+            }
+        }
         
         
-        /// Check if today's date exists, if it does, assign to today's variable
-        func doesTodayExist() {
-            let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-            
-            todayCheckInCheckOut = workingDaysList.first { workDay in
-                let workDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workDay.wrappedDate)
-                return workDayComponents == targetComponents
+        func assingDayForCheckInCheckOut() {
+            if workChoice == .firstWorkSettings {
+                todayCheckInCheckOut = isExistDaysWithTodayDate().first {
+                    $0.companyName == userSettings?.companyName
+                }
+            } else if workChoice == .secondWorkSettings {
+                todayCheckInCheckOut = isExistDaysWithTodayDate().first {
+                    $0.companyName == secondUserSettings?.companyName
+                }
             }
         }
         
         /// Handle check-in action
         func handleCheckIn() {
-            doesTodayExist()
-            if doesDayExist() == false {
-                addWorkingDay()
-                todayCheckInCheckOut = workingDaysList.last
-                todayCheckInCheckOut?.checkIn = Date()
-            } else {
-                guard let today = todayCheckInCheckOut else {
-                    // Handle Error Here
-                    return
-                }
+//            doesTodayExist()
+            assingDayForCheckInCheckOut()
+            guard let today = todayCheckInCheckOut else { return } // <-- In later stage error must be implemnted here.
                 today.checkIn = Date() // set check-in to time right now
-//                withAnimation(.easeInOut(duration: 1)) {
-//                    showCheckInOutCard.toggle()
-//                }
-            }
             persistenceController.save()
         }
+        
         /// Handle check-out action
         func handleCheckOut() {
-            doesTodayExist()
+//            doesTodayExist()
             guard todayCheckInCheckOut?.checkIn != nil else { return }
-            guard let today = todayCheckInCheckOut else {
-                // Handle Error Here
-                return
-            }
+            guard let today = todayCheckInCheckOut else { return } // <-- In later stage error must be implemnted here.
             today.checkOut = Date() // set check-out to time right now
             withAnimation(.easeInOut(duration: 1)){
                 showCheckInOutCard.toggle()
@@ -177,23 +211,7 @@ extension WorkDaysScreen {
             persistenceController.save()
         }
         
-        func checkUserDefaults() {
-            print("Before Fetch: \(String(describing: userSettings?.companyName))")
-            fetchUserSettings()
-            print("After Fetch: \(String(describing: userSettings?.companyName))")
-        }
-        
         // MARK: - Private Methods
-        
-        /// Checks if a working day already exists for the specified date.
-        private func doesDayExist() -> Bool {
-            let calendar = Calendar.current
-            
-            let itemExist = workingDaysList.contains { day in
-                return calendar.isDate(day.wrappedDate, inSameDayAs: userDefinedWorkDay.date)
-            }
-            return itemExist
-        }
         
         /// Check if a day is weekend
         /// - Returns: work hours for specific day as Int
@@ -241,13 +259,12 @@ extension WorkDaysScreen {
         
         /// Fetches user settings from UserDefaults.
         private func fetchUserSettings() {
-            guard let userData = UserDefaults.standard.data(forKey: "userSettings") else {
-                // THERE ERROR MUST BE HANDLE !!!
-                return
-            }
+            guard let userSettings = UserDefaults.standard.data(forKey: UserDefaultsKeys.firstWorkSettings.rawValue) else { return }
+            guard let secondUserSettings = UserDefaults.standard.data(forKey: UserDefaultsKeys.secondWorkSettings.rawValue) else { return }
             
             do {
-                self.userSettings = try JSONDecoder().decode(UserSettings.self, from: userData)
+                self.userSettings = try JSONDecoder().decode(UserSettings.self, from: userSettings)
+                self.secondUserSettings = try JSONDecoder().decode(UserSettings.self, from: secondUserSettings)
             } catch {
                 print("Failed to decode user settings data:", error.localizedDescription)
                 return
@@ -315,7 +332,7 @@ extension WorkDaysScreen {
             var grouped: [Date : [WorkingDay]] = [:]
             let dateFormatter = DateFormatter()
             let calendar = Calendar.current
-            dateFormatter.dateFormat = "MMMM"
+            dateFormatter.dateFormat = "MMMM yyyy"
             for item in workingDaysList {
                 let components = calendar.dateComponents([.year ,.month], from: item.wrappedDate)
                 let monthName = calendar.date(from: components)
@@ -325,6 +342,22 @@ extension WorkDaysScreen {
                 SectionModel(name: dateFormatter.string(from: key), items: value.sorted { $0.wrappedDate > $1.wrappedDate }, date: key)
             }
             sectionArray = section
+        }
+        
+        func calculateTime(_ workDay: WorkingDay) -> String {
+            // Pause time into seconds
+            let pauseTime = calculatePauseInSeconds(workDay)
+            // WorkHours mutiply with 60 to get in seconds
+            let workHours = workDay.wrappedWorkingHours * 60
+            // Calculate WorkedTime and Pause together
+            let workTimeAndPause = workDay.wrappedWorkedTime + pauseTime
+            // substract
+            let calc = workTimeAndPause - workHours
+            return WorkTimeConverter.convertSecondToTime(calc, false)
+        }
+        
+         func calculatePauseInSeconds(_ workDay: WorkingDay) -> Int {
+             WorkTimeConverter.calculatePauseInSeconds(workDay)
         }
     }
 }

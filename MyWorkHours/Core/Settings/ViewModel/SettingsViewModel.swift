@@ -20,6 +20,7 @@ extension SettingsView {
         @Published var firstWorkSettings: UserSettings = UserSettings()
         @Published var secondWorkSettings: UserSettings = UserSettings()
         @Published var showPremiumView: Bool = false
+
         
         var userStatus: UserStatus {
             userStatusManager.userStatus
@@ -80,10 +81,11 @@ extension SettingsView {
         private func setRetrievedData() {
             let defaultData = UserSettings()
             do {
-//                let savedSettings =  try userDefaultsStore.get(UserSettings.self, forKey: UserDefaultsKeys.firstWorkSettings.rawValue, defaultData)
-//                firstWorkSettings = savedSettings
                 firstWorkSettings = try userDefaultsStore.get(UserSettings.self, forKey: UserDefaultsKeys.firstWorkSettings.rawValue, defaultData)
                 secondWorkSettings = try userDefaultsStore.get(UserSettings.self, forKey: UserDefaultsKeys.secondWorkSettings.rawValue, defaultData)
+                if userStatus == .basic {
+                    firstWorkSettings.secondWork = false
+                }
             } catch {
                 print("UserSettings cannot be retrieve: \(error.localizedDescription).")
             }

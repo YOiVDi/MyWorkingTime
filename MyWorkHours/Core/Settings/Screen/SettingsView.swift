@@ -13,6 +13,7 @@ struct SettingsView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var viewModel: SettingsViewModel
+    @EnvironmentObject var purchaseViewModel: PurchaseViewModel
     var showFinishButton: Bool? = false
     var finishAction: (() -> Void)? = nil
     private var notificationMessage: LocalizedStringResource = """
@@ -98,7 +99,8 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $viewModel.showPremiumView) {
                 ZStack(alignment: .topTrailing) {
-                    PurchaseView(userStatusManager: viewModel.userStatusManager)
+//                    PurchaseView(userStatusManager: viewModel.userStatusManager)
+                    SubscriptionScreen(viewModel: purchaseViewModel)
                     VStack {
                         Button {
                             viewModel.showPremiumView = false

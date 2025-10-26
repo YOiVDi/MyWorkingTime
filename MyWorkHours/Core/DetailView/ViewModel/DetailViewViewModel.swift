@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-extension DetailView {
+extension DetailScreen {
     class ViewModel: ObservableObject {
         // MARK: - Public properties
         @Published var selectedPause: Pause?
@@ -57,7 +57,7 @@ extension DetailView {
         
         /// show complete worked time for a day.
         var workedTime: String {
-            model.workedTime != 0 ? convertTimeToSeconds(model.wrappedWorkedTime) : time
+            model.workedTime != 0 ? convertSecondToTime(model.wrappedWorkedTime) : time
         }
         
         
@@ -110,8 +110,8 @@ extension DetailView {
             // Set selectedpause to nil
             self.selectedPause = nil
             
-            // Recalculate the working time (assuming this function exists and performs some calculation)
-            calculatedWorkingTime()
+            // Recalculate the worked time (assuming this function exists and performs some calculation)
+            calculatedWorkedTime()
         
             // Save the changes to the persistence controller
             persistenceController.save()
@@ -127,8 +127,8 @@ extension DetailView {
             // Reset the selected pause to nil
             selectedPause = nil
             
-            // Recalculate the working time (assuming this function exists and performs some calculation)
-            calculatedWorkingTime()
+            // Recalculate the worked time (assuming this function exists and performs some calculation)
+            calculatedWorkedTime()
             
             objectWillChange.send()
             
@@ -182,7 +182,7 @@ extension DetailView {
         
         /// Calculate time between check-in and check-out.
         /// - Returns: return calculated time.
-        func calculatedWorkingTime() {
+        func calculatedWorkedTime() {
             if let checkIn = model.checkIn, let checkOut = model.checkOut {
                 // Calculate the time interval in seconds
                 var timeInterval = checkOut.timeIntervalSince(checkIn)
@@ -205,7 +205,7 @@ extension DetailView {
                 }
                 
                 // Calculate and format the time as a string.
-                self.time = convertTimeToSeconds(totalSeconds)
+                self.time = convertSecondToTime(totalSeconds)
             }
         }
         
@@ -237,7 +237,7 @@ extension DetailView {
         /// Converts a total number of seconds into a formatted time string (HH:mm:ss).
         /// - Parameter totalSeconds: The total number of seconds as an Int.
         /// - Returns: A formatted time string in the format "HH:mm:ss".
-        private func convertTimeToSeconds(_ seconds: Int) -> String {
+        private func convertSecondToTime(_ seconds: Int) -> String {
             
             // Convert the total seconds to hours, minutes, and seconds
             let hours = seconds / 3600

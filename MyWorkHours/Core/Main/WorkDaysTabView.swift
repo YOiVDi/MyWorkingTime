@@ -21,7 +21,7 @@ struct WorkDaysTabView: View {
                     .tabItem {
                         Label("List", systemImage: "list.bullet.circle")
                     }
-            PauseTimerView(timerManager: timerManager, persistenceController: servicesContainer.persistenceController)
+            PauseTimerScreen(timerManager: timerManager, persistenceController: servicesContainer.persistenceController)
                     .tabItem {
                         Label("Pause Timer", systemImage: "clock")
                     }

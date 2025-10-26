@@ -42,7 +42,10 @@ class TimerManager: ObservableObject {
     
     /// Gives a initial value of timer and activate it
     func startTimer(_ hours: Int, _ minutes: Int, _ seconds: Int) {
-        guard doesTodayExist() != nil else { return }
+        guard !isExistDaysWithTodayDate().isEmpty else {
+            alert = .pauseWillBeNotAdded
+            return
+        }
         setTimer(hours, minutes, seconds)
         isStarted = true
         beginPause = Date()
@@ -143,26 +146,35 @@ class TimerManager: ObservableObject {
     
     /// If a working day exists, a pause will be added
      private func addPause() {
-         if let workingDay = doesTodayExist() {
+         if let workDay = determinatedWhichWork() {
              guard let beginPause = beginPause, let finishPause = finishPause else { return }
-             persistenceController.addPause(workingDay: workingDay, identifier: String(Date().formatted(date: .omitted, time: .standard)), beginPause, finishPause)
+             persistenceController.addPause(workingDay: workDay, identifier: String(Date().formatted(date: .omitted, time: .standard)), beginPause, finishPause)
          }
      }
     
-    /// Check if today exist as a day in our WorkingDay list
-    private func doesTodayExist() -> WorkingDay? {
+    /// Search for a workday/workdays whose date is equal to today's date, and return them as array of WorkingDays
+    private func isExistDaysWithTodayDate() -> [WorkingDay] {
         let workingDaysList = PersistenceController.shared.fetchRequest(sortBy: nil)
-        let date = Date()
-        let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        
-        guard let matchingDay = workingDaysList.first(where: { workingDay in
-            let workingDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workingDay.wrappedDate)
-            return workingDayComponents == targetComponents
-        }) else {
-            alert = .pauseWillBeNotAdded
-            return nil
+       let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+       var workDays: [WorkingDay] = []
+       for day in workingDaysList {
+           let workDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: day.wrappedDate)
+           if targetComponents == workDayComponents {
+               workDays.append(day)
+           }
+       }
+       return workDays
+   }
+    
+    /// Check which work has CheckIn time, and doesn't have CheckOut time. Base on those requirements determined to which day must be add pause from current timer.
+    private func determinatedWhichWork() -> WorkingDay? {
+        var workDay: WorkingDay?
+        for day in isExistDaysWithTodayDate() {
+            if day.checkIn != nil && day.checkOut == nil {
+                workDay = day
+            }
         }
-        return matchingDay
+        return workDay
     }
     
     /// Schedules a notification one minute before the break ends when the user starts the timer.

@@ -47,12 +47,12 @@
           ],
           "displayPrice" : "0.99",
           "familyShareable" : true,
-          "groupNumber" : 1,
+          "groupNumber" : 2,
           "internalID" : "D6DE48D6",
           "introductoryOffer" : {
             "internalID" : "8D0C9585",
             "paymentMode" : "free",
-            "subscriptionPeriod" : "P1M"
+            "subscriptionPeriod" : "P1W"
           },
           "localizations" : [
             {

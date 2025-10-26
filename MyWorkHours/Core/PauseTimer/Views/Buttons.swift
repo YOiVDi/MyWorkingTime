@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Buttons: View {
-    @ObservedObject var viewModel: PauseTimerView.PauseTimerViewModel
+    @ObservedObject var viewModel: PauseTimerScreen.PauseTimerViewModel
     @Environment(\.verticalSizeClass) var verticalSizeClass
     var body: some View {
         if verticalSizeClass == .compact {
@@ -106,5 +106,5 @@ struct Buttons: View {
 }
 
 #Preview {
-    Buttons(viewModel: PauseTimerView.PauseTimerViewModel(timerManager: TimerManager(persistenceController: PersistenceController.shared)))
+    Buttons(viewModel: PauseTimerScreen.PauseTimerViewModel(timerManager: TimerManager(persistenceController: PersistenceController.shared)))
 }

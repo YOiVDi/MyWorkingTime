@@ -15,12 +15,15 @@ struct ListView: View {
                 ForEach(viewModel.section, id: \.self) { section in
                     Section("\(section.name)") {
                         ForEach(section.items, id: \.self) { workDay in
-                            NavigationLink(destination: DetailView(model: workDay, modelPause: workDay.arrPause, persistenceController: viewModel.persistenceController)) {
+                            NavigationLink(destination: DetailScreen(model: workDay, modelPause: workDay.arrPause, persistenceController: viewModel.persistenceController)) {
                                 VStack(alignment: .leading) {
                                     HStack(spacing: 10) {
                                         DateIconView(model: workDay)
                                         Text(workDay.wrappedCompanyname)
                                             .font(.title3).bold()
+//                                        Text(viewModel.convertSecondToTime(workDay.wrappedWorkedTime))
+                                        Text(viewModel.calculateTime(workDay))
+                                            .foregroundStyle((workDay.wrappedWorkedTime + viewModel.calculatePauseInSeconds(workDay)) - (workDay.wrappedWorkingHours * 60) < 0 ? Color.red :  Color.green)
                                     }
                                 }
                                 .swipeActions(allowsFullSwipe: false) {
@@ -45,7 +48,7 @@ struct ListView: View {
         } else {
             List {
                 ForEach(viewModel.workDays, id: \.self) { workDay in
-                    NavigationLink(destination: DetailView(model: workDay, modelPause: workDay.arrPause, persistenceController: viewModel.persistenceController)) {
+                    NavigationLink(destination: DetailScreen(model: workDay, modelPause: workDay.arrPause, persistenceController: viewModel.persistenceController)) {
                         VStack(alignment: .leading) {
                             HStack(spacing: 10) {
                                 DateIconView(model: workDay)

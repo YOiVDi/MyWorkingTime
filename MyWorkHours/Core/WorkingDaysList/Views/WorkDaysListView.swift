@@ -78,13 +78,9 @@ struct WorkDaysListView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 if editMode?.wrappedValue.isEditing == false {
                     Button {
-                        viewModel.confirmationIsShowing = true
+                        viewModel.createNewDaySheet = true
                     } label: {
                         Label("add", systemImage: "plus.circle.fill")
-                    }
-                    .confirmationDialog("Want to create a working day with date:", isPresented: $viewModel.confirmationIsShowing, titleVisibility: .visible) {
-                        Button("Today", action: { viewModel.addWorkingDay() })
-                        Button("Different Date", action: { viewModel.createNewDaySheet = true })
                     }
                 } else {
                     Button(role: .destructive) {

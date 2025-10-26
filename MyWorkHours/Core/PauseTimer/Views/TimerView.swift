@@ -10,7 +10,7 @@ import SwiftUI
 struct TimerView: View {
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.verticalSizeClass) var verticalSizeClass
-    @ObservedObject var viewModel: PauseTimerView.PauseTimerViewModel
+    @ObservedObject var viewModel: PauseTimerScreen.PauseTimerViewModel
     var body: some View {
         ZStack {
             Circle()
@@ -106,5 +106,5 @@ struct TimerView: View {
 }
 
 #Preview {
-    TimerView(viewModel: PauseTimerView.PauseTimerViewModel(timerManager: TimerManager(persistenceController: PersistenceController.shared)))
+    TimerView(viewModel: PauseTimerScreen.PauseTimerViewModel(timerManager: TimerManager(persistenceController: PersistenceController.shared)))
 }

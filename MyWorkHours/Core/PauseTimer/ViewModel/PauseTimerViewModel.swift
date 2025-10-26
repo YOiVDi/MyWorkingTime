@@ -19,7 +19,8 @@ enum PredefinedTimer: Int, CaseIterable {
     case thirtyMinutes = 30
 }
 
-extension PauseTimerView {
+extension PauseTimerScreen {
+    @MainActor
     class PauseTimerViewModel: ObservableObject {
         // MARK: - Public Propeties
         @Published var hours = 0
@@ -109,18 +110,18 @@ extension PauseTimerView {
                     isStarted: timerManager.isStarted,
                     dateInBackground: timerManager.dateInBackground,
                     elapsedTime: timerManager.elapsedTime,
-                    resumeTimer: timerManager.resumeTimer,
-                    pauseTimeCalculate: timerManager.pauseTimeCalculate,
-                    setActiveDate: { self.timerManager.dateInActiveMode = $0 }
+                    resumeTimer: { [weak self] in self?.resumeTimer() },
+                    pauseTimeCalculate: { [weak self] in self?.timerManager.pauseTimeCalculate() },
+                    setActiveDate: { [weak self] in self?.timerManager.dateInActiveMode = $0 }
                 )
                 print("ScenePhase: Active")
             case .background:
                 scenePhaseHandler.handleBackgroundScenePhase(
                     timerRunning: isTimerRunning,
-                    setBackgroundDate: { self.timerManager.dateInBackground = $0 },
-                    stopTimer: { self.timerManager.timer?.invalidate() },
-                    setStopped: { self.timerManager.isStopped = $0 },
-                    setStarted: { self.timerManager.isStarted = $0 }
+                    setBackgroundDate: { [weak self] in self?.timerManager.dateInBackground = $0 },
+                    stopTimer: { [weak self] in self?.stopTimer() },
+                    setStopped: { [weak self] in self?.timerManager.isStopped = $0 },
+                    setStarted: { [weak self] in self?.timerManager.isStarted = $0 }
                 )
                 print("ScenePhase: Background")
             default:
@@ -144,7 +145,7 @@ extension PauseTimerView {
             timerManager.resumeTimer()
         }
         
-        func subscribeToTimerManager() {
+        private func subscribeToTimerManager() {
             // mirror manager's @Published values
             timerManager.$elapsedTime
                 .assign(to: &$elapsedTime)

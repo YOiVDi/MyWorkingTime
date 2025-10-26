@@ -47,7 +47,7 @@ extension WorkingDay {
          checkOut ?? nil
      }
     
-    public var wrappedWorkedTime: Int{
+    public var wrappedWorkedTime: Int {
         Int(workedTime)
     }
      

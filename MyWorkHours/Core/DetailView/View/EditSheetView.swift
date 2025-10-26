@@ -10,7 +10,7 @@ import SwiftUI
 struct EditSheetView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: DetailView.ViewModel
+    @ObservedObject var viewModel: DetailScreen.ViewModel
     var body: some View {
         NavigationView {
             VStack {
@@ -157,5 +157,5 @@ struct EditSheetView: View {
 
 #Preview {
     let preview = PersistenceController.preview
-    EditSheetView(viewModel: DetailView.ViewModel(model: preview, persistenceController: PersistenceController.shared))
+    EditSheetView(viewModel: DetailScreen.ViewModel(model: preview, persistenceController: PersistenceController.shared))
 }

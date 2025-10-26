@@ -22,8 +22,17 @@ enum UserStatus: String {
 @MainActor class PurchaseViewModel: ObservableObject {
     private var productsId: [String] = ProductID.allCases.map {$0.rawValue}
     @Published private(set) var products: [Product] = []
+    @Published private(set) var userCurrentSubscription: Product?
+    @Published private(set) var subscriptionExpirationDate: Date? = nil
+    @Published private(set) var renewMessage: String = ""
     private var updates: Task<Void, Never>? = nil
     private let userStatusManager: UserStatusManager
+    private var cancellables: Set<AnyCancellable> = []
+    
+    // Expose user current status
+    var userStatus: UserStatus {
+        userStatusManager.userStatus
+    }
     
     init(userStatusManager: UserStatusManager) {
         self.userStatusManager = userStatusManager
@@ -47,6 +56,27 @@ enum UserStatus: String {
     func buy(_ product: Product) {
         Task {
             await buyProduct(product)
+            await updateUserSubscriptionStatus() // refresh immediately after purchase
+        }
+    }
+    
+    
+    func manageSubscription() async {
+        do {
+            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                try await AppStore.showManageSubscriptions(in: scene)
+                await updateUserSubscriptionStatus()
+            } else {
+                // fallback if no active scene found
+                if let url = URL(string: "https://apps.apple.com/account/subscriptions") {
+                    await UIApplication.shared.open(url)
+                }
+            }
+        } catch {
+            print("Failed to open Manage Subscriptions: \(error.localizedDescription)")
+            if let url = URL(string: "https://apps.apple.com/account/subscriptions") {
+                await UIApplication.shared.open(url)
+            }
         }
     }
     
@@ -95,13 +125,13 @@ enum UserStatus: String {
     private func newTransactionListenerTask() -> Task<Void, Never> {
         Task(priority: .background) {
             for await verificationResult in Transaction.updates {
-                self.handle(updatedTransaction: verificationResult)
+                await self.handle(updatedTransaction: verificationResult)
             }
         }
     }
     
     // Handle purchase verification
-    private func handle(updatedTransaction verificationResult: VerificationResult<Transaction>) {
+    private func handle(updatedTransaction verificationResult: VerificationResult<Transaction>) async {
         guard case .verified(let transaction) = verificationResult else {
             return
         }
@@ -117,6 +147,7 @@ enum UserStatus: String {
             return
         }
         
+        
         if let expirationDate = transaction.expirationDate,
            expirationDate < Date() {
             // Subscription expired
@@ -129,6 +160,7 @@ enum UserStatus: String {
         
         if transaction.isUpgraded {
             // Old transaction replaced by a higher-tier one
+            print("Transaction is upgraded")
             return
         }
         
@@ -140,33 +172,59 @@ enum UserStatus: String {
     
     // Updating user status base of current state of transaction
     private func updateUserSubscriptionStatus() async {
-        // Get all current entitlements
+        var foundProduct: Product?
+        var expiration: Date?
+        
         for await result in Transaction.currentEntitlements {
-            if case .verified(let transaction) = result {
-                // If any active transaction matches your subscription product IDs
-                if productsId.contains(transaction.productID) {
-                    if let expirationDate = transaction.expirationDate {
-                        if expirationDate > Date() {
-                            // Subscription is still active
-                            await MainActor.run { [weak self] in
-                                self?.userStatusManager.subscribed()
+            guard case .verified(let transaction) = result else { continue }
+            guard productsId.contains(transaction.productID) else { continue }
+            
+            // remember expiration date
+            expiration = transaction.expirationDate
+            
+            
+            // try to resolve the matching Product for display
+            if let product = try? await Product.products(for: [transaction.productID]).first {
+                foundProduct = product
+                
+                // Check for auto-renew
+                if let statuses = try? await product.subscription?.status {
+                    for status in statuses {
+                        switch status.renewalInfo {
+                        case .verified(let renewalInfo):
+                            guard let expiration else { continue }
+                            if renewalInfo.willAutoRenew {
+                                renewMessage = "Next billing date: \(expiration.formatted(date: .abbreviated, time: .omitted))"
+                            } else {
+                                renewMessage = "Your subscription will expires on \(expiration.formatted(date: .abbreviated, time: .omitted)), and after that you will be no longer able to use premium features."
                             }
-                            return
+                            
+                        case .unverified(_, let error):
+                            print("⚠️ Unverified renewal info: \(error.localizedDescription)")
                         }
-                    } else {
-                        // Non-expiring entitlement (unlikely for subscription)
-                        await MainActor.run { [weak self] in
-                            self?.userStatusManager.subscribed()
-                        }
-                        return
                     }
                 }
             }
+            
+            
+            
+            // mark user as subscribed if still active
+            if expiration == nil || expiration! > Date() {
+                await MainActor.run { [weak self] in
+                    self?.userStatusManager.subscribed()
+                    self?.userCurrentSubscription = foundProduct
+                    self?.subscriptionExpirationDate = expiration
+                }
+                return
+            }
         }
         
-        // No active subscriptions found — downgrade user
-        await MainActor.run {
-            self.userStatusManager.basic()
+        
+        // nothing valid found → downgrade
+        await MainActor.run { [weak self] in
+            self?.userStatusManager.basic()
+            self?.userCurrentSubscription = nil
+            self?.subscriptionExpirationDate = nil
             print("no active subscriptions found")
         }
     }

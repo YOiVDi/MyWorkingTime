@@ -7,7 +7,8 @@
 
 import Foundation
 
-class ScenePhaseHandler {
+@MainActor
+final class ScenePhaseHandler {
     func handleActiveScenePhase(timerRunning: Bool, isStarted: Bool, dateInBackground: Date?, elapsedTime: TimeInterval, resumeTimer: @escaping () -> Void, pauseTimeCalculate: @escaping () -> Void, setActiveDate: @escaping (Date) -> Void) {
         if dateInBackground != nil {
             setActiveDate(Date())

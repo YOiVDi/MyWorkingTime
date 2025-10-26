@@ -19,6 +19,7 @@ struct MyWorkHoursApp: App {
         WindowGroup {
             MainAppView(servicesContainer, userStatusManager)
                 .environmentObject(settings)
+                .environmentObject(purchaseViewModel)
                 .environment(\.managedObjectContext, servicesContainer.persistenceController.container.viewContext)
         }
     }

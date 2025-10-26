@@ -13,6 +13,18 @@ struct CheckInOutCardView: View {
     
     var body: some View {
         VStack {
+            Picker("", selection: $viewModel.workChoice) {
+                ForEach(UserDefaultsKeys.allCases, id: \.self) { key in
+                    Text(key == .firstWorkSettings ? (viewModel.userSettings?.companyName ?? "") : (viewModel.secondUserSettings?.companyName ?? ""))
+                        .onTapGesture {
+                            viewModel.workChoice = key
+                        }
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding([.top, .horizontal])
+            .disabled(viewModel.disableWorkChoice())
+            
             HStack {
                 ///
                 Text(viewModel.userSettings?.companyName ?? "No Company")
@@ -62,14 +74,13 @@ struct CheckInOutCardView: View {
                 }
                 .disabled(viewModel.todayCheckInCheckOut?.checkOut != nil)
             }
-            .padding()
+            .padding(.bottom)
             .buttonStyle(BorderedProminentButtonStyle())
         }
         .frame(maxWidth: 375, maxHeight: 230)
         .background(colorScheme == .light ? .cyan : .gray)
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .padding()
-        .onAppear(perform: { viewModel.doesTodayExist()})
+        .onAppear(perform: { viewModel.assingDayForCheckInCheckOut()})
     }
 }
 

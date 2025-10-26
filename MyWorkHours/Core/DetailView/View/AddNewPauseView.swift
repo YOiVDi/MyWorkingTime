@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddNewPauseView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: DetailView.ViewModel
+    @ObservedObject var viewModel: DetailScreen.ViewModel
     var body: some View {
         NavigationView {
             VStack {
@@ -25,12 +25,12 @@ struct AddNewPauseView: View {
         }
     }
     
-    init(viewModel: DetailView.ViewModel) {
+    init(viewModel: DetailScreen.ViewModel) {
         _viewModel = ObservedObject(wrappedValue: viewModel)
     }
 }
 
 #Preview {
     let preview = PersistenceController.preview
-    AddNewPauseView(viewModel: DetailView.ViewModel(model: preview, persistenceController: PersistenceController.shared))
+    AddNewPauseView(viewModel: DetailScreen.ViewModel(model: preview, persistenceController: PersistenceController.shared))
 }
