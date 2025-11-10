@@ -13,8 +13,10 @@ class UserStatusManager: ObservableObject {
     @Published private(set) var userStatus: UserStatus = .basic
     
     private var cancellables: Set<AnyCancellable> = []
+    private var userDefaultsStore: UserDefaultsStore
     
-    init() {
+    init(userDefaultsStore: UserDefaultsStore) {
+        self.userDefaultsStore = userDefaultsStore
         subscribeAndUpdateUserStatus()
         retrieveUserDefaults()
     }
@@ -43,16 +45,18 @@ class UserStatusManager: ObservableObject {
     
     // Save user status into user defaults
     private func saveInUserDefaults() {
-        UserDefaults.standard.set(userStatus.rawValue, forKey: "userStatus")
+        try? userDefaultsStore.set(userStatus.rawValue, forKey: "userStatus")
         print("Saved \(userStatus.rawValue)")
     }
     
+    
     // Retrieve user status from user defaults
     private func retrieveUserDefaults() {
-        if let value = UserDefaults.standard.string(forKey: "userStatus"),
+        if let value = try? userDefaultsStore.get(UserStatus.RawValue.self, forKey: "userStatus", "basic"),
            let status = UserStatus(rawValue: value) {
             userStatus = status
         }
         print("Retrieved user status: \(userStatus.rawValue)")
     }
+
 }

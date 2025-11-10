@@ -33,6 +33,7 @@
 		854ACAD22BFDA22E007EA22A /* CheckInOutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854ACAD12BFDA22E007EA22A /* CheckInOutCardView.swift */; };
 		855370502C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553704E2C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift */; };
 		855370512C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8553704F2C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift */; };
+		855A2BCC2EB69C65007F5986 /* TimerSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855A2BCB2EB69C65007F5986 /* TimerSnapshot.swift */; };
 		85763B112E9EC94200FF5FB6 /* Pause+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763B102E9EC94200FF5FB6 /* Pause+CoreDataClass.swift */; };
 		85763B132E9EC96100FF5FB6 /* WorkingDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85763B122E9EC96100FF5FB6 /* WorkingDay+CoreDataClass.swift */; };
 		857CD5E42C2AB48900095005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 857CD5E32C2AB48900095005 /* LaunchScreen.storyboard */; };
@@ -84,6 +85,7 @@
 		855370452C0DA78E00BDCD12 /* WorkingDay v6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v6.xcdatamodel"; sourceTree = "<group>"; };
 		8553704E2C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pause+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8553704F2C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		855A2BCB2EB69C65007F5986 /* TimerSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSnapshot.swift; sourceTree = "<group>"; };
 		856960742C031F6C00686655 /* WorkingDay v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WorkingDay v3.xcdatamodel"; sourceTree = "<group>"; };
 		85763B102E9EC94200FF5FB6 /* Pause+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pause+CoreDataClass.swift"; sourceTree = "<group>"; };
 		85763B122E9EC96100FF5FB6 /* WorkingDay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkingDay+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -141,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				8509CF532BF210EE00C7ACB0 /* MyWorkHours */,
-				8513C3932CF64A56007E69EF /* MyWorkHoursTests */,
 				8509CF522BF210EE00C7ACB0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -169,6 +170,7 @@
 				853F7CAD2E903A790072AA10 /* StoreKit */,
 				85FB5BE92C31A328008504C0 /* Localizable */,
 				8509CF632BF2110300C7ACB0 /* Model */,
+				8513C3932CF64A56007E69EF /* MyWorkHoursTests */,
 				8509CF582BF210F000C7ACB0 /* Assets.xcassets */,
 				8509CF5A2BF210F000C7ACB0 /* Preview Content */,
 			);
@@ -190,6 +192,7 @@
 				850286B32C16DCAE004D3EA5 /* OnboardItem.swift */,
 				8585F6D22E8056D00034D4FA /* UserDefinedWorkDay.swift */,
 				8585F6D02E7F68570034D4FA /* SectionModel.swift */,
+				855A2BCB2EB69C65007F5986 /* TimerSnapshot.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				8509CF992BF2118100C7ACB0 /* PersistenceController.swift in Sources */,
 				8509CF922BF2111B00C7ACB0 /* WorkDaysTabView.swift in Sources */,
 				8509CF8F2BF2111B00C7ACB0 /* PauseTimerViewModel.swift in Sources */,
+				855A2BCC2EB69C65007F5986 /* TimerSnapshot.swift in Sources */,
 				855370502C0DA90A00BDCD12 /* Pause+CoreDataProperties.swift in Sources */,
 				855370512C0DA90A00BDCD12 /* WorkingDay+CoreDataProperties.swift in Sources */,
 				8509CF912BF2111B00C7ACB0 /* SettingsViewModel.swift in Sources */,

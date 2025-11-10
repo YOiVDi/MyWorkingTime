@@ -62,11 +62,11 @@
             },
             {
               "description" : "",
-              "displayName" : "Monat",
+              "displayName" : "Monatlich",
               "locale" : "de"
             }
           ],
-          "productID" : "subscription_monthly",
+          "productID" : "com.myworkhours.premiumaccess.monthly",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Monthly",
           "subscriptionGroupID" : "9A763E20",
@@ -104,7 +104,7 @@
               "locale" : "de"
             }
           ],
-          "productID" : "subscription_yearly",
+          "productID" : "com.myworkhours.premiumaccess.yearly",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "Yearly",
           "subscriptionGroupID" : "9A763E20",

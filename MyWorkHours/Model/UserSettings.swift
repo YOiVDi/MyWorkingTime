@@ -12,6 +12,7 @@ struct UserSettings: Codable {
     var companyName: String = ""
     var startShift: Date = Date()
     var endShift: Date = Date()
+    var pause: Date = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: Date()) ?? .now
     var workOnWeekend: Bool =  false
     var saturday: Bool =  false
     var startInSaturday: Date = Date()

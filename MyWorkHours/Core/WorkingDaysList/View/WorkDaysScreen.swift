@@ -39,6 +39,6 @@ struct WorkDaysScreen: View {
 
 #Preview {
     let persistenceController = PersistenceController.shared
-    let userStatusManager = UserStatusManager()
+    let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
     WorkDaysScreen(persistenceController: persistenceController, userStatusManager: userStatusManager)
 }

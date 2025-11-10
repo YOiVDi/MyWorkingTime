@@ -22,7 +22,7 @@ struct OnboardSettingsView: View {
 
 #Preview {
     let services = ServicesContainer()
-    let userStatusManager = UserStatusManager()
+    let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
     OnboardSettingsView(viewModel: OnboardViewModel())
         .environmentObject(SettingsView.SettingsViewModel(services, userStatusManager))
 }

@@ -20,7 +20,7 @@ extension WorkDaysScreen {
         // MARK: - Published Private(set) Properties
         @Published private(set) var workingDaysList: [WorkingDay] = []
         @Published private(set) var todayCheckInCheckOut: WorkingDay?
-        @Published private(set) var notADayWithTodayDate = false
+//        @Published private(set) var notADayWithTodayDate = false
         
         // MARK: - Public Properties
         @Published var selections = Set<WorkingDay>()
@@ -58,7 +58,7 @@ extension WorkDaysScreen {
         var userDefinedWorkDay: UserDefinedWorkDay = UserDefinedWorkDay()
         
 
-        // Hold user defaults
+        // Hold user Defaults and Settings
         private(set) var userSettings: UserSettings?
         private(set) var secondUserSettings: UserSettings?
         private var sectionArray: [SectionModel] = []
@@ -98,17 +98,17 @@ extension WorkDaysScreen {
                 return
             }
             
-            persistenceController.addWorkDay(userSettings: workChoice == .firstWorkSettings ? userSettings : secondUserSettings, notADayWithTodayDate: notADayWithTodayDate, date: userDefinedWorkDay.date, workingHours: userDefinedWorkDay.workingHours, isWeekend: isWeekend)
+            persistenceController.addWorkDay(userSettings: workChoice == .firstWorkSettings ? userSettings : secondUserSettings, date: userDefinedWorkDay.date, workingHours: userDefinedWorkDay.workingHours)
             fetchWorkDays()
         }
         
         /// Create a day from a user-selected date
         func creatingDayOfUserChoice(_ dismiss: DismissAction) {
-            notADayWithTodayDate = true
+//            notADayWithTodayDate = true
             userDefinedWorkDay.workingHours = Date().returnWorkTimeAsInt(startShift: userDefinedWorkDay.startShift, endShift: userDefinedWorkDay.endShift)
             addWorkingDay()
             dismiss()
-            notADayWithTodayDate = false
+//            notADayWithTodayDate = false
             fetchWorkDays()
         }
         
@@ -136,18 +136,7 @@ extension WorkDaysScreen {
                 }
             }
         }
-//        
-//        
-//        /// Check if today's date exists, if it does, assign to today's variable
-//        func doesTodayExist() {
-//            let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-//            
-//            todayCheckInCheckOut = workingDaysList.first { workDay in
-//                let workDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: workDay.wrappedDate)
-//                return workDayComponents == targetComponents
-//            }
-//        }
-//        
+        
          private func isExistDaysWithTodayDate() -> [WorkingDay] {
              let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: userDefinedWorkDay.date)
              print("Target Date: \(targetComponents)")
@@ -345,20 +334,21 @@ extension WorkDaysScreen {
         }
         
         func calculateTime(_ workDay: WorkingDay) -> String {
-            // Pause time into seconds
-            let pauseTime = calculatePauseInSeconds(workDay)
-            // WorkHours mutiply with 60 to get in seconds
-            let workHours = workDay.wrappedWorkingHours * 60
-            // Calculate WorkedTime and Pause together
-            let workTimeAndPause = workDay.wrappedWorkedTime + pauseTime
-            // substract
-            let calc = workTimeAndPause - workHours
-            return WorkTimeConverter.convertSecondToTime(calc, false)
+            let pause = calculatePauseInSeconds(workDay)
+            let workHoursInSecondsAndPause = (workDay.wrappedWorkingHours * 60) - pause
+            let calc = workDay.wrappedWorkedTime - workHoursInSecondsAndPause
+            print("Pauses: \(pause)")
+            print("WorkingHoursWithOutPause: \(workHoursInSecondsAndPause)")
+            print("WorkedTime: \(workDay.wrappedWorkedTime)")
+            print("Calc: \(pause)")
+            return WorkTimeConverter.convertSecondToTime(calc, true)
         }
         
          func calculatePauseInSeconds(_ workDay: WorkingDay) -> Int {
-             WorkTimeConverter.calculatePauseInSeconds(workDay)
+             let pauseTime =  workDay.wrappedCompanyname == userSettings?.companyName ? userSettings?.pause : secondUserSettings?.pause
+             let dateComponents = Calendar.current.dateComponents([.minute], from: pauseTime ?? Date())
+             let pauseToInt = Int(dateComponents.minute ?? 0)
+             return (pauseToInt * 60)
         }
     }
 }
-

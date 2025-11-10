@@ -34,6 +34,6 @@ struct MainAppView: View {
 
 #Preview {
     let servicesContainer = ServicesContainer()
-    let userStatusManager = UserStatusManager()
+    let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
     return MainAppView(servicesContainer, userStatusManager)
 }

@@ -623,6 +623,9 @@
         }
       }
     },
+    "Pause" : {
+
+    },
     "Pause Begin: " : {
       "localizations" : {
         "de" : {
@@ -652,6 +655,9 @@
           }
         }
       }
+    },
+    "Please complete all fields correctly to ensure accurate daily data." : {
+
     },
     "Please make sure all textfields are filled in." : {
       "localizations" : {
@@ -698,6 +704,9 @@
           }
         }
       }
+    },
+    "Restore Purchase" : {
+
     },
     "Resume" : {
       "localizations" : {

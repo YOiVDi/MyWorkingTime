@@ -45,7 +45,7 @@ struct Buttons: View {
                     
                 }
                 Button {
-                    viewModel.stopTimer()
+                    viewModel.stopTimer(.user)
                 } label: {
                     Label("Stop", systemImage: "stop")
                         .frame(maxWidth: viewModel.isTimerRunning ? 120 : 100)
@@ -90,7 +90,7 @@ struct Buttons: View {
                     
                 }
                 Button {
-                    viewModel.stopTimer()
+                    viewModel.stopTimer(.user)
                 } label: {
                     Label("Stop", systemImage: "stop")
                         .frame(maxWidth: viewModel.isTimerRunning ? 120 : 100)
@@ -106,5 +106,5 @@ struct Buttons: View {
 }
 
 #Preview {
-    Buttons(viewModel: PauseTimerScreen.PauseTimerViewModel(timerManager: TimerManager(persistenceController: PersistenceController.shared)))
+    Buttons(viewModel: PauseTimerScreen.PauseTimerViewModel(timerManager: TimerManager(persistenceController: PersistenceController.shared, userDefaultsStore: UserDefaultsStore(), notificationCenterServices: NotificationCenterServices())))
 }

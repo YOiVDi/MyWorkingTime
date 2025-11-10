@@ -110,13 +110,15 @@ struct PersistenceController {
     
     /// Creates a new workday based on user settings.
     /// - Parameter userSettings: Predefined user settings for initializing a new working day.
-    func addWorkDay(userSettings: UserSettings, notADayWithTodayDate: Bool, date: Date, workingHours: Int, isWeekend: @escaping () -> Int) {
+    func addWorkDay(userSettings: UserSettings, date: Date, workingHours: Int) {
         let context = container.viewContext
         let newWorkingDay = WorkingDay(context: context)
         newWorkingDay.id = UUID()
         newWorkingDay.companyName = userSettings.companyName
-        newWorkingDay.date = notADayWithTodayDate ? date : Date()
-        newWorkingDay.workingHours = Int16(notADayWithTodayDate ? workingHours : isWeekend())
+//        newWorkingDay.date = notADayWithTodayDate ? date : Date()
+        newWorkingDay.date = date
+//        newWorkingDay.workingHours = Int16(notADayWithTodayDate ? workingHours : isWeekend())
+        newWorkingDay.workingHours = Int16(workingHours)
 
         save()
     }

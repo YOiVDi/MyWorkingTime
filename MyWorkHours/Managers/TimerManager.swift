@@ -6,6 +6,10 @@
 //
 
 import Foundation
+import SwiftUI
+
+// The notification will be deleted if the case is a user, otherwise the notification will remain.
+enum StopIntention { case user, lifecycle}
 
 class TimerManager: ObservableObject {
     
@@ -29,13 +33,18 @@ class TimerManager: ObservableObject {
     private(set) var finishPause: Date?
     
     private var timerNotificationSet = false
-    private let notification = NotificationCenterServices()
+    private let notification: NotificationCenterServices
+    private var userDefaultsStore: UserDefaultsStore
     private let persistenceController: PersistenceController
+    private let kTimerSnapshotKey = "timerSnapshot"
     
     
     
-    init(persistenceController: PersistenceController) {
+    init(persistenceController: PersistenceController, userDefaultsStore: UserDefaultsStore, notificationCenterServices: NotificationCenterServices) {
         self.persistenceController = persistenceController
+        self.userDefaultsStore = userDefaultsStore
+        self.notification = notificationCenterServices
+        self.restoreTimerIfNeeded()
     }
     
     // MARK: - Public Methods
@@ -49,6 +58,8 @@ class TimerManager: ObservableObject {
         setTimer(hours, minutes, seconds)
         isStarted = true
         beginPause = Date()
+        let snap = TimerSnapshot(beginPause: beginPause!, duration: elapsedTimeFrom, isStarted: true)
+        try? userDefaultsStore.set(snap, forKey: kTimerSnapshotKey)
         activateTimer()
     }
     
@@ -65,20 +76,20 @@ class TimerManager: ObservableObject {
     }
     
     ///  Invalidate timer
-    func stopTimer() {
-        var processCompletedCount = UserDefaults.standard.integer(forKey: "processCompletedCount")
+    func stopTimer(_ intention: StopIntention) {
         isStopped = true
         isStarted = false
         finishPause = .now
         timer?.invalidate()
-        notification.deleteNotification(identifier: ["timer"])
-        processCompletedCount += 1
-        UserDefaults.standard.set(processCompletedCount, forKey: "processCompletedCount")
-        print("CountUsage: \(processCompletedCount)")
+        if intention == .user {
+            notification.deleteNotification(identifier: ["timer"])
+            clearSnapshot()
+        }
     }
     
     /// Reset the timer to its initial state
     func resetTimer() {
+        var processCompletedCount = UserDefaults.standard.integer(forKey: "processCompletedCount")
         timer?.invalidate()
         addPause()
         isStarted = false
@@ -90,6 +101,10 @@ class TimerManager: ObservableObject {
         overElapsedTime = 0
         notification.deleteNotification(identifier: ["timer"])
         timerNotificationSet = false
+        processCompletedCount += 1
+        UserDefaults.standard.set(processCompletedCount, forKey: "processCompletedCount")
+        print("CountUsage: \(processCompletedCount)")
+        clearSnapshot()
     }
     
     /// Allows the timer to resume from where it was last stopped
@@ -133,7 +148,6 @@ class TimerManager: ObservableObject {
     // MARK: - Private Methods
     
     private func activateTimer() {
-        scheduleBreakNotification()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             if self.elapsedTime == 0 {
@@ -142,6 +156,7 @@ class TimerManager: ObservableObject {
                 self.elapsedTime -= 1
             }
         }
+        scheduleBreakNotification()
     }
     
     /// If a working day exists, a pause will be added
@@ -179,11 +194,36 @@ class TimerManager: ObservableObject {
     
     /// Schedules a notification one minute before the break ends when the user starts the timer.
     private func scheduleBreakNotification() {
-        guard !timerNotificationSet && elapsedTimeFrom >= 120 else { return }
-        if elapsedTime != 0 {
+        guard elapsedTimeFrom >= 120, isStarted == true else { return }
             notification.addNotification(timeInterval: elapsedTimeFrom - 60, title: String(localized: "⏱️ One minute left until your break ends❗️"), subtitle: String(localized: "If you don't stop the timer, overtime will begin."), identifier: "timer")
-            print("add Notification")
-            timerNotificationSet = true
-        }
+        print("Notification is added!")
+    }
+    
+    
+    private func restoreTimerIfNeeded() {
+        guard let snap: TimerSnapshot = try? userDefaultsStore.get(TimerSnapshot.self, forKey: kTimerSnapshotKey, TimerSnapshot(beginPause: Date(),
+                                                                                                                                duration: 0,
+                                                                                                                                isStarted: false)),
+              snap.isStarted else { return }
+
+        let now = Date()
+        let elapsed = now.timeIntervalSince(snap.beginPause)
+        let remaining = max(0, snap.duration - elapsed)
+        let over = max(0, elapsed - snap.duration)
+
+        // Rehydrate in-memory state
+        beginPause = snap.beginPause
+        elapsedTimeFrom = snap.duration
+        elapsedTime = remaining
+        overElapsedTime = over
+        isStarted = true
+        isStopped = false
+
+        // Re-arm the ticking timer
+        activateTimer()
+    }
+    
+    private func clearSnapshot() {
+        userDefaultsStore.removeValue(keyValue: kTimerSnapshotKey)
     }
 }

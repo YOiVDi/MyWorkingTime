@@ -116,7 +116,7 @@ struct WorkDaysListView: View {
 #Preview {
     NavigationView {
         let persistenceController = PersistenceController.shared
-        let userStatusManager = UserStatusManager()
+        let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
         WorkDaysListView(viewModel: WorkDaysScreen.ViewModel(persistenceController: persistenceController, userStatusManager: userStatusManager))
     }
 }

@@ -19,15 +19,23 @@ struct WorkdaySettingsView: View {
     @Binding var sunday: Bool
     @Binding var startInSunday: Date
     @Binding var endInSunday: Date
+    @Binding var pause: Date
     
     var body: some View {
-            Section ("Work Information for \(section)") {
+            Section {
                 TextField("Company name", text: $companyName)
                     .autocorrectionDisabled()
                     .trimmedString($companyName)
                 DatePicker("Start Shift", selection: $startShift, displayedComponents: .hourAndMinute)
                 DatePicker("End Shift", selection: $endShift, displayedComponents: .hourAndMinute)
+                DatePicker("Pause", selection: $pause, displayedComponents: .hourAndMinute)
+            } header: {
+                Text("Work Information for \(section)")
+            } footer: {
+                Text("Please complete all fields correctly to ensure accurate daily data.")
+                    .foregroundStyle(.secondary)
             }
+
             
             Section("Weekend's") {
                 Toggle("Work on weekends", isOn: $workOnWeekend)
@@ -49,5 +57,5 @@ struct WorkdaySettingsView: View {
 }
 
 #Preview {
-    WorkdaySettingsView(section: "Main Section", companyName: .constant("Company Name"), startShift: .constant(Date()), endShift: .constant(Date()), workOnWeekend: .constant(false), saturday: .constant(false), startInSaturday: .constant(Date()), endInSaturday: .constant(Date()), sunday: .constant(false), startInSunday: .constant(Date()), endInSunday: .constant(Date()))
+    WorkdaySettingsView(section: "Main Section", companyName: .constant("Company Name"), startShift: .constant(Date()), endShift: .constant(Date()), workOnWeekend: .constant(false), saturday: .constant(false), startInSaturday: .constant(Date()), endInSaturday: .constant(Date()), sunday: .constant(false), startInSunday: .constant(Date()), endInSunday: .constant(Date()), pause: .constant(Date()))
 }

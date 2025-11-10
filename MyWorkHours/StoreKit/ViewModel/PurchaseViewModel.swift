@@ -10,8 +10,8 @@ import StoreKit
 import Combine
 
 enum ProductID: String, CaseIterable {
-    case subscriptionMonthly = "subscription_monthly"
-    case subscriptionYearly = "subscription_yearly"
+    case subscriptionMonthly = "com.myworkhours.premium.monthly"
+    case subscriptionYearly = "com.myworkhours.premium.yearly"
     case subscriptionTestperiod = "subscription_testperiod"
 }
 
@@ -20,7 +20,7 @@ enum UserStatus: String {
     case subscribed = "subscribed"
 }
 @MainActor class PurchaseViewModel: ObservableObject {
-    private var productsId: [String] = ProductID.allCases.map {$0.rawValue}
+    private var productsId: [String] = ProductID.allCases.map { $0.rawValue }
     @Published private(set) var products: [Product] = []
     @Published private(set) var userCurrentSubscription: Product?
     @Published private(set) var subscriptionExpirationDate: Date? = nil
@@ -41,8 +41,8 @@ enum UserStatus: String {
         Task {
             await fetchProducts()
             await updateUserSubscriptionStatus()
+            print("UserStatus after purchaseviewmodel init: \(userStatusManager.userStatus)")
         }
-        print("UserStatus after purchaseviewmodel init: \(userStatusManager.userStatus)")
     }
     
     deinit {
@@ -226,6 +226,13 @@ enum UserStatus: String {
             self?.userCurrentSubscription = nil
             self?.subscriptionExpirationDate = nil
             print("no active subscriptions found")
+        }
+    }
+    
+    // Restore Purchase
+    func restorePurchases() {
+        Task {
+            await updateUserSubscriptionStatus()
         }
     }
 }

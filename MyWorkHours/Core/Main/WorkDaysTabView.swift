@@ -36,13 +36,13 @@ struct WorkDaysTabView: View {
     init(_ servicesContainer: ServicesContainer, userStatusManager: UserStatusManager) {
         self.servicesContainer = servicesContainer
         self._userStatusManager = ObservedObject(wrappedValue: userStatusManager)
-        _timerManager = StateObject(wrappedValue: TimerManager(persistenceController: servicesContainer.persistenceController))
+        _timerManager = StateObject(wrappedValue: TimerManager(persistenceController: servicesContainer.persistenceController, userDefaultsStore: servicesContainer.userDefaultsService, notificationCenterServices: servicesContainer.notificationCenterService))
     }
 }
 
 #Preview {
     let servicesContainer = ServicesContainer()
-    let userStatusManager = UserStatusManager()
+    let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
     WorkDaysTabView(servicesContainer, userStatusManager: userStatusManager)
         .environmentObject(SettingsView.SettingsViewModel(servicesContainer, userStatusManager))
 }

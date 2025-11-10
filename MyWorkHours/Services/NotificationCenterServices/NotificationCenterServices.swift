@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import UserNotificationsUI
+import UserNotifications
 import SwiftUI
 
 class NotificationCenterServices {
@@ -51,6 +51,7 @@ class NotificationCenterServices {
     /// - Parameter identifier: An array of notification identifiers to remove.
     func deleteNotification(identifier: [String]) {
         self.center.removePendingNotificationRequests(withIdentifiers: identifier)
+        print("Notification with ID: \(identifier) has been delete.")
     }
     
     
@@ -98,5 +99,4 @@ class NotificationCenterServices {
         print("Status : \(status)")
         return status
     }
-    
 }

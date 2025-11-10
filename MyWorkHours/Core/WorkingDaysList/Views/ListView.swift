@@ -21,7 +21,6 @@ struct ListView: View {
                                         DateIconView(model: workDay)
                                         Text(workDay.wrappedCompanyname)
                                             .font(.title3).bold()
-//                                        Text(viewModel.convertSecondToTime(workDay.wrappedWorkedTime))
                                         Text(viewModel.calculateTime(workDay))
                                             .foregroundStyle((workDay.wrappedWorkedTime + viewModel.calculatePauseInSeconds(workDay)) - (workDay.wrappedWorkingHours * 60) < 0 ? Color.red :  Color.green)
                                     }
@@ -81,6 +80,6 @@ struct ListView: View {
 
 #Preview {
     let persistenceController = PersistenceController.shared
-    let userStatusManager = UserStatusManager()
+    let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
     ListView(viewModel: WorkDaysScreen.ViewModel(persistenceController: persistenceController, userStatusManager: userStatusManager))
 }

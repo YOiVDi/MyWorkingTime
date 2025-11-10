@@ -64,5 +64,5 @@ struct CurrentSubscriptionView: View {
 }
 
 #Preview {
-    CurrentSubscriptionView(viewModel: PurchaseViewModel(userStatusManager: UserStatusManager() ))
+    CurrentSubscriptionView(viewModel: PurchaseViewModel(userStatusManager: UserStatusManager(userDefaultsStore: UserDefaultsStore())))
 }

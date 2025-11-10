@@ -27,7 +27,7 @@ struct MyWorkHoursApp: App {
     init() {
         let services = ServicesContainer()
         self.servicesContainer = services
-        let userStatusManager = UserStatusManager()
+        let userStatusManager = UserStatusManager(userDefaultsStore: services.userDefaultsService)
         self._userStatusManager = StateObject(wrappedValue: userStatusManager)
         self._purchaseViewModel = StateObject(wrappedValue: PurchaseViewModel(userStatusManager: userStatusManager))
         _settings = StateObject(wrappedValue: SettingsView.SettingsViewModel(services, userStatusManager))

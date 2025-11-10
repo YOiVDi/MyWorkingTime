@@ -70,6 +70,9 @@ struct PurchaseView: View {
                                     .foregroundStyle(.secondary)
                             }
                         }
+                        Button("Restore Purchase") {
+                            viewModel.restorePurchases()
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -78,5 +81,5 @@ struct PurchaseView: View {
 }
 
 #Preview {
-    PurchaseView(viewModel: PurchaseViewModel(userStatusManager: UserStatusManager()))
+    PurchaseView(viewModel: PurchaseViewModel(userStatusManager: UserStatusManager(userDefaultsStore: UserDefaultsStore())))
 }

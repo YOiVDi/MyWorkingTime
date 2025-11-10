@@ -27,7 +27,7 @@ struct SettingsView: View {
             Form {
                 
                 // MARK: - First Work
-                WorkdaySettingsView(section: "Main Work", companyName: $viewModel.firstWorkSettings.companyName, startShift: $viewModel.firstWorkSettings.startShift, endShift: $viewModel.firstWorkSettings.endShift, workOnWeekend: $viewModel.firstWorkSettings.workOnWeekend, saturday: $viewModel.firstWorkSettings.saturday, startInSaturday: $viewModel.firstWorkSettings.startInSaturday, endInSaturday: $viewModel.firstWorkSettings.endInSaturday, sunday: $viewModel.firstWorkSettings.sunday, startInSunday: $viewModel.firstWorkSettings.startInSunday, endInSunday: $viewModel.firstWorkSettings.endInSunday)
+                WorkdaySettingsView(section: "Main Work", companyName: $viewModel.firstWorkSettings.companyName, startShift: $viewModel.firstWorkSettings.startShift, endShift: $viewModel.firstWorkSettings.endShift, workOnWeekend: $viewModel.firstWorkSettings.workOnWeekend, saturday: $viewModel.firstWorkSettings.saturday, startInSaturday: $viewModel.firstWorkSettings.startInSaturday, endInSaturday: $viewModel.firstWorkSettings.endInSaturday, sunday: $viewModel.firstWorkSettings.sunday, startInSunday: $viewModel.firstWorkSettings.startInSunday, endInSunday: $viewModel.firstWorkSettings.endInSunday, pause: $viewModel.firstWorkSettings.pause)
                 
                     
                     // MARK: - Second Work Toggle
@@ -48,7 +48,7 @@ struct SettingsView: View {
                     // MARK: - Second Work
                 if viewModel.userStatus == .subscribed {
                     if viewModel.firstWorkSettings.secondWork != false {
-                        WorkdaySettingsView(section: "Second Work", companyName: $viewModel.secondWorkSettings.companyName, startShift: $viewModel.secondWorkSettings.startShift, endShift: $viewModel.secondWorkSettings.endShift, workOnWeekend: $viewModel.secondWorkSettings.workOnWeekend, saturday: $viewModel.secondWorkSettings.saturday, startInSaturday: $viewModel.secondWorkSettings.startInSaturday, endInSaturday: $viewModel.secondWorkSettings.endInSaturday, sunday: $viewModel.secondWorkSettings.sunday, startInSunday: $viewModel.secondWorkSettings.startInSunday, endInSunday: $viewModel.secondWorkSettings.endInSunday)
+                        WorkdaySettingsView(section: "Second Work", companyName: $viewModel.secondWorkSettings.companyName, startShift: $viewModel.secondWorkSettings.startShift, endShift: $viewModel.secondWorkSettings.endShift, workOnWeekend: $viewModel.secondWorkSettings.workOnWeekend, saturday: $viewModel.secondWorkSettings.saturday, startInSaturday: $viewModel.secondWorkSettings.startInSaturday, endInSaturday: $viewModel.secondWorkSettings.endInSaturday, sunday: $viewModel.secondWorkSettings.sunday, startInSunday: $viewModel.secondWorkSettings.startInSunday, endInSunday: $viewModel.secondWorkSettings.endInSunday, pause: $viewModel.secondWorkSettings.pause)
                     }
                 }
                 
@@ -128,7 +128,7 @@ struct SettingsView: View {
 
 #Preview {
     let services = ServicesContainer()
-    let userStatusManager = UserStatusManager()
+    let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
     SettingsView()
         .environmentObject(SettingsView.SettingsViewModel(services, userStatusManager))
 }

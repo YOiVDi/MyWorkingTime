@@ -37,17 +37,21 @@ extension PauseTimerScreen {
         @Published private(set) var isTimerRunning = false
         
         
+        
+        
         // MARK: - Private Properties
         private let persistenceController: PersistenceController
         private let scenePhaseHandler = ScenePhaseHandler()
-        private var cancellables: Set<AnyCancellable> = []
         private let timerManager: TimerManager
+        private var cancellables: Set<AnyCancellable> = []
+        private var scenePhase: ScenePhase
         
         // MARK: - Initialization
         init(timerManager: TimerManager, persistenceController: PersistenceController = .shared) {
             self.persistenceController = persistenceController
             self.timerManager = timerManager
-            subscribeToTimerManager()
+            self.scenePhase = .active
+            self.subscribeToTimerManager()
         }
         
         // MARK: - UI Computed Properties
@@ -119,7 +123,7 @@ extension PauseTimerScreen {
                 scenePhaseHandler.handleBackgroundScenePhase(
                     timerRunning: isTimerRunning,
                     setBackgroundDate: { [weak self] in self?.timerManager.dateInBackground = $0 },
-                    stopTimer: { [weak self] in self?.stopTimer() },
+                    stopTimer: { [weak self] in self?.stopTimer(.lifecycle) },
                     setStopped: { [weak self] in self?.timerManager.isStopped = $0 },
                     setStarted: { [weak self] in self?.timerManager.isStarted = $0 }
                 )
@@ -135,8 +139,8 @@ extension PauseTimerScreen {
         func startTimer() {
             timerManager.startTimer(hours, minutes, seconds)
         }
-        func stopTimer() {
-            timerManager.stopTimer()
+        func stopTimer(_ stopIntention: StopIntention) {
+            timerManager.stopTimer(stopIntention)
         }
         func resetTimer() {
             timerManager.resetTimer()

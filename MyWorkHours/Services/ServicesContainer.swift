@@ -15,7 +15,13 @@ protocol ServicesContainerProtocol {
 }
 
 final class ServicesContainer: ServicesContainerProtocol {
-    let notificationCenterService = NotificationCenterServices()
-    let userDefaultsService = UserDefaultsStore()
-    let persistenceController = PersistenceController.shared
+    let notificationCenterService: NotificationCenterServices
+    let userDefaultsService: UserDefaultsStore
+    let persistenceController: PersistenceController
+    
+    init() {
+        self.notificationCenterService = NotificationCenterServices()
+        self.userDefaultsService = UserDefaultsStore()
+        self.persistenceController = PersistenceController.shared
+    }
 }

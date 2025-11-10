@@ -106,5 +106,5 @@ struct TimerView: View {
 }
 
 #Preview {
-    TimerView(viewModel: PauseTimerScreen.PauseTimerViewModel(timerManager: TimerManager(persistenceController: PersistenceController.shared)))
+    TimerView(viewModel: PauseTimerScreen.PauseTimerViewModel(timerManager: TimerManager(persistenceController: PersistenceController.shared, userDefaultsStore: UserDefaultsStore(), notificationCenterServices: NotificationCenterServices())))
 }

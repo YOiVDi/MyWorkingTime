@@ -66,9 +66,9 @@ struct CreateNewDayView: View {
                 }
             }
             .onAppear {
+                viewModel.workChoice = .firstWorkSettings
                 viewModel.userDefinedWorkDay.startShift = viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.startShift ?? Date()) : viewModel.secondUserSettings?.startShift ?? Date()
                 viewModel.userDefinedWorkDay.endShift = viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.endShift ?? Date()) : viewModel.secondUserSettings?.endShift ?? Date()
-                viewModel.workChoice = .firstWorkSettings
             }
             .onChange(of: viewModel.workChoice) { _, _ in
                 viewModel.userDefinedWorkDay.startShift = viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.startShift ?? Date()) : viewModel.secondUserSettings?.startShift ?? Date()
@@ -80,6 +80,6 @@ struct CreateNewDayView: View {
 
 #Preview {
     let persistenceController = PersistenceController.shared
-    let userStatusManager = UserStatusManager()
+    let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
     CreateNewDayView(viewModel: WorkDaysScreen.ViewModel(persistenceController: persistenceController, userStatusManager: userStatusManager))
 }

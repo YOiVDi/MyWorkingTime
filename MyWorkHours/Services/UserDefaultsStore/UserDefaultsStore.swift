@@ -31,5 +31,8 @@ class UserDefaultsStore: KeyValueStoring {
         return try decoder.decode(type, from: data)
     }
     
+    func removeValue(keyValue: String) {
+        defaults.removeObject(forKey: keyValue)
+    }
     
 }

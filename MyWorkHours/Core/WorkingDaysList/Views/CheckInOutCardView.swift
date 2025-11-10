@@ -86,6 +86,6 @@ struct CheckInOutCardView: View {
 
 #Preview {
     let persistenceController = PersistenceController.shared
-    let userStatusManager = UserStatusManager()
+    let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
     CheckInOutCardView(viewModel: WorkDaysScreen.ViewModel(persistenceController: persistenceController, userStatusManager: userStatusManager))
 }

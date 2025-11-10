@@ -73,5 +73,5 @@ struct PauseTimerScreen: View {
 }
 
 #Preview {
-    PauseTimerScreen(timerManager: TimerManager(persistenceController: PersistenceController.shared), persistenceController: PersistenceController.shared)
+    PauseTimerScreen(timerManager: TimerManager(persistenceController: PersistenceController.shared, userDefaultsStore: UserDefaultsStore(), notificationCenterServices: NotificationCenterServices()), persistenceController: PersistenceController.shared)
 }

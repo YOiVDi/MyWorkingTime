@@ -24,5 +24,5 @@ struct SubscriptionScreen: View {
 }
 
 #Preview {
-    SubscriptionScreen(viewModel: PurchaseViewModel(userStatusManager: UserStatusManager()))
+    SubscriptionScreen(viewModel: PurchaseViewModel(userStatusManager: UserStatusManager(userDefaultsStore: UserDefaultsStore())))
 }
