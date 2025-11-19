@@ -17,7 +17,9 @@ struct UserSettings: Codable {
     var saturday: Bool =  false
     var startInSaturday: Date = Date()
     var endInSaturday: Date = Date()
+    var pauseSaturday: Date = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: Date()) ?? .now
     var sunday: Bool =  false
     var startInSunday: Date = Date()
     var endInSunday: Date = Date()
+    var pauseSunday: Date = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: Date()) ?? .now
 }

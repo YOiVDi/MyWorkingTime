@@ -12,14 +12,16 @@ struct WorkdaySettingsView: View {
     @Binding var companyName: String
     @Binding var startShift: Date
     @Binding var endShift: Date
+    @Binding var pause: Date
     @Binding var workOnWeekend: Bool
     @Binding var saturday: Bool
     @Binding var startInSaturday: Date
     @Binding var endInSaturday: Date
+    @Binding var pauseSaturday: Date
     @Binding var sunday: Bool
     @Binding var startInSunday: Date
     @Binding var endInSunday: Date
-    @Binding var pause: Date
+    @Binding var pauseSunday: Date
     
     var body: some View {
             Section {
@@ -45,11 +47,13 @@ struct WorkdaySettingsView: View {
                     if saturday {
                         DatePicker("Start Shift", selection: $startInSaturday, displayedComponents: .hourAndMinute)
                         DatePicker("End Shift", selection: $endInSaturday, displayedComponents: .hourAndMinute)
+                        DatePicker("Pause", selection: $pauseSaturday, displayedComponents: .hourAndMinute)
                     }
                     Toggle("Sunday", isOn: $sunday)
                     if sunday {
                         DatePicker("Start Shift", selection: $startInSunday, displayedComponents: .hourAndMinute)
                         DatePicker("End Shift", selection: $endInSunday, displayedComponents: .hourAndMinute)
+                        DatePicker("Pause", selection: $pauseSunday, displayedComponents: .hourAndMinute)
                     }
                 }
             }
@@ -57,5 +61,5 @@ struct WorkdaySettingsView: View {
 }
 
 #Preview {
-    WorkdaySettingsView(section: "Main Section", companyName: .constant("Company Name"), startShift: .constant(Date()), endShift: .constant(Date()), workOnWeekend: .constant(false), saturday: .constant(false), startInSaturday: .constant(Date()), endInSaturday: .constant(Date()), sunday: .constant(false), startInSunday: .constant(Date()), endInSunday: .constant(Date()), pause: .constant(Date()))
+    WorkdaySettingsView(section: "Main Section", companyName: .constant("Company Name"), startShift: .constant(Date()), endShift: .constant(Date()), pause: .constant(Date()), workOnWeekend: .constant(false), saturday: .constant(false), startInSaturday: .constant(Date()), endInSaturday: .constant(Date()), pauseSaturday: .constant(Date()), sunday: .constant(false), startInSunday: .constant(Date()), endInSunday: .constant(Date()), pauseSunday: .constant(Date()))
 }

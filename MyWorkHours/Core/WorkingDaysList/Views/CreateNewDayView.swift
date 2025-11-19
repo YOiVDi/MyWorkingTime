@@ -66,13 +66,13 @@ struct CreateNewDayView: View {
                 }
             }
             .onAppear {
-                viewModel.workChoice = .firstWorkSettings
-                viewModel.userDefinedWorkDay.startShift = viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.startShift ?? Date()) : viewModel.secondUserSettings?.startShift ?? Date()
-                viewModel.userDefinedWorkDay.endShift = viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.endShift ?? Date()) : viewModel.secondUserSettings?.endShift ?? Date()
+                viewModel.checkWeekday(viewModel.userDefinedWorkDay.date)
             }
             .onChange(of: viewModel.workChoice) { _, _ in
-                viewModel.userDefinedWorkDay.startShift = viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.startShift ?? Date()) : viewModel.secondUserSettings?.startShift ?? Date()
-                viewModel.userDefinedWorkDay.endShift = viewModel.workChoice == .firstWorkSettings ? (viewModel.userSettings?.endShift ?? Date()) : viewModel.secondUserSettings?.endShift ?? Date()
+                viewModel.checkWeekday(viewModel.userDefinedWorkDay.date)
+            }
+            .onChange(of: viewModel.userDefinedWorkDay.date) { oldDate, newDate in
+                viewModel.checkWeekday(viewModel.userDefinedWorkDay.date)
             }
         }
     }
