@@ -70,6 +70,10 @@ struct SettingsView: View {
                         .multilineTextAlignment(.center)
                 }
                 
+                // MARK: - Legal
+                Link("Privacy Policy", destination: URL(string: "https://www.yoiddev.com/workhours-privacy-policy")!)
+                Link("Terms of Service", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/?utm_source=chatgpt.com")!)
+                
                 if showFinishButton == true {
                     HStack {
                         Spacer()

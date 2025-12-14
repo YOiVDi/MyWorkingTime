@@ -50,23 +50,24 @@
           "groupNumber" : 2,
           "internalID" : "D6DE48D6",
           "introductoryOffer" : {
+            "displayPrice" : "0.99",
             "internalID" : "8D0C9585",
             "paymentMode" : "free",
-            "subscriptionPeriod" : "P1W"
+            "subscriptionPeriod" : "P3D"
           },
           "localizations" : [
             {
-              "description" : "",
+              "description" : "Monthly access to all premium features.",
               "displayName" : "Monthly",
               "locale" : "en_US"
             },
             {
-              "description" : "",
+              "description" : "Monatlicher Zugriff auf alle Premiumfunktionen.",
               "displayName" : "Monatlich",
               "locale" : "de"
             }
           ],
-          "productID" : "com.myworkhours.premiumaccess.monthly",
+          "productID" : "com.myworkhours.premiumaccess.monthlytwo",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Monthly",
           "subscriptionGroupID" : "9A763E20",
@@ -87,24 +88,23 @@
           "groupNumber" : 1,
           "internalID" : "537285EC",
           "introductoryOffer" : {
-            "displayPrice" : "0.99",
             "internalID" : "5EB9511B",
             "paymentMode" : "free",
-            "subscriptionPeriod" : "P2M"
+            "subscriptionPeriod" : "P3D"
           },
           "localizations" : [
             {
-              "description" : "",
+              "description" : "Yearly access to all premium features.",
               "displayName" : "Yearly",
               "locale" : "en_US"
             },
             {
-              "description" : "",
+              "description" : "Jährlicher Zugriff auf alle Premiumfunktionen.",
               "displayName" : "Jährlich",
               "locale" : "de"
             }
           ],
-          "productID" : "com.myworkhours.premiumaccess.yearly",
+          "productID" : "com.myworkhours.premiumaccess.yearlytwo",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "Yearly",
           "subscriptionGroupID" : "9A763E20",

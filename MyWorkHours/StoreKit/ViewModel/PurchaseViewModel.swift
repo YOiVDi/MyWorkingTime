@@ -10,8 +10,8 @@ import StoreKit
 import Combine
 
 enum ProductID: String, CaseIterable {
-    case subscriptionMonthly = "com.myworkhours.premiumaccess.monthly"
-    case subscriptionYearly = "com.myworkhours.premiumaccess.yearly"
+    case subscriptionMonthly = "com.myworkhours.premiumaccess.monthlytwo"
+    case subscriptionYearly = "com.myworkhours.premiumaccess.yearlytwo"
     case subscriptionTestperiod = "subscription_testperiod"
 }
 
