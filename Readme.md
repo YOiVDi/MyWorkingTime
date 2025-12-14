@@ -8,9 +8,12 @@ It focuses on clean architecture, modern SwiftUI patterns, and reliable local da
 ## 📱 Screenshots
 <p float="left">
   <img src="https://www.yoiddev.com/MyWorkHoursImg/MyWork.png" width="250" />
-  <img src="https://www.yoiddev.com/MyWorkHoursImg/Timer.png" width="250" />
+  <img src="https://www.yoiddev.com/MyWorkHoursImg/Hours.png" width="250" />
+  <img src="https://www.yoiddev.com/MyWorkHoursImg/Card.png" width="250" />
   <img src="https://www.yoiddev.com/MyWorkHoursImg/List.png" width="250" />
+    <img src="https://www.yoiddev.com/MyWorkHoursImg/Details.png" width="250" />
   <img src="https://www.yoiddev.com/MyWorkHoursImg/EditView.png" width="250" />
+  <img src="https://www.yoiddev.com/MyWorkHoursImg/Timer.png" width="250" />
   <img src="https://www.yoiddev.com/MyWorkHoursImg/Settings.png" width="250" />
 </p>
 
