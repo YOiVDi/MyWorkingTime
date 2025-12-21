@@ -1,8 +1,6 @@
 //
 //  WorkingDayViewModel.swift
-//  PlusStunde
-//
-//  Created by Yordan Dimitrov on 24.01.24.
+//  MyWorkHours
 //
 
 import Combine
@@ -20,7 +18,6 @@ extension WorkDaysScreen {
         // MARK: - Published Private(set) Properties
         @Published private(set) var workingDaysList: [WorkingDay] = []
         @Published private(set) var todayCheckInCheckOut: WorkingDay?
-//        @Published private(set) var notADayWithTodayDate = false
         
         // MARK: - Public Properties
         @Published var userDefinedWorkDay: UserDefinedWorkDay = UserDefinedWorkDay()   /// A struct which is helpe to define a custom work day
@@ -63,6 +60,8 @@ extension WorkDaysScreen {
         
         // MARK: - PersistenceController
         let persistenceController: PersistenceController
+        
+        // MARK: - Managers
         let userStatusManager: UserStatusManager
         
         
@@ -144,7 +143,6 @@ extension WorkDaysScreen {
             }
         }
         
-        
         func assingDayForCheckInCheckOut() {
             if workChoice == .firstWorkSettings {
                 todayCheckInCheckOut = isExistDaysWithTodayDate().first {
@@ -190,20 +188,18 @@ extension WorkDaysScreen {
         }
         
          func calculatePauseInSeconds(_ workDay: WorkingDay) -> Int {
-             let weekday = Calendar.current.component(.weekday, from: workDay.wrappedDate)
+             let weekday = DateHelper.weekday(from: workDay.wrappedDate)
              var pauseTime: Date?
              
-             if weekday == 1 {
+             if DateHelper.isSunday(weekday) {
                  pauseTime = workDay.wrappedCompanyname == userSettings?.companyName ? userSettings?.pauseSunday : secondUserSettings?.pauseSunday
-             } else if weekday == 7 {
+             } else if DateHelper.isSaturday(weekday) {
                  pauseTime = workDay.wrappedCompanyname == userSettings?.companyName ? userSettings?.pauseSaturday : secondUserSettings?.pauseSaturday
              } else {
                  pauseTime = workDay.wrappedCompanyname == userSettings?.companyName ? userSettings?.pause : secondUserSettings?.pause
              }
              
-             let dateComponents = Calendar.current.dateComponents([.minute], from: pauseTime ?? Date())
-             let pauseToInt = Int(dateComponents.minute ?? 0)
-             return (pauseToInt * 60)
+             return DateHelper.minutesToSeconds(pauseTime)
         }
         
         /// Check if a day is weekend
@@ -215,43 +211,26 @@ extension WorkDaysScreen {
             switch weekday {
                 // Sunday
             case 1:
-                userDefinedWorkDay.startShift = setTimeOfDay(from: settings?.startInSunday ?? Date())
-                userDefinedWorkDay.endShift = setTimeOfDay(from: settings?.endInSunday ?? Date())
+                userDefinedWorkDay.startShift = DateComponentsExtractor.settingTime(from: settings?.startInSunday ?? Date())
+                userDefinedWorkDay.endShift = DateComponentsExtractor.settingTime(from: settings?.endInSunday ?? Date())
             case 7:
-                userDefinedWorkDay.startShift = setTimeOfDay(from: settings?.startInSaturday ?? Date())
-                userDefinedWorkDay.endShift = setTimeOfDay(from: settings?.endInSaturday ?? Date())
+                userDefinedWorkDay.startShift = DateComponentsExtractor.settingTime(from: settings?.startInSaturday ?? Date())
+                userDefinedWorkDay.endShift = DateComponentsExtractor.settingTime(from: settings?.endInSaturday ?? Date())
             default:
-                userDefinedWorkDay.startShift = setTimeOfDay(from: settings?.startShift ?? Date())
-                userDefinedWorkDay.endShift = setTimeOfDay(from: settings?.endShift ?? Date())
+                userDefinedWorkDay.startShift = DateComponentsExtractor.settingTime(from: settings?.startShift ?? Date())
+                userDefinedWorkDay.endShift = DateComponentsExtractor.settingTime(from: settings?.endShift ?? Date())
             }
         }
         
         // MARK: - Private Methods
-        // Convert certain date to today and use only hour and minute's.
-        private func setTimeOfDay(from time: Date) -> Date {
-            let calendar = Calendar.current
-            let timeComponents = calendar.dateComponents([.hour, .minute, .second], from: time)
-            let today = Date()
-            return calendar.date(bySettingHour: timeComponents.hour ?? 0,
-                                 minute: timeComponents.minute ?? 0,
-                                 second: timeComponents.second ?? 0,
-                                 of: today) ?? today
-        }
+        
         
         private func isExistDaysWithTodayDate() -> [WorkingDay] {
-            let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: userDefinedWorkDay.date)
-            print("Target Date: \(targetComponents)")
-           var workDays: [WorkingDay] = []
-           for day in workingDaysList {
-               let workDayComponents = Calendar.current.dateComponents([.year, .month, .day], from: day.wrappedDate)
-               if targetComponents == workDayComponents {
-                   workDays.append(day)
-               }
-           }
-           return workDays
+            CollectionFilters.filterByDate(_items: workingDaysList, targetDate: userDefinedWorkDay.date, dateKeyPath: \.wrappedDate)
        }
        
-       private func doesDayAsRequirmentsExist() -> Bool {
+        // Returns true if there's a day entry for today that matches the selected work settings.
+        private func doesDayAsRequirmentsExist() -> Bool {
            isExistDaysWithTodayDate().contains { day in
                (day.companyName == userSettings?.companyName && workChoice == .firstWorkSettings) ||
                (day.companyName == secondUserSettings?.companyName && workChoice == .secondWorkSettings)
@@ -331,8 +310,8 @@ extension WorkDaysScreen {
         //   date  = month key (Date)
         private func sectionWorkDays() {
             var grouped: [Date : [WorkingDay]] = [:]
-            let dateFormatter = DateFormatter()
             let calendar = Calendar.current
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MMMM yyyy"
             for item in workingDaysList {
                 let components = calendar.dateComponents([.year ,.month], from: item.wrappedDate)
