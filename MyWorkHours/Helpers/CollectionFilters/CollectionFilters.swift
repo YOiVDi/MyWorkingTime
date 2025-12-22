@@ -17,4 +17,15 @@ struct CollectionFilters {
             return itemComponents == targetComponents
         }
     }
+    
+    static func groupedByMonthYear<T>(items: [T], dateKeyPath: KeyPath<T, Date>) -> [Date: [T]] {
+        var grouped: [Date : [T]] = [:]
+        let calendar = Calendar.current
+        for item in items {
+            let components = calendar.dateComponents([.year ,.month], from: item[keyPath: dateKeyPath])
+            let monthName = calendar.date(from: components)
+            grouped[monthName ?? .now, default: []].append(item)
+        }
+        return grouped
+    }
 }

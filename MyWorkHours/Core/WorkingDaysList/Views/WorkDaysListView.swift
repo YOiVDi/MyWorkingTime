@@ -105,7 +105,12 @@ struct WorkDaysListView: View {
         }
         .alert(viewModel.alert?.title ?? "Error Occured" , isPresented: Binding(value: $viewModel.alert)) {
             //            Buttons
-            viewModel.alertButtons(editMode)
+            let buttons = viewModel.alertButtons(editMode)
+            ForEach(0..<buttons.count, id: \.self) { i in
+                Button(buttons[i].title, role: buttons[i].role) {
+                    buttons[i].action()
+                }
+            }
         } message: {
             Text(viewModel.alert?.message ?? "")
         }

@@ -129,6 +129,7 @@
       }
     },
     "Cancel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -580,6 +581,7 @@
       }
     },
     "OK" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

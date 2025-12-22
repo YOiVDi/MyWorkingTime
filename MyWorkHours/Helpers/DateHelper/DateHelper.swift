@@ -27,4 +27,10 @@ struct DateHelper {
         let pauseToInt = Int(dateComponents.minute ?? 0)
         return (pauseToInt * 60)
     }
+    
+    static func yearMonthFormatter(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM yyyy"
+        return dateFormatter.string(from: date)
+    }
 }

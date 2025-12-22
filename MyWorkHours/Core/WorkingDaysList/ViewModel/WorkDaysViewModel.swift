@@ -119,20 +119,32 @@ extension WorkDaysScreen {
         }
         
         /// Handle alerts buttons
-        func alertButtons(_ editMode:  Binding<EditMode>?) -> some View {
-            return  Group {
-                if alert == .deleteAll || alert == .swipeDelete {
-                    Button("Delete", role: .destructive) {
-                        self.handleDeleteAction(editMode)
-                    }
-                    Button("Cancel", role: .cancel) {
-                        self.handleCancelAction(editMode)
-                    }
-                } else {
-                    Button("OK") {}
-                }
+//        func alertButtons(_ editMode:  Binding<EditMode>?) -> some View {
+//            return  Group {
+//                if alert == .deleteAll || alert == .swipeDelete {
+//                    Button("Delete", role: .destructive) {
+//                        self.handleDeleteAction(editMode)
+//                    }
+//                    Button("Cancel", role: .cancel) {
+//                        self.handleCancelAction(editMode)
+//                    }
+//                } else {
+//                    Button("OK") {}
+//                }
+//            }
+//        }
+        
+        func alertButtons(_ editMode:  Binding<EditMode>?) -> [(title: String, role: ButtonRole? ,action: () -> Void)] {
+            
+            if alert == .deleteAll || alert == .swipeDelete {
+                return [("Delete", .destructive ,{ self.handleDeleteAction(editMode) }),
+                        ("Cancel", .cancel ,{ self.handleCancelAction(editMode)})
+                ]
+            } else {
+                return [("OK", .none ,{})]
             }
         }
+
         
         func disableWorkChoice() -> Bool {
             fetchUserSettings()
@@ -266,7 +278,6 @@ extension WorkDaysScreen {
             case .deleteAll:
                 deleteSelectedWorkingDays(pendingSelections)
                 selections.removeAll()
-                editMode?.wrappedValue = .inactive
                 pendingSelections.removeAll()
             case .swipeDelete:
                 if let selection = singleSelect {
@@ -309,17 +320,9 @@ extension WorkDaysScreen {
         //   items = sorted WorkingDay list (newest first)
         //   date  = month key (Date)
         private func sectionWorkDays() {
-            var grouped: [Date : [WorkingDay]] = [:]
-            let calendar = Calendar.current
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMMM yyyy"
-            for item in workingDaysList {
-                let components = calendar.dateComponents([.year ,.month], from: item.wrappedDate)
-                let monthName = calendar.date(from: components)
-                grouped[monthName ?? .now, default: []].append(item)
-            }
+            let grouped: [Date : [WorkingDay]] = CollectionFilters.groupedByMonthYear(items: workingDaysList, dateKeyPath: \.wrappedDate)
             let section: [SectionModel] = grouped.map { (key, value) in
-                SectionModel(name: dateFormatter.string(from: key), items: value.sorted { $0.wrappedDate > $1.wrappedDate }, date: key)
+                SectionModel(name: DateHelper.yearMonthFormatter(key), items: value.sorted { $0.wrappedDate > $1.wrappedDate }, date: key)
             }
             sectionArray = section
         }
