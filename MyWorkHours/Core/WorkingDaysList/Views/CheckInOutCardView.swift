@@ -93,6 +93,11 @@ struct CheckInOutCardView: View {
         .frame(maxWidth: 375, maxHeight: 230)
         //        .background(colorScheme == .light ? .cyan : .gray)
         .clipShape(RoundedRectangle(cornerRadius: 10))
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(lineWidth: 0.2)
+                .backgroundStyle(.gray)
+        )
         .onAppear(perform: { viewModel.assingDayForCheckInCheckOut()})
     }
 }
