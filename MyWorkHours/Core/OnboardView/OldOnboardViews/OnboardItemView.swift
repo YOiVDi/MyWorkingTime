@@ -69,5 +69,6 @@ struct OnboardItemView: View {
 }
 
 #Preview {
-    OnboardItemView(viewModel: OnboardViewModel(), item: .dummyItem)
+    let service = ServicesContainer()
+    OnboardItemView(viewModel: OnboardViewModel(userDefaultsStore: service.userDefaultsService), item: .dummyItem)
 }

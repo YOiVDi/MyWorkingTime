@@ -13,7 +13,7 @@ struct OnboardSettingsView: View {
     var body: some View {
             VStack {
                 SettingsView(showFinishButton: true) {
-                    viewModel.isOnboarding()
+                    viewModel.finishOnBording()
                 }
             }
     }
@@ -23,6 +23,6 @@ struct OnboardSettingsView: View {
 #Preview {
     let services = ServicesContainer()
     let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
-    OnboardSettingsView(viewModel: OnboardViewModel())
+    OnboardSettingsView(viewModel: OnboardViewModel(userDefaultsStore: services.userDefaultsService))
         .environmentObject(SettingsView.SettingsViewModel(services, userStatusManager))
 }

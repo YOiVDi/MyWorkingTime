@@ -79,7 +79,5 @@ struct CreateNewDayView: View {
 }
 
 #Preview {
-    let persistenceController = PersistenceController.shared
-    let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
-    CreateNewDayView(viewModel: WorkDaysScreen.ViewModel(persistenceController: persistenceController, userStatusManager: userStatusManager))
+    CreateNewDayView(viewModel: WorkDaysScreen.ViewModel(persistenceController: PersistenceController.shared, userStatusManager: UserStatusManager(userDefaultsStore: UserDefaultsStore())))
 }

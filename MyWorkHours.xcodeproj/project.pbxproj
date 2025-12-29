@@ -106,10 +106,12 @@
 		857FA3A52E6D45FA000AC2AA /* Screen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Screen; sourceTree = "<group>"; };
 		857FA3A72E6D4621000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
 		857FA3A82E6D4661000AC2AA /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
-		857FA3A92E6D467D000AC2AA /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
+		857FA3A92E6D467D000AC2AA /* OldOnboardViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OldOnboardViews; sourceTree = "<group>"; };
 		857FA3AA2E6D4686000AC2AA /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
 		858EBCFF2E6D7E1D00AFDB6A /* Screen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); name = Screen; path = View; sourceTree = "<group>"; };
 		858EBD002E6D7E2700AFDB6A /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
+		85BE20092F013BCF002B2ECB /* NewOnboardViews */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = NewOnboardViews; sourceTree = "<group>"; };
+		85BE20132F015437002B2ECB /* OnboardScreen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OnboardScreen; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,7 +135,9 @@
 		850286B02C16DC16004D3EA5 /* OnboardView */ = {
 			isa = PBXGroup;
 			children = (
-				857FA3A92E6D467D000AC2AA /* View */,
+				85BE20132F015437002B2ECB /* OnboardScreen */,
+				85BE20092F013BCF002B2ECB /* NewOnboardViews */,
+				857FA3A92E6D467D000AC2AA /* OldOnboardViews */,
 				857FA3AA2E6D4686000AC2AA /* ViewModel */,
 			);
 			path = OnboardView;
@@ -401,10 +405,12 @@
 				857FA3A52E6D45FA000AC2AA /* Screen */,
 				857FA3A72E6D4621000AC2AA /* View */,
 				857FA3A82E6D4661000AC2AA /* ViewModel */,
-				857FA3A92E6D467D000AC2AA /* View */,
+				857FA3A92E6D467D000AC2AA /* OldOnboardViews */,
 				857FA3AA2E6D4686000AC2AA /* ViewModel */,
 				858EBCFF2E6D7E1D00AFDB6A /* Screen */,
 				858EBD002E6D7E2700AFDB6A /* ViewModel */,
+				85BE20092F013BCF002B2ECB /* NewOnboardViews */,
+				85BE20132F015437002B2ECB /* OnboardScreen */,
 			);
 			name = MyWorkHours;
 			productName = MyWorkingTime;

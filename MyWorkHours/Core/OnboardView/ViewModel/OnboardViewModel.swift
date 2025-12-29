@@ -11,19 +11,45 @@ import SwiftUI
     @MainActor class OnboardViewModel: ObservableObject {
         
         @Published private(set) var onboardItems: [OnboardItem] = []
-        @Published private(set) var finishOnboarding = UserDefaults.standard.bool(forKey: "isOnboarding")
-//        @Published private(set) var finishOnboarding = false // for test purpose
         @Published var tabBarSelection = 0
+        @Published private(set) var finishOnboarding = UserDefaults.standard.bool(forKey: "isOnboarding")
+        @Published private(set) var isAlreadySetup: Bool = UserDefaults.standard.bool(forKey: "isAlreadySetup")
+        @Published var initSettings: UserSettings = UserSettings()
+        
+        private let userDefaultsStore: UserDefaultsStore
         
         
-        init() {
-            load()
+        init(userDefaultsStore: UserDefaultsStore) {
+            self.userDefaultsStore = userDefaultsStore
+            setDefaultTime()
+//            load()
         }
         
-        func isOnboarding() {
+        func finishOnBording() {
             finishOnboarding = true
             UserDefaults.standard.set(finishOnboarding, forKey: "isOnboarding")
+            try? userDefaultsStore.set(initSettings, forKey: "userSettings")
         }
+        
+        private func setDefaultTime() {
+            if !isAlreadySetup {
+                var dateComponents = Calendar.current.dateComponents([.hour, .minute], from: Date())
+                dateComponents.hour = 7
+                dateComponents.minute = 0
+                initSettings.startShift = Calendar.current.date(from: dateComponents) ?? Date()
+                dateComponents.hour = 15
+                dateComponents.minute = 15
+                initSettings.endShift = Calendar.current.date(from: dateComponents) ?? Date()
+                dateComponents.hour = 0
+                dateComponents.minute = 30
+                initSettings.pause = Calendar.current.date(from: dateComponents) ?? Date()
+            }
+        }
+        
+        
+        
+        
+        // MARK: - This is for old Onboarding
         
         func nextPage() {
             if tabBarSelection < onboardItems.count - 1 {

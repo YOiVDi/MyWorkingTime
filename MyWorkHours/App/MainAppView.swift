@@ -9,13 +9,14 @@ import CoreData
 import SwiftUI
 
 struct MainAppView: View {
-    @StateObject var onboardViewModel = OnboardViewModel()
+    @StateObject var onboardViewModel: OnboardViewModel
     @ObservedObject var userStatusManager: UserStatusManager
     let servicesContainer: ServicesContainer
     var body: some View {
         Group {
             if !onboardViewModel.finishOnboarding {
-                OnBoardTabView(viewModel: onboardViewModel)
+//                OnBoardTabView(viewModel: onboardViewModel)
+                OnbordingScreen(onboardViewModel: onboardViewModel)
                     .transition(.move(edge: .bottom))
             } else {
                 WorkDaysTabView(servicesContainer, userStatusManager: userStatusManager)
@@ -29,11 +30,10 @@ struct MainAppView: View {
     init(_ servicesContainer: ServicesContainer, _ userStatusManager: UserStatusManager) {
         self.servicesContainer = servicesContainer
         _userStatusManager = ObservedObject(wrappedValue: userStatusManager)
+        _onboardViewModel = StateObject(wrappedValue: OnboardViewModel(userDefaultsStore: servicesContainer.userDefaultsService))
     }
 }
 
 #Preview {
-    let servicesContainer = ServicesContainer()
-    let userStatusManager = UserStatusManager(userDefaultsStore: UserDefaultsStore())
-    return MainAppView(servicesContainer, userStatusManager)
+    return MainAppView(ServicesContainer(), UserStatusManager(userDefaultsStore: UserDefaultsStore()))
 }

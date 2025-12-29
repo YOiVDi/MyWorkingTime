@@ -169,7 +169,7 @@ class TimerManager: ObservableObject {
     
     /// Search for a workday/workdays whose date is equal to today's date, and return them as array of WorkingDays
     private func isExistDaysWithTodayDate() -> [WorkingDay] {
-        let workingDaysList = PersistenceController.shared.fetchRequest(sortBy: nil)
+        let workingDaysList = persistenceController.fetchRequest(sortBy: nil)
        let targetComponents = Calendar.current.dateComponents([.year, .month, .day], from: Date())
        var workDays: [WorkingDay] = []
        for day in workingDaysList {

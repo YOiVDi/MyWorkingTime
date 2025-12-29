@@ -147,7 +147,7 @@ extension WorkDaysScreen {
 
         
         func disableWorkChoice() -> Bool {
-            fetchUserSettings()
+//            fetchUserSettings()
             if userStatusManager.userStatus == .basic || userSettings?.secondWork == false {
                 return true
             } else {
