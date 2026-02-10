@@ -1,5 +1,5 @@
 //
-//  UserStatusManager.swift
+//  UserStatusStore.swift
 //  MyWorkHours
 //
 //  Created by Yordan Dimitrov on 05.10.25.

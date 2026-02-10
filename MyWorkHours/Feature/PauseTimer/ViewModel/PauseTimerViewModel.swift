@@ -34,15 +34,15 @@ extension PauseTimerScreen {
         
         // MARK: - Private Properties
         private let scenePhaseHandler = ScenePhaseService()
-        private let timer: TimerManager
+        private let timer: TimerStore
         private var cancellables: Set<AnyCancellable> = []
         private var scenePhase: ScenePhase
         
         // MARK: - Initialization
-        init(timerManager: TimerManager) {
-            self.timer = timerManager
+        init(timerStore: TimerStore) {
+            self.timer = timerStore
             self.scenePhase = .active
-//            self.subscribeToTimerManager()
+//            self.subscribeToTimerStore()
         }
         
         // MARK: - UI Computed Properties
@@ -140,21 +140,21 @@ extension PauseTimerScreen {
             timer.resumeTimer()
         }
         
-//        private func subscribeToTimerManager() {
-//            // mirror manager's @Published values
-//            timerManager.$elapsedTime
+//        private func subscribeToTimerStore() {
+//            // mirror store's @Published values
+//            timerStore.$elapsedTime
 //                .assign(to: &$elapsedTime)
-//            timerManager.$overElapsedTime
+//            timerStore.$overElapsedTime
 //                .assign(to: &$overElapsedTime)
-//            timerManager.$isStarted
+//            timerStore.$isStarted
 //                .assign(to: &$isStarted)
-//            timerManager.$isStopped
+//            timerStore.$isStopped
 //                .assign(to: &$isStopped)
-//            timerManager.$alert
+//            timerStore.$alert
 //                .assign(to: &$alert)
 //            
 //            // computed example
-//            timerManager.$timer
+//            timerStore.$timer
 //                .map { $0 != nil }
 //                .assign(to: &$isTimerRunning)
 //        }

@@ -28,8 +28,8 @@ extension WorkDaysScreen {
         //
         private var sectionArray: [SectionModel] = []
         
-        // MARK: - Managers
-        private let userStatusManager: UserStatusStore
+        // MARK: - Store's
+        private let userStatusStore: UserStatusStore
         private let userSettingsStore: UserSettingsStore
         
         // MARK: - Service
@@ -63,7 +63,7 @@ extension WorkDaysScreen {
         }
         
         var isPremium: Bool {
-            userStatusManager.userStatus == .subscribed
+            userStatusStore.userStatus == .subscribed
         }
         
         var userFirstWorkSettings: UserSettings {
@@ -75,8 +75,8 @@ extension WorkDaysScreen {
         }
         
         // MARK: - Initialization
-        init(userStatusManager: UserStatusStore, servicesContainer: ServicesContainerProtocol) {
-            self.userStatusManager = userStatusManager
+        init(userStatusStore: UserStatusStore, servicesContainer: ServicesContainerProtocol) {
+            self.userStatusStore = userStatusStore
             self.workingDaysService = servicesContainer.workDaysService
             self.workingDayPauseService = servicesContainer.workingDayPauseService
             self.checkInOutService = servicesContainer.workDayCheckInOutService
@@ -123,7 +123,7 @@ extension WorkDaysScreen {
 
         
         func disableWorkChoice() -> Bool {
-            if userStatusManager.userStatus == .basic || userSettingsStore.firstWorkSettings.secondWork == false {
+            if userStatusStore.userStatus == .basic || userSettingsStore.firstWorkSettings.secondWork == false {
                 return true
             } else {
                 return false

@@ -96,5 +96,5 @@ struct CheckInOutCardView: View {
 }
 
 #Preview {
-    CheckInOutCardView(viewModel: WorkDaysScreen.ViewModel(userStatusManager: UserStatusStore(userDefaultsStore: UserDefaultsStore()), servicesContainer: ServicesContainer(persistenceController: PersistenceController.shared)))
+    CheckInOutCardView(viewModel: WorkDaysScreen.ViewModel(userStatusStore: UserStatusStore(userDefaultsStore: UserDefaultsStore()), servicesContainer: ServicesContainer(persistenceController: PersistenceController.shared)))
 }

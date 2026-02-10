@@ -103,7 +103,6 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $viewModel.showPremiumView) {
                 ZStack(alignment: .topTrailing) {
-//                    PurchaseView(userStatusManager: viewModel.userStatusManager)
                     SubscriptionScreen(viewModel: purchaseViewModel)
                     VStack {
                         Button {

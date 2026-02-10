@@ -78,5 +78,5 @@ struct ListView: View {
 
 #Preview {
     
-    ListView(viewModel: WorkDaysScreen.ViewModel(userStatusManager: UserStatusStore(userDefaultsStore: UserDefaultsStore()), servicesContainer: ServicesContainer(persistenceController: PersistenceController.shared)))
+    ListView(viewModel: WorkDaysScreen.ViewModel(userStatusStore: UserStatusStore(userDefaultsStore: UserDefaultsStore()), servicesContainer: ServicesContainer(persistenceController: PersistenceController.shared)))
 }

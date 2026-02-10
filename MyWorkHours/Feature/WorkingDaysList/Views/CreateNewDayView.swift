@@ -72,5 +72,5 @@ struct CreateNewDayView: View {
 }
 
 #Preview {
-    CreateNewDayView(viewModel: WorkDaysScreen.ViewModel(userStatusManager: UserStatusStore(userDefaultsStore: UserDefaultsStore()), servicesContainer: ServicesContainer(persistenceController: PersistenceController.shared)))
+    CreateNewDayView(viewModel: WorkDaysScreen.ViewModel(userStatusStore: UserStatusStore(userDefaultsStore: UserDefaultsStore()), servicesContainer: ServicesContainer(persistenceController: PersistenceController.shared)))
 }

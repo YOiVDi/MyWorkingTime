@@ -113,6 +113,6 @@ struct WorkDaysListView: View {
 
 #Preview {
     NavigationView {
-        WorkDaysListView(viewModel: WorkDaysScreen.ViewModel(userStatusManager: UserStatusStore(userDefaultsStore: UserDefaultsStore()), servicesContainer: ServicesContainer(persistenceController: PersistenceController.shared)))
+        WorkDaysListView(viewModel: WorkDaysScreen.ViewModel(userStatusStore: UserStatusStore(userDefaultsStore: UserDefaultsStore()), servicesContainer: ServicesContainer(persistenceController: PersistenceController.shared)))
     }   
 }

@@ -12,16 +12,16 @@ import StoreKit
 struct WorkDaysTabView: View {
     
     let servicesContainer: ServicesContainer
-    @ObservedObject var userStatusManager: UserStatusStore
-    @StateObject var timerManager: TimerManager
+    @ObservedObject var userStatusStore: UserStatusStore
+    @StateObject var timerStore: TimerStore
     
     var body: some View {
         TabView {
-            WorkDaysScreen(userStatusManager: userStatusManager, servicesContainer: servicesContainer)
+            WorkDaysScreen(userStatusStore: userStatusStore, servicesContainer: servicesContainer)
                     .tabItem {
                         Label("List", systemImage: "list.bullet.circle")
                     }
-            PauseTimerScreen(timerManager: timerManager)
+            PauseTimerScreen(timerStore: timerStore)
                     .tabItem {
                         Label("Pause Timer", systemImage: "clock")
                     }
@@ -33,14 +33,14 @@ struct WorkDaysTabView: View {
         .navigationViewStyle(.stack)
     }
     
-    init(_ servicesContainer: ServicesContainer, userStatusManager: UserStatusStore) {
+    init(_ servicesContainer: ServicesContainer, userStatusStore: UserStatusStore) {
         self.servicesContainer = servicesContainer
-        self._userStatusManager = ObservedObject(wrappedValue: userStatusManager)
-        _timerManager = StateObject(wrappedValue: TimerManager(workingDaysQueryService: servicesContainer.workingDaysQueryService, workingDayPauseService: servicesContainer.workingDayPauseService, userDefaultsStore: servicesContainer.userDefaultsService, notificationCenterServices: servicesContainer.notificationCenterService))
+        self._userStatusStore = ObservedObject(wrappedValue: userStatusStore)
+        _timerStore = StateObject(wrappedValue: TimerStore(workingDaysQueryService: servicesContainer.workingDaysQueryService, workingDayPauseService: servicesContainer.workingDayPauseService, userDefaultsStore: servicesContainer.userDefaultsService, notificationCenterServices: servicesContainer.notificationCenterService))
     }
 }
 
 #Preview {
-    WorkDaysTabView(ServicesContainer(persistenceController: PersistenceController.shared), userStatusManager: UserStatusStore(userDefaultsStore: UserDefaultsStore()))
+    WorkDaysTabView(ServicesContainer(persistenceController: PersistenceController.shared), userStatusStore: UserStatusStore(userDefaultsStore: UserDefaultsStore()))
         .environmentObject(SettingsView.SettingsViewModel(ServicesContainer(persistenceController: PersistenceController.shared), UserStatusStore(userDefaultsStore: UserDefaultsStore())))
 }

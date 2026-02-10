@@ -67,11 +67,11 @@ struct PauseTimerScreen: View {
         }
     }
     
-    init(timerManager: TimerManager) {
-        _viewModel = StateObject(wrappedValue: PauseTimerViewModel(timerManager: timerManager))
+    init(timerStore: TimerStore) {
+        _viewModel = StateObject(wrappedValue: PauseTimerViewModel(timerStore: timerStore))
     }
 }
 
 #Preview {
-    PauseTimerScreen(timerManager: TimerManager(workingDaysQueryService: WorkingDaysQueryService(persistenceController: PersistenceController.shared), workingDayPauseService: WorkingDayPauseService(persistenceController: PersistenceController.shared), userDefaultsStore: UserDefaultsStore(), notificationCenterServices: NotificationCenterServices()))
+    PauseTimerScreen(timerStore: TimerStore(workingDaysQueryService: WorkingDaysQueryService(persistenceController: PersistenceController.shared), workingDayPauseService: WorkingDayPauseService(persistenceController: PersistenceController.shared), userDefaultsStore: UserDefaultsStore(), notificationCenterServices: NotificationCenterServices()))
 }

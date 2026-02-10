@@ -101,5 +101,5 @@ manage or cancel your subscription at any time in your Apple ID settings.
 }
 
 #Preview {
-    PurchaseView(viewModel: PurchaseViewModel(userStatusManager: UserStatusStore(userDefaultsStore: UserDefaultsStore())))
+    PurchaseView(viewModel: PurchaseViewModel(userStatusStore: UserStatusStore(userDefaultsStore: UserDefaultsStore())))
 }

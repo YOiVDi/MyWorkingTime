@@ -26,22 +26,22 @@ enum UserStatus: String {
     @Published private(set) var subscriptionExpirationDate: Date? = nil
     @Published private(set) var renewMessage: String = ""
     private var updates: Task<Void, Never>? = nil
-    private let userStatusManager: UserStatusStore
+    private let userStatusStore: UserStatusStore
     private var cancellables: Set<AnyCancellable> = []
     
     // Expose user current status
     var userStatus: UserStatus {
-        userStatusManager.userStatus
+        userStatusStore.userStatus
     }
     
-    init(userStatusManager: UserStatusStore) {
-        self.userStatusManager = userStatusManager
+    init(userStatusStore: UserStatusStore) {
+        self.userStatusStore = userStatusStore
         updates = newTransactionListenerTask()
         
         Task {
             await fetchProducts()
             await updateUserSubscriptionStatus()
-            print("UserStatus after purchaseviewmodel init: \(userStatusManager.userStatus)")
+            print("UserStatus after purchaseviewmodel init: \(userStatusStore.userStatus)")
         }
     }
     
@@ -100,10 +100,10 @@ enum UserStatus: String {
                 case .verified(let transaction):
                     await transaction.finish()
                     await MainActor.run { [weak self] in
-                        self?.userStatusManager.subscribed()
+                        self?.userStatusStore.subscribed()
                     }
                 case .unverified(let transaction, let transactionError):
-                    userStatusManager.basic()
+                    userStatusStore.basic()
                     await transaction.finish()
                     print("transaction is unverified: \(transactionError.localizedDescription)")
                     
@@ -141,7 +141,7 @@ enum UserStatus: String {
         if let revocationDate = transaction.revocationDate {
             // Subscription was refunded or revoked
             Task { @MainActor in
-                self.userStatusManager.basic()
+                self.userStatusStore.basic()
             }
             print("Subscription revoked at \(revocationDate)")
             return
@@ -152,7 +152,7 @@ enum UserStatus: String {
            expirationDate < Date() {
             // Subscription expired
             Task { @MainActor in
-                self.userStatusManager.basic()
+                self.userStatusStore.basic()
             }
             print("Subscription expired on \(expirationDate)")
             return
@@ -166,7 +166,7 @@ enum UserStatus: String {
         
         // Subscription is active
         Task { @MainActor in
-            self.userStatusManager.subscribed()
+            self.userStatusStore.subscribed()
         }
     }
     
@@ -211,7 +211,7 @@ enum UserStatus: String {
             // mark user as subscribed if still active
             if expiration == nil || expiration! > Date() {
                 await MainActor.run { [weak self] in
-                    self?.userStatusManager.subscribed()
+                    self?.userStatusStore.subscribed()
                     self?.userCurrentSubscription = foundProduct
                     self?.subscriptionExpirationDate = expiration
                 }
@@ -222,7 +222,7 @@ enum UserStatus: String {
         
         // nothing valid found → downgrade
         await MainActor.run { [weak self] in
-            self?.userStatusManager.basic()
+            self?.userStatusStore.basic()
             self?.userCurrentSubscription = nil
             self?.subscriptionExpirationDate = nil
             print("no active subscriptions found")

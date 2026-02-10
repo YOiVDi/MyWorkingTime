@@ -11,8 +11,7 @@ import SwiftUI
 // The notification will be deleted if the case is a user, otherwise the notification will remain.
 enum StopIntention { case user, lifecycle}
 
-@MainActor
-final class TimerManager: ObservableObject {
+final class TimerStore: ObservableObject {
     
     // MARK: - Publish Properties
     @Published var isStopped = false

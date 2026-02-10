@@ -25,12 +25,12 @@ struct WorkDaysScreen: View {
         .navigationViewStyle(.stack)
     }
     
-    init(userStatusManager: UserStatusStore, servicesContainer: ServicesContainerProtocol) {
-        _viewModel = StateObject(wrappedValue: ViewModel(userStatusManager: userStatusManager, servicesContainer: servicesContainer))
+    init(userStatusStore: UserStatusStore, servicesContainer: ServicesContainerProtocol) {
+        _viewModel = StateObject(wrappedValue: ViewModel(userStatusStore: userStatusStore, servicesContainer: servicesContainer))
     }
 }
 
 #Preview {
 
-    WorkDaysScreen(userStatusManager: UserStatusStore(userDefaultsStore: UserDefaultsStore()), servicesContainer: ServicesContainer(persistenceController: PersistenceController.shared))
+    WorkDaysScreen(userStatusStore: UserStatusStore(userDefaultsStore: UserDefaultsStore()), servicesContainer: ServicesContainer(persistenceController: PersistenceController.shared))
 }

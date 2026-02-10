@@ -23,7 +23,7 @@ extension SettingsView {
 
         
         var userStatus: UserStatus {
-            userStatusManager.userStatus
+            userStatusStore.userStatus
         }
         
         /// Private properties
@@ -31,8 +31,8 @@ extension SettingsView {
         private let notificationServices: NotificationCenterServices
         private let userDefaultsStore: UserDefaultsStore
         
-        // Managers
-        private let userStatusManager: UserStatusStore
+        // Stores
+        private let userStatusStore: UserStatusStore
         private let userSettingsStore: UserSettingsStore
 
         
@@ -43,10 +43,10 @@ extension SettingsView {
         
         // MARK: - Initialization
         
-        init(_ servicesContainer: ServicesContainer, _ userStatusManager: UserStatusStore) {
+        init(_ servicesContainer: ServicesContainer, _ userStatusStore: UserStatusStore) {
             self.userDefaultsStore = servicesContainer.userDefaultsService
             self.notificationServices = servicesContainer.notificationCenterService
-            self.userStatusManager = userStatusManager
+            self.userStatusStore = userStatusStore
             self.userSettingsStore = servicesContainer.userSettingsStore
             setRetrievedData()
             debouncing()

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MainAppView: View {
     @StateObject var onboardViewModel: OnboardViewModel
-    @ObservedObject var userStatusManager: UserStatusStore
+    @ObservedObject var userStatusStore: UserStatusStore
     let servicesContainer: ServicesContainer
     var body: some View {
         Group {
@@ -19,17 +19,17 @@ struct MainAppView: View {
                 OnbordingScreen(onboardViewModel: onboardViewModel)
                     .transition(.move(edge: .bottom))
             } else {
-                WorkDaysTabView(servicesContainer, userStatusManager: userStatusManager)
+                WorkDaysTabView(servicesContainer, userStatusStore: userStatusStore)
                     .transition(.move(edge: .bottom))
-//                PurchaseView(userStatusManager: userStatusManager)
+//                PurchaseView(userStatusStore: userStatusStore)
             }
         }
         .animation(.easeIn(duration: 0.5), value: onboardViewModel.finishOnboarding)
     }
     
-    init(_ servicesContainer: ServicesContainer, _ userStatusManager: UserStatusStore) {
+    init(_ servicesContainer: ServicesContainer, _ userStatusStore: UserStatusStore) {
         self.servicesContainer = servicesContainer
-        _userStatusManager = ObservedObject(wrappedValue: userStatusManager)
+        _userStatusStore = ObservedObject(wrappedValue: userStatusStore)
         _onboardViewModel = StateObject(wrappedValue: OnboardViewModel(userDefaultsStore: servicesContainer.userDefaultsService))
     }
 }
