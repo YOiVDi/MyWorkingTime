@@ -26,7 +26,7 @@ enum UserStatus: String {
     @Published private(set) var subscriptionExpirationDate: Date? = nil
     @Published private(set) var renewMessage: String = ""
     private var updates: Task<Void, Never>? = nil
-    private let userStatusManager: UserStatusManager
+    private let userStatusManager: UserStatusStore
     private var cancellables: Set<AnyCancellable> = []
     
     // Expose user current status
@@ -34,7 +34,7 @@ enum UserStatus: String {
         userStatusManager.userStatus
     }
     
-    init(userStatusManager: UserStatusManager) {
+    init(userStatusManager: UserStatusStore) {
         self.userStatusManager = userStatusManager
         updates = newTransactionListenerTask()
         

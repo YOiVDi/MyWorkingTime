@@ -8,12 +8,12 @@
 import Foundation
 
 struct SectionModel: Identifiable, Hashable, Comparable {
+    let id = UUID()
+    let name: String
+    let items: [WorkDay]
+    let date: Date
+    
     static func < (lhs: SectionModel, rhs: SectionModel) -> Bool {
         lhs > rhs
     }
-    
-    let id = UUID()
-    let name: String
-    let items: [WorkingDay]
-    let date: Date
 }

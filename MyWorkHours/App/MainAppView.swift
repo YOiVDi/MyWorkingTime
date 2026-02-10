@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MainAppView: View {
     @StateObject var onboardViewModel: OnboardViewModel
-    @ObservedObject var userStatusManager: UserStatusManager
+    @ObservedObject var userStatusManager: UserStatusStore
     let servicesContainer: ServicesContainer
     var body: some View {
         Group {
@@ -27,7 +27,7 @@ struct MainAppView: View {
         .animation(.easeIn(duration: 0.5), value: onboardViewModel.finishOnboarding)
     }
     
-    init(_ servicesContainer: ServicesContainer, _ userStatusManager: UserStatusManager) {
+    init(_ servicesContainer: ServicesContainer, _ userStatusManager: UserStatusStore) {
         self.servicesContainer = servicesContainer
         _userStatusManager = ObservedObject(wrappedValue: userStatusManager)
         _onboardViewModel = StateObject(wrappedValue: OnboardViewModel(userDefaultsStore: servicesContainer.userDefaultsService))
@@ -35,5 +35,5 @@ struct MainAppView: View {
 }
 
 #Preview {
-    return MainAppView(ServicesContainer(), UserStatusManager(userDefaultsStore: UserDefaultsStore()))
+    return MainAppView(ServicesContainer(persistenceController: PersistenceController.shared), UserStatusStore(userDefaultsStore: UserDefaultsStore()))
 }
