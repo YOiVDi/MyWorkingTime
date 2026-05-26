@@ -89,7 +89,7 @@ extension WorkDaysScreen {
         
         // Make viewmodel for DetailView
         func makeDetailViewModel(for workDay: WorkDay) -> DetailScreen.ViewModel {
-            return DetailScreen.ViewModel(model: workDay, workingDayPauseService: workingDayPauseService)
+            return DetailScreen.ViewModel(model: workDay, workingDayPauseService: workingDayPauseService, workDayService: workingDaysService ,refreshWorkDayInArr: refreshWorkDayInArr)
         }
         
         /// Create a day from a user-selected date
@@ -145,16 +145,18 @@ extension WorkDaysScreen {
             todayCheckInCheckOut = today
             showCheckInOutCard.toggle()
         }
-              
-        func calculateTime(_ workDay: WorkDay) -> String {
-            let pause = calculatePauseInSeconds(workDay)
-            let workHoursInSecondsAndPause = (workDay.workHours * 60) - pause
-            let calc = workDay.workedTime - workHoursInSecondsAndPause
-            print("Pauses: \(pause)")
-            print("WorkingHoursWithOutPause: \(workHoursInSecondsAndPause)")
-            print("WorkedTime: \(workDay.workedTime)")
-            print("Calc: \(calc)")
-            return WorkTimeConverter.convertSecondToTime(calc, true)
+        
+        // Calculate either user is plus or minus time for certain day
+        func calculateWorkTimeForTheDay(_ workDay: WorkDay) -> String {
+            let workTimeDefinedInSettings = (workDay.workHours * 60) + calculatePauseInSeconds(workDay)
+            var pauses = 0
+            for pause in workDay.pause {
+                pauses += Int(pause.finishPause.timeIntervalSince(pause.startPause))
+            }
+            guard let checkIn = workDay.checkIn, let checkOut = workDay.checkOut else { return "00:00" }
+            let calcCheckInOutAndPuases = Int(checkOut.timeIntervalSince(checkIn)) + pauses
+            let finalCalc = calcCheckInOutAndPuases - workTimeDefinedInSettings
+            return WorkTimeConverter.convertSecondToTime(finalCalc, true)
         }
         
          func calculatePauseInSeconds(_ workDay: WorkDay) -> Int {
@@ -193,12 +195,6 @@ extension WorkDaysScreen {
         }
         
         // MARK: - Private Methods
-        
-        // Refresh today property
-        private func refreshToday() {
-            let settings = (workChoice == .firstWorkSettings ? userSettingsStore.firstWorkSettings : userSettingsStore.secondWorkSettings)
-            todayCheckInCheckOut = checkInOutService.assingDayForCheckInCheckOut(for: workChoice, settings)
-        }
         
         /// Add a new working day
         private func addWorkingDay() {
@@ -262,6 +258,31 @@ extension WorkDaysScreen {
         private func fetchWorkDays() {
             workingDaysList = workingDaysService.fetch()
             sectionWorkDays()
+        }
+        
+        // Refresh today property
+        private func refreshToday() {
+            let settings = (workChoice == .firstWorkSettings ? userSettingsStore.firstWorkSettings : userSettingsStore.secondWorkSettings)
+            todayCheckInCheckOut = checkInOutService.assingDayForCheckInCheckOut(for: workChoice, settings)
+        }
+        
+        private func refreshWorkDayInArr(_ updated: WorkDay) -> WorkDay? {
+            print("LIST refreshWorkDay called with id=\(updated.id)")
+
+            guard let dto = workingDaysService.refreshWorkDay(for: updated.id) else {
+                print("LIST refreshWorkDay: service returned nil for id=\(updated.id)")
+                return nil
+            }
+
+            guard let index = workingDaysList.firstIndex(where: { $0.id == updated.id }) else {
+                print("LIST refreshWorkDay: id not found in workingDaysList")
+                return nil
+            }
+
+            workingDaysList[index] = dto
+            sectionWorkDays()
+            print("LIST refreshWorkDay: updated index \(index)")
+            return dto
         }
         
         // Groups workingDaysList by month into sections.

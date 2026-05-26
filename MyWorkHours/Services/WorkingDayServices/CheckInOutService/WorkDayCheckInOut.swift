@@ -25,6 +25,7 @@ final class WorkDayCheckInOut: WorkDayCheckInOutProtocol {
     
     func handleCheckOut(_ day: inout WorkDay, workingDaysList: inout [WorkDay]) {
         day.checkOut = Date.now
+        day.workedTime = Int(day.checkOut?.timeIntervalSince(day.checkIn!) ?? 0)
         workingDaysQuery.update(day)
         if let index = workingDaysList.firstIndex(where: {$0.id == day.id}) {
             workingDaysList[index] = day

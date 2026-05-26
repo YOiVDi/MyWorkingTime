@@ -19,13 +19,20 @@ struct WorkDaysTabView: View {
         TabView {
             WorkDaysScreen(userStatusStore: userStatusStore, servicesContainer: servicesContainer)
                     .tabItem {
-                        Label("List", systemImage: "list.bullet.circle")
+                        Label("Workdays", systemImage: "list.bullet.circle")
                     }
+            
+//            PauseTimerScreen(timerStore: timerStore)
+//                .tabItem {
+//                    Label("Reports", systemImage: "chart.bar.fill")
+//                }
+            
             PauseTimerScreen(timerStore: timerStore)
                     .tabItem {
-                        Label("Pause Timer", systemImage: "clock")
+                        Label("Timer", systemImage: "clock")
                     }
-                    SettingsView()
+            
+            SettingsView()
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }

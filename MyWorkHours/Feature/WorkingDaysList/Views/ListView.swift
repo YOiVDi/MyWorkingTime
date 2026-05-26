@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ListView: View {
     @ObservedObject var viewModel: WorkDaysScreen.ViewModel
+    @Namespace var namespace
     var body: some View {
         if viewModel.isPremium {
             List(selection: $viewModel.selections) {
@@ -9,16 +10,20 @@ struct ListView: View {
                     Section("\(section.name)") {
                         ForEach(section.items, id: \.self) { workDay in
                             let detailVM = viewModel.makeDetailViewModel(for: workDay)
-                            NavigationLink(destination: DetailScreen(viewModel: detailVM)) {
+                            NavigationLink {
+                                DetailScreen(viewModel: detailVM)
+                                    .navigationTransition(.zoom(sourceID: workDay.id, in: namespace))
+                            } label: {
                                 VStack(alignment: .leading) {
                                     HStack(spacing: 10) {
                                         DateIconView(model: workDay)
                                         Text(workDay.companyName)
                                             .font(.title3).bold()
-                                        Text(viewModel.calculateTime(workDay))
-                                            .foregroundStyle((workDay.workedTime + viewModel.calculatePauseInSeconds(workDay)) - (workDay.workHours * 60) < 0 ? Color.red :  Color.green)
+                                        Text(viewModel.calculateWorkTimeForTheDay(workDay))
+                                            .foregroundStyle(viewModel.calculateWorkTimeForTheDay(workDay).contains("-") ? .red : .green)
                                     }
-                                }
+                                    .matchedTransitionSource(id: workDay.id, in: namespace)
+                            }
                                 .swipeActions(allowsFullSwipe: false) {
                                     Button {
                                         withAnimation {
@@ -77,6 +82,5 @@ struct ListView: View {
 
 
 #Preview {
-    
     ListView(viewModel: WorkDaysScreen.ViewModel(userStatusStore: UserStatusStore(userDefaultsStore: UserDefaultsStore()), servicesContainer: ServicesContainer(persistenceController: PersistenceController.shared)))
 }

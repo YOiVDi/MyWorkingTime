@@ -7,7 +7,7 @@ struct WorkDaysScreen: View {
     @StateObject var viewModel: ViewModel
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             // MARK: - Main Stack
             ZStack(alignment: .bottomTrailing) {
                 if viewModel.workingDaysList.isEmpty {

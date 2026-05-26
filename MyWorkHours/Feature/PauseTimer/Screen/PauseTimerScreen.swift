@@ -73,5 +73,5 @@ struct PauseTimerScreen: View {
 }
 
 #Preview {
-    PauseTimerScreen(timerStore: TimerStore(workingDaysQueryService: WorkingDaysQueryService(persistenceController: PersistenceController.shared), workingDayPauseService: WorkingDayPauseService(persistenceController: PersistenceController.shared), userDefaultsStore: UserDefaultsStore(), notificationCenterServices: NotificationCenterServices()))
+    PauseTimerScreen(timerStore: TimerStore(workingDaysQueryService: WorkingDaysQueryService(persistenceController: PersistenceController.shared), workingDayPauseService: WorkingDayPauseService(persistenceController: PersistenceController.shared, workingDaysQueryServices: WorkingDaysQueryService(persistenceController: PersistenceController.shared)), userDefaultsStore: UserDefaultsStore(), notificationCenterServices: NotificationCenterServices()))
 }

@@ -6,4 +6,5 @@ protocol WorkingDaysServicesProtocol {
     func update(_ workDay: WorkDay)
     func delete(_ day: WorkDay)
     func deleteSelected(selected workDays: Set<WorkDay>)
+    func refreshWorkDay(for id: UUID) -> WorkDay?
 }

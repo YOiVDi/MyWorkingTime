@@ -38,11 +38,16 @@ struct CreateNewDayView: View {
                 Text("When you create a new day with a specific date, you can add check-ins, check-outs, and pauses after the day is created. Simply click on the day you created in the upper right corner via the edit button, and you will be able to edit that day. From there, you can update your check-in and check-out times, as well as add pauses.")
                     .foregroundStyle(.secondary)
                 Spacer()
-                Button("Create day") {
+                Button {
                     viewModel.creatingDayOfUserChoice(dismiss)
+                } label: {
+                    Text("Create day")
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity, maxHeight: 50)
+                        .background(.blue)
+                        .cornerRadius(10)
                 }
-                .buttonStyle(BorderedProminentButtonStyle())
-                .shadow(color: .black, radius: 3, x: -1, y: 1)
+                .padding(.bottom)
             }
             .padding(.horizontal, 20)
             .navigationTitle("New working day")

@@ -38,8 +38,8 @@ final class ServicesContainer: ServicesContainerProtocol {
         self.persistenceController = persistenceController
         self.notificationCenterService = NotificationCenterServices()
         self.userDefaultsService = UserDefaultsStore()
-        self.workingDayPauseService = WorkingDayPauseService(persistenceController: persistenceController)
         self.workingDaysQueryService = WorkingDaysQueryService(persistenceController: persistenceController)
+        self.workingDayPauseService = WorkingDayPauseService(persistenceController: persistenceController, workingDaysQueryServices: workingDaysQueryService)
         self.workDaysService = WorkingDaysService(queryService: workingDaysQueryService, persistenceController: persistenceController)
         self.workDayCheckInOutService = WorkDayCheckInOut(workingDaysQuery: workingDaysQueryService)
         self.userSettingsStore = UserSettingsStore(userDefaultsStore: userDefaultsService)

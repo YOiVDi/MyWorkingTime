@@ -45,6 +45,14 @@ final class WorkingDaysQueryService: WorkingDaysQueryServiceProtocol {
         return days
     }
     
+    // Fetch item with specified ID
+    func fetchOnId(_ id: UUID) -> WorkingDay? {
+        let request: NSFetchRequest<WorkingDay> = WorkingDay.fetchRequest()
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        return try? context.fetch(request).first
+    }
+    
     // Fetch all object from the repository
     func fetchAllObjects(sortBy: [NSSortDescriptor]) -> [WorkingDay] {
         let workDays: [WorkingDay]
@@ -81,12 +89,5 @@ final class WorkingDaysQueryService: WorkingDaysQueryServiceProtocol {
     }
     
     // MARK: - Private Methods
-    
-    func fetchOnId(_ id: UUID) -> WorkingDay? {
-        let request: NSFetchRequest<WorkingDay> = WorkingDay.fetchRequest()
-        request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
-        return try? context.fetch(request).first
-    }
     
 }

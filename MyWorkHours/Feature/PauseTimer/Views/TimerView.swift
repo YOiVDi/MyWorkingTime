@@ -106,5 +106,5 @@ struct TimerView: View {
 }
 
 #Preview {
-    TimerView(viewModel: PauseTimerScreen.PauseTimerViewModel(timerStore: TimerStore(workingDaysQueryService: WorkingDaysQueryService(persistenceController: PersistenceController.shared), workingDayPauseService: WorkingDayPauseService(persistenceController: PersistenceController.shared), userDefaultsStore: UserDefaultsStore(), notificationCenterServices: NotificationCenterServices())))
+    TimerView(viewModel: PauseTimerScreen.PauseTimerViewModel(timerStore: TimerStore(workingDaysQueryService: WorkingDaysQueryService(persistenceController: PersistenceController.shared), workingDayPauseService: WorkingDayPauseService(persistenceController: PersistenceController.shared, workingDaysQueryServices: WorkingDaysQueryService(persistenceController: PersistenceController.shared)), userDefaultsStore: UserDefaultsStore(), notificationCenterServices: NotificationCenterServices())))
 }

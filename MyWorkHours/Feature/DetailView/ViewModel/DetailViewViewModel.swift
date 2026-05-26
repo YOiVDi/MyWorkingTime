@@ -42,8 +42,12 @@ extension DetailScreen {
         // MARK: - Private properties
         private var defaultTime: Date
         private var time = "Check-In and Check-Out data missing."
+        private var updateWorkedTime = 0
         
         private let workingDayPauseService: WorkingDayPauseProtocol
+        private let workDayService: WorkingDaysServicesProtocol
+        
+        private let refreshWorkDayInArr: (WorkDay) -> WorkDay?
         
         // MARK: - Computed properties
         
@@ -63,9 +67,10 @@ extension DetailScreen {
         
         
         // MARK: - Initialization
-        init(model: WorkDay, workingDayPauseService: WorkingDayPauseProtocol) {
+        init(model: WorkDay, workingDayPauseService: WorkingDayPauseProtocol, workDayService: WorkingDaysServicesProtocol, refreshWorkDayInArr: @escaping (WorkDay) -> WorkDay?) {
             /// init persistenceController
             self.workingDayPauseService = workingDayPauseService
+            self.workDayService = workDayService
             /// init properties
             self.model = model
             defaultTime = Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 00, second: 0, of: model.date) ?? Date()
@@ -73,6 +78,7 @@ extension DetailScreen {
             self.pauseEnd = defaultTime
             self.checkIn = model.checkIn ?? defaultTime
             self.checkOut = model.checkOut ?? defaultTime
+            self.refreshWorkDayInArr = refreshWorkDayInArr
         }
         
         
@@ -105,7 +111,8 @@ extension DetailScreen {
             guard let selectedPause else { return }
             
             // Delete selected pause from Core Data context
-            workingDayPauseService.deletePause(pause: selectedPause)
+//            workingDayPauseService.deletePause(pause: selectedPause)
+            workingDayPauseService.deletePause(for: model, pause: selectedPause)
             
             // Set selectedpause to nil
             self.selectedPause = nil
@@ -123,46 +130,21 @@ extension DetailScreen {
             // Update the model's working hours, check-in, and check-out times
             model.checkIn = self.checkIn == defaultTime ? nil : self.checkIn
             model.checkOut = self.checkOut == defaultTime ? nil : self.checkOut
+            model.workedTime = Int(model.checkOut?.timeIntervalSince(model.checkIn!) ?? 0) - (calculatePauseInSeconds() / 60)
+            workDayService.update(model)
+            refreshDTO()
             
             // Reset the selected pause to nil
             selectedPause = nil
             
             // Recalculate the worked time (assuming this function exists and performs some calculation)
             calculatedWorkedTime()
-            
-            // Save the changes to the persistence controller
-//            persistenceController.save()
-            // MUST SAVE
         }
         
         /// Adds a new pause to the working day.
-        func addPause(for day: WorkDay) {
-            
-//            let addStartPause = pauseBegin
-            // Initialize pauseStartEdit to the current date and time + 15 min
-//            let addFinishPause = Date(timeInterval: 900, since: addStartPause)
-//            let addFinishPause = pauseEnd
-            
-//            // Create a new Pause entity in the Core Data context
-//            let newPause = Pause(context: persistenceController.container.viewContext)
-//            
-//            // Assign a unique identifier to the newPause
-//            newPause.identifier = UUID().uuidString
-//            
-//            // Set the start time of the pause period for the newPause entity
-//            newPause.startPause = addStartPause
-//            
-//            // Set the finish time of the pause period for the newPause entity
-//            newPause.finishPause = addFinishPause
-//            
-//            // Add a pause to a  day
-//            day.addToPauses(newPause)
-//
-//            objectWillChange.send()
-//            
-//            // Save the changes to the persistence controller
-//            persistenceController.save()
-            workingDayPauseService.addPause(for: day, beginPause: pauseBegin, endOfPause: pauseEnd)
+        func addPause() {
+            workingDayPauseService.addPause(for: model, beginPause: pauseBegin, endOfPause: pauseEnd)
+            refreshDTO()
         }
         
         /// Mark pause and show time picker's.
@@ -182,7 +164,7 @@ extension DetailScreen {
         
         /// Calculate time between check-in and check-out.
         /// - Returns: return calculated time.
-        func calculatedWorkedTime() {
+        func calculatedWorkedTime()  {
             if let checkIn = model.checkIn, let checkOut = model.checkOut {
                 // Calculate the time interval in seconds
                 var timeInterval = checkOut.timeIntervalSince(checkIn)
@@ -201,12 +183,13 @@ extension DetailScreen {
                 // If model worked time doesn't equal to totalSeconds, then re-calculate.
                 if model.workedTime != totalSeconds {
                     model.workedTime = totalSeconds
-//                    persistenceController.save()
-                    // MUST SAVE 
                 }
                 
                 // Calculate and format the time as a string.
                 self.time = convertSecondToTime(totalSeconds)
+                
+                // Refresh DTO
+                refreshDTO()
             }
         }
         
@@ -269,6 +252,11 @@ extension DetailScreen {
             
             // Return the total duration of all pauses in seconds
             return pauseInterval
+        }
+        
+        private func refreshDTO() {
+            guard let freshDto = refreshWorkDayInArr(model) else { return }
+            model = freshDto
         }
         
     }

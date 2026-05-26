@@ -54,7 +54,7 @@ struct EditSheetView: View {
                                     HStack {
                                         Spacer()
                                         Button("Add pause") {
-                                            viewModel.addPause(for: viewModel.model)
+                                            viewModel.addPause()
                                             viewModel.addNewPause.toggle()
                                         }
                                         .disabled(!viewModel.pauseDescription.isEmpty)
@@ -146,7 +146,7 @@ struct EditSheetView: View {
                             viewModel.buttons()
                         }
                     }
-                        .disabled(viewModel.disableAddPause)
+                    .disabled(viewModel.disableAddPause)
                 }
             }
             .navigationTitle("Edit \(viewModel.model.date.formatted(date: .abbreviated, time: .omitted))")
@@ -156,5 +156,5 @@ struct EditSheetView: View {
 }
 
 #Preview {
-    EditSheetView(viewModel: DetailScreen.ViewModel(model: WorkDay.mock, workingDayPauseService: WorkingDayPauseService(persistenceController: PersistenceController.shared)))
+    EditSheetView(viewModel: DetailScreen.ViewModel(model: WorkDay.mock, workingDayPauseService: WorkingDayPauseService(persistenceController: PersistenceController.shared, workingDaysQueryServices: WorkingDaysQueryService(persistenceController: PersistenceController.shared)), workDayService: WorkingDaysService(queryService: WorkingDaysQueryService(persistenceController: PersistenceController.shared), persistenceController: PersistenceController.shared), refreshWorkDayInArr: { _ in nil} ))
 }

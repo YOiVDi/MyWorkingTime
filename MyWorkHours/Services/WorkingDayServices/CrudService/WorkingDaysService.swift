@@ -35,6 +35,11 @@ final class WorkingDaysService: WorkingDaysServicesProtocol {
         queryService.update(workDay)
     }
     
+    func refreshWorkDay(for id: UUID) -> WorkDay? {
+        guard let repositoryDay = queryService.fetchOnId(id) else { return nil }
+        return WorkDayMapper.mapToDto(repositoryDay)
+    }
+    
     // MARK: - Delete
     
     func delete(_ day: WorkDay) {

@@ -23,8 +23,9 @@ struct CollectionFilters {
         let calendar = Calendar.current
         for item in items {
             let components = calendar.dateComponents([.year ,.month], from: item[keyPath: dateKeyPath])
-            let monthName = calendar.date(from: components)
-            grouped[monthName ?? .now, default: []].append(item)
+            if let monthDate = calendar.date(from: components) {
+                grouped[monthDate, default: []].append(item)
+            }
         }
         return grouped
     }

@@ -31,5 +31,5 @@ struct AddNewPauseView: View {
 }
 
 #Preview {
-    AddNewPauseView(viewModel: DetailScreen.ViewModel(model: WorkDay.mock, workingDayPauseService: WorkingDayPauseService(persistenceController: PersistenceController.shared)))
+    AddNewPauseView(viewModel: DetailScreen.ViewModel(model: WorkDay.mock, workingDayPauseService: WorkingDayPauseService(persistenceController: PersistenceController.shared, workingDaysQueryServices: WorkingDaysQueryService(persistenceController: PersistenceController.shared)), workDayService: WorkingDaysService(queryService: WorkingDaysQueryService(persistenceController: PersistenceController.shared), persistenceController: PersistenceController.shared), refreshWorkDayInArr: { _ in nil }))
 }

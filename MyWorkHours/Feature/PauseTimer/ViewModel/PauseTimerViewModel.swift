@@ -34,29 +34,29 @@ extension PauseTimerScreen {
         
         // MARK: - Private Properties
         private let scenePhaseHandler = ScenePhaseService()
-        private let timer: TimerStore
+        private let timerStore: TimerStore
         private var cancellables: Set<AnyCancellable> = []
         private var scenePhase: ScenePhase
         
         // MARK: - Initialization
         init(timerStore: TimerStore) {
-            self.timer = timerStore
+            self.timerStore = timerStore
             self.scenePhase = .active
-//            self.subscribeToTimerStore()
+            self.subscribeToTimerStore()
         }
         
         // MARK: - UI Computed Properties
         /// Trimming of circle is based on elapsedTime
         var trimProgress: CGFloat {
-            return timer.elapsedTime == 0 ?  (timer.timer != nil && timer.elapsedTime == 0 ? 1 : 0) : 1 - (timer.elapsedTime / timer.elapsedTimeFrom)
+            return timerStore.elapsedTime == 0 ?  (timerStore.timer != nil && timerStore.elapsedTime == 0 ? 1 : 0) : 1 - (timerStore.elapsedTime / timerStore.elapsedTimeFrom)
         }
         
         
         /// Changes the color of the timer circle depending on what state it is currently in
         var timerCircleColor: Color {
-            if timer.timer == nil {
+            if timerStore.timer == nil {
                 return Color.gray.opacity(0.5)
-            } else if timer.timer != nil && timer.elapsedTime == 0 {
+            } else if timerStore.timer != nil && timerStore.elapsedTime == 0 {
                 return Color.red
             }
             return Color.blue
@@ -93,7 +93,7 @@ extension PauseTimerScreen {
             case .twentyFiveMinutes: hours = 0; minutes = 25; seconds = 0
             case .thirtyMinutes: hours = 0; minutes = 30; seconds = 0
             }
-            timer.setTimer(hours, minutes, seconds)
+            timerStore.setTimer(hours, minutes, seconds)
         }
         
         // MARK: - App State
@@ -102,21 +102,21 @@ extension PauseTimerScreen {
             case .active:
                 scenePhaseHandler.handleActiveScenePhase(
                     timerRunning: isTimerRunning,
-                    isStarted: timer.isStarted,
-                    dateInBackground: timer.dateInBackground,
-                    elapsedTime: timer.elapsedTime,
+                    isStarted: timerStore.isStarted,
+                    dateInBackground: timerStore.dateInBackground,
+                    elapsedTime: timerStore.elapsedTime,
                     resumeTimer: { [weak self] in self?.resumeTimer() },
-                    pauseTimeCalculate: { [weak self] in self?.timer.pauseTimeCalculate() },
-                    setActiveDate: { [weak self] in self?.timer.dateInActiveMode = $0 }
+                    pauseTimeCalculate: { [weak self] in self?.timerStore.pauseTimeCalculate() },
+                    setActiveDate: { [weak self] in self?.timerStore.dateInActiveMode = $0 }
                 )
                 print("ScenePhase: Active")
             case .background:
                 scenePhaseHandler.handleBackgroundScenePhase(
                     timerRunning: isTimerRunning,
-                    setBackgroundDate: { [weak self] in self?.timer.dateInBackground = $0 },
+                    setBackgroundDate: { [weak self] in self?.timerStore.dateInBackground = $0 },
                     stopTimer: { [weak self] in self?.stopTimer(.lifecycle) },
-                    setStopped: { [weak self] in self?.timer.isStopped = $0 },
-                    setStarted: { [weak self] in self?.timer.isStarted = $0 }
+                    setStopped: { [weak self] in self?.timerStore.isStopped = $0 },
+                    setStarted: { [weak self] in self?.timerStore.isStarted = $0 }
                 )
                 print("ScenePhase: Background")
             default:
@@ -128,35 +128,35 @@ extension PauseTimerScreen {
         // MARK: - Timer Methods
         
         func startTimer() {
-            timer.startTimer(hours, minutes, seconds)
+            timerStore.startTimer(hours, minutes, seconds)
         }
         func stopTimer(_ stopIntention: StopIntention) {
-            timer.stopTimer(stopIntention)
+            timerStore.stopTimer(stopIntention)
         }
         func resetTimer() {
-            timer.resetTimer()
+            timerStore.resetTimer()
         }
         func resumeTimer() {
-            timer.resumeTimer()
+            timerStore.resumeTimer()
         }
         
-//        private func subscribeToTimerStore() {
-//            // mirror store's @Published values
-//            timerStore.$elapsedTime
-//                .assign(to: &$elapsedTime)
-//            timerStore.$overElapsedTime
-//                .assign(to: &$overElapsedTime)
-//            timerStore.$isStarted
-//                .assign(to: &$isStarted)
-//            timerStore.$isStopped
-//                .assign(to: &$isStopped)
-//            timerStore.$alert
-//                .assign(to: &$alert)
-//            
-//            // computed example
-//            timerStore.$timer
-//                .map { $0 != nil }
-//                .assign(to: &$isTimerRunning)
-//        }
+        private func subscribeToTimerStore() {
+            // mirror store's @Published values
+            timerStore.$elapsedTime
+                .assign(to: &$elapsedTime)
+            timerStore.$overElapsedTime
+                .assign(to: &$overElapsedTime)
+            timerStore.$isStarted
+                .assign(to: &$isStarted)
+            timerStore.$isStopped
+                .assign(to: &$isStopped)
+            timerStore.$alert
+                .assign(to: &$alert)
+            
+            // computed example
+            timerStore.$timer
+                .map { $0 != nil }
+                .assign(to: &$isTimerRunning)
+        }
     }
 }
