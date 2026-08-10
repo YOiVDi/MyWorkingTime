@@ -61,7 +61,9 @@ extension DetailScreen {
         
         /// show complete worked time for a day.
         var workedTime: String {
-            model.workedTime != 0 ? convertSecondToTime(model.workedTime) : time
+            guard model.checkIn != nil && model.checkOut != nil else { return self.time }
+            print("converted to time: \(model.workedTime)")
+            return convertSecondToTime(model.workedTime)
         }
         
         
@@ -85,43 +87,22 @@ extension DetailScreen {
         
         // MARK: - Public Methods
         
-        /// Return button base of condition.
-        func buttons() -> some View {
-            return Group {
-                if (selectedPause != nil) {
-                    Button(role: .destructive) {
-                        self.deletePause()
-                    } label: {
-                        Label("Delete", systemImage: "trash")
-                    }
-                } else {
-                    Button {
-                        if self.addNewPause == false {
-                        }
-                        self.addNewPause.toggle()
-                    } label: {
-                        Label("Add", systemImage: "plus.circle.fill")
-                    }
-                }
-            }
-        }
-        
         /// Deletes the given pause from the working day and saves the context.
         func deletePause() {
             guard let selectedPause else { return }
             
             // Delete selected pause from Core Data context
-//            workingDayPauseService.deletePause(pause: selectedPause)
+            model.pause.removeAll(where: { $0.id == selectedPause.id } )
             workingDayPauseService.deletePause(for: model, pause: selectedPause)
             
             // Set selectedpause to nil
             self.selectedPause = nil
-            
-            // Recalculate the worked time (assuming this function exists and performs some calculation)
-            calculatedWorkedTime()
-        
-            // Save the changes to the persistence controller
-                // MUST SAVE
+//            
+//            // Recalculate the worked time (assuming this function exists and performs some calculation)
+//            calculatedWorkedTime()
+//        
+//            // Save the changes to the persistence controller
+//                // MUST SAVE
         }
         
         
@@ -130,15 +111,15 @@ extension DetailScreen {
             // Update the model's working hours, check-in, and check-out times
             model.checkIn = self.checkIn == defaultTime ? nil : self.checkIn
             model.checkOut = self.checkOut == defaultTime ? nil : self.checkOut
-            model.workedTime = Int(model.checkOut?.timeIntervalSince(model.checkIn!) ?? 0) - (calculatePauseInSeconds() / 60)
+            guard let checkIn = model.checkIn, let checkOut = model.checkOut else { return }
+            let calculatedPause = calculatePauseInSeconds()
+            model.workedTime = Int(checkOut.timeIntervalSince(checkIn)) - calculatedPause
             workDayService.update(model)
-            refreshDTO()
             
             // Reset the selected pause to nil
             selectedPause = nil
-            
-            // Recalculate the worked time (assuming this function exists and performs some calculation)
-            calculatedWorkedTime()
+            // Updating model
+            refreshDTO()
         }
         
         /// Adds a new pause to the working day.
@@ -187,17 +168,15 @@ extension DetailScreen {
                 
                 // Calculate and format the time as a string.
                 self.time = convertSecondToTime(totalSeconds)
-                
-                // Refresh DTO
-                refreshDTO()
             }
         }
         
-        /// Convert Int16 from coredate into hours, minutes.
-        func calculateWorkTimeFromMinutes() -> String {
+        /// Convert Int16 from coredate into hours, minutes, seconds.
+        func convertsworkHours() -> String {
             let hours = model.workHours / 60
             let minutes = model.workHours % 60
-            return String(format: "%02d:%02d", hours, minutes)
+            let seconds = model.workHours / 3600
+            return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
         }
         
         /// Set a date of new pause  fields to match date of day
@@ -254,7 +233,7 @@ extension DetailScreen {
             return pauseInterval
         }
         
-        private func refreshDTO() {
+         func refreshDTO() {
             guard let freshDto = refreshWorkDayInArr(model) else { return }
             model = freshDto
         }

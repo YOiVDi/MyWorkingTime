@@ -19,8 +19,9 @@ struct ListView: View {
                                         DateIconView(model: workDay)
                                         Text(workDay.companyName)
                                             .font(.title3).bold()
-                                        Text(viewModel.calculateWorkTimeForTheDay(workDay))
-                                            .foregroundStyle(viewModel.calculateWorkTimeForTheDay(workDay).contains("-") ? .red : .green)
+                                        let workTimeBalance = viewModel.calculatedTimeBalance(workDay)
+                                        Text(workTimeBalance)
+                                            .foregroundStyle(workTimeBalance.contains("-") ? .red : .green)
                                     }
                                     .matchedTransitionSource(id: workDay.id, in: namespace)
                             }

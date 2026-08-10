@@ -28,19 +28,23 @@ struct OnbordingScreen: View {
                 
                 Button {
                     path.append(.second)
-            } label: {
-                Text("Get Started")
-                    .frame(maxWidth: .infinity, maxHeight: 30)
-                    .foregroundStyle(Color.white)
+                } label: {
+                    Text("Get Started")
+                        .frame(maxWidth: .infinity, maxHeight: 30)
+                        .foregroundStyle(Color.white)
+                }
+                .buttonStyle(.borderedProminent)
+                .padding(.horizontal)
+                .padding(.bottom, 12)
             }
-            .buttonStyle(.borderedProminent)
-            .padding(.horizontal)
-            .padding(.bottom, 12)
         }
     }
-}
+    
+    init(onboardViewModel: OnboardViewModel) {
+        _onboardViewModel = .init(wrappedValue: onboardViewModel)
+    }
 }
 
 #Preview {
-    OnbordingScreen(onboardViewModel: OnboardViewModel(userDefaultsStore: UserDefaultsStore()))
+    OnbordingScreen(onboardViewModel: OnboardViewModel(userDefaultsStore: UserDefaultsStore(), userSettingsStore: UserSettingsStore(userDefaultsStore: UserDefaultsStore())))
 }

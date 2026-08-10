@@ -30,7 +30,7 @@ struct MainAppView: View {
     init(_ servicesContainer: ServicesContainer, _ userStatusStore: UserStatusStore) {
         self.servicesContainer = servicesContainer
         _userStatusStore = ObservedObject(wrappedValue: userStatusStore)
-        _onboardViewModel = StateObject(wrappedValue: OnboardViewModel(userDefaultsStore: servicesContainer.userDefaultsService))
+        _onboardViewModel = StateObject(wrappedValue: OnboardViewModel(userDefaultsStore: servicesContainer.userDefaultsService, userSettingsStore: servicesContainer.userSettingsStore))
     }
 }
 

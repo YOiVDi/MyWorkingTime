@@ -20,18 +20,17 @@ final class UserSettingsStore: ObservableObject {
     
     
     private func fetchUserSettings() {
-        guard let userSettings = UserDefaults.standard.data(forKey: UserDefaultsKeys.firstWorkSettings.rawValue) else { return }
-        guard let secondUserSettings = UserDefaults.standard.data(forKey: UserDefaultsKeys.secondWorkSettings.rawValue) else { return }
-        
+        firstWorkSettings = loadSettings(key: .firstWorkSettings)
+        secondWorkSettings = loadSettings(key: .secondWorkSettings)
+    }
+    
+    private func loadSettings(key: UserDefaultsKeys) -> UserSettings {
         do {
-            self.firstWorkSettings = try JSONDecoder().decode(UserSettings.self, from: userSettings)
-            self.secondWorkSettings = try JSONDecoder().decode(UserSettings.self, from: secondUserSettings)
+            return try userDefaultsStore.get(UserSettings.self, forKey: key.rawValue, UserSettings())
         } catch {
-            print("Failed to decode user settings data:", error.localizedDescription)
-            return
+            print("Failed to load \(key.rawValue): \(error.localizedDescription)")
+            return UserSettings()
         }
-        
-        print("fetch usersettings")
     }
     
     

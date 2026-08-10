@@ -146,32 +146,11 @@ extension WorkDaysScreen {
             showCheckInOutCard.toggle()
         }
         
-        // Calculate either user is plus or minus time for certain day
-        func calculateWorkTimeForTheDay(_ workDay: WorkDay) -> String {
-            let workTimeDefinedInSettings = (workDay.workHours * 60) + calculatePauseInSeconds(workDay)
-            var pauses = 0
-            for pause in workDay.pause {
-                pauses += Int(pause.finishPause.timeIntervalSince(pause.startPause))
-            }
-            guard let checkIn = workDay.checkIn, let checkOut = workDay.checkOut else { return "00:00" }
-            let calcCheckInOutAndPuases = Int(checkOut.timeIntervalSince(checkIn)) + pauses
-            let finalCalc = calcCheckInOutAndPuases - workTimeDefinedInSettings
-            return WorkTimeConverter.convertSecondToTime(finalCalc, true)
-        }
-        
-         func calculatePauseInSeconds(_ workDay: WorkDay) -> Int {
-             let weekday = DateHelper.weekday(from: workDay.date)
-             var pauseTime: Date?
-             
-             if DateHelper.isSunday(weekday) {
-                 pauseTime = workDay.companyName == userSettingsStore.firstWorkSettings.companyName ? userSettingsStore.firstWorkSettings.pauseSunday : userSettingsStore.secondWorkSettings.pauseSunday
-             } else if DateHelper.isSaturday(weekday) {
-                 pauseTime = workDay.companyName == userSettingsStore.firstWorkSettings.companyName ? userSettingsStore.firstWorkSettings.pauseSaturday : userSettingsStore.secondWorkSettings.pauseSaturday
-             } else {
-                 pauseTime = workDay.companyName == userSettingsStore.firstWorkSettings.companyName ? userSettingsStore.firstWorkSettings.pause : userSettingsStore.secondWorkSettings.pause
-             }
-             
-             return DateHelper.minutesToSeconds(pauseTime)
+        // Calculating whether the balance is negative, or positive.
+        func calculatedTimeBalance(_ workDay: WorkDay) -> String {
+            let firstWorkSettings = userSettingsStore.firstWorkSettings
+            let secondWorkSettings = userSettingsStore.secondWorkSettings
+           return workDay.calculateWorktimeBlance(firstWorkSettings, secondWorkSettings)
         }
         
         /// Check if a day is weekend

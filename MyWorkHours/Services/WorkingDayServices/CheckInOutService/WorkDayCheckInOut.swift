@@ -15,6 +15,7 @@ final class WorkDayCheckInOut: WorkDayCheckInOutProtocol {
         self.workingDaysQuery = workingDaysQuery
     }
     
+    // MARK: InOut should to be remove.
     func handleCheckIn(_ day: inout WorkDay, workingDaysList: inout [WorkDay]) {
         day.checkIn = Date.now
         workingDaysQuery.update(day)
@@ -23,9 +24,12 @@ final class WorkDayCheckInOut: WorkDayCheckInOutProtocol {
         }
     }
     
+    // MARK: InOut should to be remove.
     func handleCheckOut(_ day: inout WorkDay, workingDaysList: inout [WorkDay]) {
-        day.checkOut = Date.now
-        day.workedTime = Int(day.checkOut?.timeIntervalSince(day.checkIn!) ?? 0)
+        guard let checkIn = day.checkIn else { return }
+        let checkOut = Date.now
+        day.checkOut = checkOut
+        day.workedTime = Int(checkOut.timeIntervalSince(checkIn))
         workingDaysQuery.update(day)
         if let index = workingDaysList.firstIndex(where: {$0.id == day.id}) {
             workingDaysList[index] = day

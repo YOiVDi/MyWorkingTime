@@ -69,6 +69,13 @@ extension SettingsView {
                 btnTitle =  await notificationServices.checkAuthorizationStatus()
             }
         }
+        
+        // Fetch user-settings
+        func fetchUserSettings() {
+            firstWorkSettings = userSettingsStore.firstWorkSettings
+            secondWorkSettings = userSettingsStore.secondWorkSettings
+        }
+        
         // MARK: - Private Methods
         
         /// Save user settings in to UserDefaults

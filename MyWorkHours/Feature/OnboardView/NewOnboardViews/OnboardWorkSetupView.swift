@@ -12,7 +12,6 @@ struct OnboardWorkSetupView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-
             // MARK: - Shift setup
             OnboardSetupWork(companyName: $onboardViewModel.initSettings.companyName, startShift: $onboardViewModel.initSettings.startShift, endShift: $onboardViewModel.initSettings.endShift, pause: $onboardViewModel.initSettings.pause, workOnWeekend: $onboardViewModel.initSettings.workOnWeekend, saturday: $onboardViewModel.initSettings.saturday, startInSaturday: $onboardViewModel.initSettings.startInSaturday, endInSaturday: $onboardViewModel.initSettings.endInSaturday, pauseSaturday: $onboardViewModel.initSettings.pauseSaturday, sunday: $onboardViewModel.initSettings.sunday, startInSunday: $onboardViewModel.initSettings.startInSunday, endInSunday: $onboardViewModel.initSettings.endInSunday, pauseSunday: $onboardViewModel.initSettings.pauseSunday)
                 .padding(.horizontal)
@@ -36,5 +35,5 @@ struct OnboardWorkSetupView: View {
 }
 
 #Preview {
-    OnboardWorkSetupView(onboardViewModel: OnboardViewModel(userDefaultsStore: UserDefaultsStore()))
+    OnboardWorkSetupView(onboardViewModel: OnboardViewModel(userDefaultsStore: UserDefaultsStore(), userSettingsStore: UserSettingsStore(userDefaultsStore: UserDefaultsStore())))
 }

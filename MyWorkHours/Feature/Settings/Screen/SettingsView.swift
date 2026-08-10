@@ -121,6 +121,9 @@ struct SettingsView: View {
         .onChange(of: scenePhase) {
             viewModel.checkAuthorizationStatus()
         }
+        .onAppear {
+            viewModel.fetchUserSettings()
+        }
     }
     
     init(showFinishButton: Bool = false, finishAction: (() -> Void)? = nil) {

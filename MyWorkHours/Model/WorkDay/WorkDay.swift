@@ -17,6 +17,11 @@ struct WorkDay: Identifiable, Equatable, Hashable {
     var pause: [WorkDayPause]
     var workedTime: Int
     
+    
+    
+    
+    
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(date)
@@ -24,11 +29,4 @@ struct WorkDay: Identifiable, Equatable, Hashable {
     }
     
     static let mock = WorkDay(id: UUID(), companyName: "YourCompany", date: Date(), workHours: 5, pause: [WorkDayPause(id: UUID().uuidString, startPause: .now, finishPause: .now)], workedTime: 9)
-}
-
-
-struct WorkDayPause: Identifiable, Equatable, Hashable {
-    let id: String
-    var startPause: Date
-    var finishPause: Date
 }

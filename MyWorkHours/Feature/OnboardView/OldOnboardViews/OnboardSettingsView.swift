@@ -21,6 +21,6 @@ struct OnboardSettingsView: View {
 }
 
 #Preview {
-    OnboardSettingsView(viewModel: OnboardViewModel(userDefaultsStore: UserDefaultsStore()))
+    OnboardSettingsView(viewModel: OnboardViewModel(userDefaultsStore: UserDefaultsStore(), userSettingsStore: UserSettingsStore(userDefaultsStore: UserDefaultsStore())))
         .environmentObject(SettingsView.SettingsViewModel(ServicesContainer(persistenceController: PersistenceController.shared), UserStatusStore(userDefaultsStore: UserDefaultsStore())))
 }

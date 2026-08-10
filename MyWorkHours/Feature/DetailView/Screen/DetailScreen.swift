@@ -73,8 +73,8 @@ struct DetailScreen: View {
     }
     
     private var workHoursSection: some View {
-        Section("Day Working Hour's") {
-            Text(viewModel.model.workHours >= 9 ? viewModel.calculateWorkTimeFromMinutes() : "\(viewModel.model.workHours)")
+        Section("Day Working Hours") {
+            Text(viewModel.model.workHours >= 9 ? viewModel.convertsworkHours() : "\(viewModel.model.workHours)")
                 .font(.body)
                 .fontWeight(.semibold)
         }
@@ -128,7 +128,7 @@ struct DetailScreen: View {
     }
     
     private var endOfTheDayTime: some View {
-        Section("Total Working Hour's") {
+        Section("Total Worked Hours") {
             Text(viewModel.workedTime)
                 .font(.body)
                 .fontWeight(.semibold)

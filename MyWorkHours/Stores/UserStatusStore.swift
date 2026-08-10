@@ -8,6 +8,11 @@
 import Combine
 import Foundation
 
+enum UserStatus: String {
+    case basic = "basic"
+    case subscribed = "subscribed"
+}
+
 @MainActor
 class UserStatusStore: ObservableObject {
     @Published private(set) var userStatus: UserStatus = .basic
@@ -33,7 +38,6 @@ class UserStatusStore: ObservableObject {
     
     // MARK: - Private Methods
     
-    //
     private func subscribeAndUpdateUserStatus() {
         $userStatus
             .debounce(for: .milliseconds(250), scheduler: RunLoop.main)

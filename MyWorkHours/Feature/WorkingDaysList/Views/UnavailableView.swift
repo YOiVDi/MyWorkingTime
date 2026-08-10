@@ -20,13 +20,17 @@ struct UnavailableView: View {
                         .foregroundColor(.blue)
                         .font(.system(size: 40))
                 }
-                .sheet(isPresented: $viewModel.createNewDaySheet) {
-                    CreateNewDayView(viewModel: viewModel)
-                }
             }
         }
         .sheet(isPresented: $viewModel.createNewDaySheet) {
             CreateNewDayView(viewModel: viewModel)
         }
+        .onAppear {
+            
+        }
+    }
+    
+    init(viewModel: WorkDaysScreen.ViewModel) {
+        _viewModel = .init(wrappedValue: viewModel)
     }
 }

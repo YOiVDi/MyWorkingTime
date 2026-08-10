@@ -21,11 +21,12 @@ struct DateHelper {
         weekday == 7
     }
     
-    static func minutesToSeconds(_ time: Date?) -> Int {
+    static func minuteComponentInSeconds(_ time: Date?) -> Int {
         guard let time = time else { return 0 }
         let dateComponents = Calendar.current.dateComponents([.minute], from: time)
-        let pauseToInt = Int(dateComponents.minute ?? 0)
-        return (pauseToInt * 60)
+        let dateComponentMinuteInInt = Int(dateComponents.minute ?? 0)
+        let minuteToSeconds = dateComponentMinuteInInt * 60
+        return minuteToSeconds
     }
     
     static func yearMonthFormatter(_ date: Date) -> String {

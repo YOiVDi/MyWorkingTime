@@ -69,5 +69,5 @@ struct OnboardItemView: View {
 }
 
 #Preview {
-    OnboardItemView(viewModel: OnboardViewModel(userDefaultsStore: UserDefaultsStore()), item: .dummyItem)
+    OnboardItemView(viewModel: OnboardViewModel(userDefaultsStore: UserDefaultsStore(), userSettingsStore: UserSettingsStore(userDefaultsStore: UserDefaultsStore())), item: .dummyItem)
 }

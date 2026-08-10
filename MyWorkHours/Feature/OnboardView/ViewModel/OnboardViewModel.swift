@@ -12,23 +12,28 @@ import SwiftUI
         
         @Published private(set) var onboardItems: [OnboardItem] = []
         @Published var tabBarSelection = 0
-        @Published private(set) var finishOnboarding = UserDefaults.standard.bool(forKey: "isOnboarding")
+        @Published private(set) var finishOnboarding = false
         @Published private(set) var isAlreadySetup: Bool = UserDefaults.standard.bool(forKey: "isAlreadySetup")
         @Published var initSettings: UserSettings = UserSettings()
+//        
+        private let initSecondWork: UserSettings = .init()
         
         private let userDefaultsStore: UserDefaultsStore
+        private let userSettingsStore: UserSettingsStore
         
         
-        init(userDefaultsStore: UserDefaultsStore) {
+        init(userDefaultsStore: UserDefaultsStore, userSettingsStore: UserSettingsStore) {
             self.userDefaultsStore = userDefaultsStore
+            self.userSettingsStore = userSettingsStore
             setDefaultTime()
+            checkAndSetOnbordingStatus()
 //            load()
         }
         
         func finishOnBording() {
             finishOnboarding = true
-            UserDefaults.standard.set(finishOnboarding, forKey: "isOnboarding")
-            try? userDefaultsStore.set(initSettings, forKey: "userSettings")
+            try? userDefaultsStore.set(finishOnboarding, forKey: "isOnboarding")
+            userSettingsStore.saveUserSettings(initSettings, initSecondWork)
         }
         
         private func setDefaultTime() {
@@ -54,6 +59,16 @@ import SwiftUI
         func nextPage() {
             if tabBarSelection < onboardItems.count - 1 {
                     tabBarSelection += 1
+            }
+        }
+        
+        private func checkAndSetOnbordingStatus() {
+            do {
+                finishOnboarding = try userDefaultsStore.get(Bool.self, forKey: "isOnboarding", false)
+                print("Do: \(finishOnboarding)")
+            } catch {
+                finishOnboarding = false
+                print("catch: \(finishOnboarding)")
             }
         }
         

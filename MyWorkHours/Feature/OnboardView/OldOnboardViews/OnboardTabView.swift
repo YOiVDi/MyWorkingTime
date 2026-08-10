@@ -25,5 +25,5 @@ struct OnBoardTabView: View {
 }
 
 #Preview {
-    OnBoardTabView(viewModel: OnboardViewModel(userDefaultsStore: UserDefaultsStore()))
+    OnBoardTabView(viewModel: OnboardViewModel(userDefaultsStore: UserDefaultsStore(), userSettingsStore: UserSettingsStore(userDefaultsStore: UserDefaultsStore())))
 }

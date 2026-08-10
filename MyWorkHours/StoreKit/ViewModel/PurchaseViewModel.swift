@@ -14,11 +14,6 @@ enum ProductID: String, CaseIterable {
     case subscriptionYearly = "com.myworkhours.premiumaccess.yearlytwo"
     case subscriptionTestperiod = "subscription_testperiod"
 }
-
-enum UserStatus: String {
-    case basic = "basic"
-    case subscribed = "subscribed"
-}
 @MainActor class PurchaseViewModel: ObservableObject {
     private var productsId: [String] = ProductID.allCases.map { $0.rawValue }
     @Published private(set) var products: [Product] = []
