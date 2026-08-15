@@ -29,7 +29,10 @@ final class WorkDayCheckInOut: WorkDayCheckInOutProtocol {
         guard let checkIn = day.checkIn else { return }
         let checkOut = Date.now
         day.checkOut = checkOut
-        day.workedTime = Int(checkOut.timeIntervalSince(checkIn))
+        let pauseSeconds = day.pause.reduce(0) { totalPause, pause in
+            totalPause + Int(pause.finishPause.timeIntervalSince(pause.startPause))
+        }
+        day.workedTime = Int(checkOut.timeIntervalSince(checkIn)) - pauseSeconds
         workingDaysQuery.update(day)
         if let index = workingDaysList.firstIndex(where: {$0.id == day.id}) {
             workingDaysList[index] = day

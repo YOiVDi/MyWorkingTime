@@ -59,7 +59,7 @@ extension DetailScreen {
         /// expose pause for certain WorkDay
         var modelPauses: [WorkDayPause] { model.pause }
         
-        /// show complete worked time for a day.
+        /// Payable time - subtract pauses from gross work time
         var workedTime: String {
             guard model.checkIn != nil && model.checkOut != nil else { return self.time }
             print("converted to time: \(model.workedTime)")
@@ -109,11 +109,13 @@ extension DetailScreen {
         /// Updates the working day and optionally the pause with the new values.
         func update() {
             // Update the model's working hours, check-in, and check-out times
+            // If the user does not set a value for any of them, the value will be saved as nil-no date
             model.checkIn = self.checkIn == defaultTime ? nil : self.checkIn
             model.checkOut = self.checkOut == defaultTime ? nil : self.checkOut
+            // If we have checkIn, checkOut, working time is calculated and breaks are subtracted
             guard let checkIn = model.checkIn, let checkOut = model.checkOut else { return }
-            let calculatedPause = calculatePauseInSeconds()
-            model.workedTime = Int(checkOut.timeIntervalSince(checkIn)) - calculatedPause
+            model.workedTime = Int(checkOut.timeIntervalSince(checkIn)) - calculatePauseInSeconds()
+            // Updating model
             workDayService.update(model)
             
             // Reset the selected pause to nil
@@ -139,35 +141,6 @@ extension DetailScreen {
                 selectedPause = pause
                 pauseBegin = pause.startPause
                 pauseEnd = pause.finishPause
-            }
-        }
-        
-        
-        /// Calculate time between check-in and check-out.
-        /// - Returns: return calculated time.
-        func calculatedWorkedTime()  {
-            if let checkIn = model.checkIn, let checkOut = model.checkOut {
-                // Calculate the time interval in seconds
-                var timeInterval = checkOut.timeIntervalSince(checkIn)
-                
-                // Calculate the time interval in seconds
-                let pauseInterval = calculatePauseInSeconds()
-                
-                // If the time interval is negative, add 24 hours (86400 seconds).
-                if timeInterval < 0 {
-                    timeInterval += 24 * 60 * 60
-                }
-                
-                // Convert the time interval to integer seconds.
-                let totalSeconds = Int(round(timeInterval)) - pauseInterval
-                
-                // If model worked time doesn't equal to totalSeconds, then re-calculate.
-                if model.workedTime != totalSeconds {
-                    model.workedTime = totalSeconds
-                }
-                
-                // Calculate and format the time as a string.
-                self.time = convertSecondToTime(totalSeconds)
             }
         }
         

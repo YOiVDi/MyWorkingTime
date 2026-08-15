@@ -11,12 +11,11 @@ struct WorkDay: Identifiable, Equatable, Hashable {
     let id: UUID
     var companyName: String
     let date: Date
-    var workHours: Int
+    var workHours: Int     // Gross worked time
     var checkIn: Date?
     var checkOut: Date?
     var pause: [WorkDayPause]
-    var workedTime: Int
-    
+    var workedTime: Int    // Actual payable worked time without pause
     
     
     

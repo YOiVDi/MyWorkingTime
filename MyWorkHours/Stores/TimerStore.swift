@@ -81,9 +81,9 @@ final class TimerStore: ObservableObject {
     func stopTimer(_ intention: StopIntention) {
         isStopped = true
         isStarted = false
-        finishPause = .now
         timer?.invalidate()
         if intention == .user {
+            finishPause = .now
             notification.deleteNotification(identifier: ["timer"])
             clearSnapshot()
         }
@@ -93,6 +93,8 @@ final class TimerStore: ObservableObject {
     func resetTimer() {
         var processCompletedCount = UserDefaults.standard.integer(forKey: "processCompletedCount")
         timer?.invalidate()
+        // .now is used as fallback, if for some reason we have no finish time when use did press STOP button.
+        finishPause = finishPause ?? .now
         addPause()
         isStarted = false
         isStopped = false
@@ -123,13 +125,16 @@ final class TimerStore: ObservableObject {
         let components = calendar.dateComponents([.hour, .minute, .second], from: dateInBackground ?? Date.now, to: dateInActiveMode ?? Date.now)
 
         // Extract the components
+        let hours = components.hour ?? 0
         let minutes = components.minute ?? 0
         let seconds = components.second ?? 0
         
+        // Calc hours in seconds
+        let hourInSeconds = hours * 3600
         // Calc minute in seconds
         let minInSeconds = minutes * 60
         // Add minute in seconds to seconds
-        let calcSeconds = seconds + minInSeconds
+        let calcSeconds = seconds + minInSeconds + hourInSeconds
         
         // Check if the calculated time difference exceeds elapsedTime
          if elapsedTime >= Double(calcSeconds) {

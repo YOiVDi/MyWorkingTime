@@ -40,10 +40,6 @@ struct DetailScreen: View {
             .scrollContentBackground(.hidden)
             .scrollBounceBehavior(.basedOnSize)
         }
-        .onAppear(perform: {
-            viewModel.calculatedWorkedTime()
-        })
-        
         
         // MARK: Edited Sheet
         .sheet(isPresented: $viewModel.onChange) {
